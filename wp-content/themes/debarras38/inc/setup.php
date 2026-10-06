@@ -3,55 +3,57 @@
  * Mise en place du thème : supports, styles, scripts, compositions, page d'accueil.
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Sections de la page d'accueil, dans l'ordre d'affichage.
  * Chaque entrée est le nom d'un fichier de patterns/.
  */
-const D38_SECTIONS_ACCUEIL = array( 'hero', 'communes', 'services', 'appel', 'cas', 'etapes', 'faq', 'contact' );
+const D38_SECTIONS_ACCUEIL = array('hero', 'communes', 'services', 'appel', 'cas', 'etapes', 'faq', 'contact');
 
 add_action(
 	'after_setup_theme',
 	static function (): void {
-		add_theme_support( 'editor-styles' );
-		add_theme_support( 'responsive-embeds' );
-		remove_theme_support( 'core-block-patterns' );
+		add_theme_support('editor-styles');
+		add_theme_support('responsive-embeds');
+		remove_theme_support('core-block-patterns');
 
 		// L'éditeur charge la même feuille que le site : le client voit le rendu réel.
-		add_editor_style( 'assets/css/main.css' );
+		add_editor_style('assets/css/main.css');
 	}
 );
 
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		wp_enqueue_style( 'debarras38', D38_URI . '/assets/css/main.css', array(), D38_VERSION );
+		wp_enqueue_style('debarras38', D38_URI . '/assets/css/main.css', array(), D38_VERSION);
 
-		wp_enqueue_script( 'motion', D38_URI . '/assets/js/motion.js', array(), '12', array( 'strategy' => 'defer' ) );
-		wp_enqueue_script( 'debarras38', D38_URI . '/assets/js/animations.js', array( 'motion' ), D38_VERSION, array( 'strategy' => 'defer' ) );
-		wp_enqueue_script( 'debarras38-formulaire', D38_URI . '/assets/js/formulaire.js', array( 'motion' ), D38_VERSION, array( 'strategy' => 'defer' ) );
+		wp_enqueue_script('motion', D38_URI . '/assets/js/motion.js', array(), '12', array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38', D38_URI . '/assets/js/animations.js', array('motion'), D38_VERSION, array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38-entete', D38_URI . '/assets/js/entete.js', array(), D38_VERSION, array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38-formulaire', D38_URI . '/assets/js/formulaire.js', array('motion'), D38_VERSION, array('strategy' => 'defer'));
 	}
 );
 
 /**
- * En-tête du document : polices préchargées, favicon, et la classe qui prépare
- * les animations. Sans JavaScript, ou si le script tarde, tout reste visible.
+ * En-tête du document : polices préchargées, favicon, et les classes qui
+ * préparent le menu replié (d38-js) et les animations (d38-anime). Sans
+ * JavaScript, ou si un script tarde, tout reste visible.
  */
 add_action(
 	'wp_head',
 	static function (): void {
-		$polices = array( 'gabarito-latin-wght-normal', 'atkinson-hyperlegible-latin-400-normal' );
+		$polices = array('gabarito-latin-wght-normal', 'atkinson-hyperlegible-latin-400-normal');
 
-		foreach ( $polices as $police ) {
-			printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( D38_URI . "/assets/fonts/$police.woff2" ) );
+		foreach ($polices as $police) {
+			printf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url(D38_URI . "/assets/fonts/$police.woff2"));
 		}
 
-		if ( ! has_site_icon() ) {
-			printf( '<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url( D38_URI . '/assets/img/favicon.svg' ) );
+		if (!has_site_icon()) {
+			printf('<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url(D38_URI . '/assets/img/favicon.svg'));
 		}
 
-		echo "<script>(function(d){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('d38-anime');setTimeout(function(){window.d38Pret||d.classList.remove('d38-anime')},2500)})(document.documentElement)</script>\n";
+		echo "<script>(function(d){d.classList.add('d38-js');setTimeout(function(){window.d38Entete||d.classList.remove('d38-js')},2500);if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('d38-anime');setTimeout(function(){window.d38Pret||d.classList.remove('d38-anime')},2500)})(document.documentElement)</script>\n";
 	},
 	1
 );
@@ -62,7 +64,23 @@ add_action(
 add_action(
 	'init',
 	static function (): void {
-		register_block_pattern_category( 'debarras38', array( 'label' => 'Debarras38' ) );
+		register_block_pattern_category('debarras38', array('label' => 'Debarras38'));
+	}
+);
+
+/**
+ * Style « Plein » du bloc Bouton, à côté du bouton principal et du contour.
+ */
+add_action(
+	'init',
+	static function (): void {
+		register_block_style(
+			'core/button',
+			array(
+				'name' => 'plein',
+				'label' => 'Plein',
+			)
+		);
 	}
 );
 
@@ -72,11 +90,11 @@ add_action(
 add_action(
 	'init',
 	static function (): void {
-		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-		remove_action( 'wp_print_styles', 'print_emoji_styles' );
-		remove_action( 'wp_head', 'wp_generator' );
-		remove_action( 'wp_head', 'rsd_link' );
-		remove_action( 'wp_head', 'wlwmanifest_link' );
+		remove_action('wp_head', 'print_emoji_detection_script', 7);
+		remove_action('wp_print_styles', 'print_emoji_styles');
+		remove_action('wp_head', 'wp_generator');
+		remove_action('wp_head', 'rsd_link');
+		remove_action('wp_head', 'wlwmanifest_link');
 	}
 );
 
@@ -87,32 +105,32 @@ add_action(
 add_action(
 	'after_switch_theme',
 	static function (): void {
-		if ( get_option( 'd38_page_accueil' ) && get_post( (int) get_option( 'd38_page_accueil' ) ) ) {
+		if (get_option('d38_page_accueil') && get_post((int) get_option('d38_page_accueil'))) {
 			return;
 		}
 
 		$registre = WP_Block_Patterns_Registry::get_instance();
-		$contenu  = '';
+		$contenu = '';
 
-		foreach ( D38_SECTIONS_ACCUEIL as $section ) {
-			$composition = $registre->get_registered( "debarras38/$section" );
-			$contenu    .= trim( $composition['content'] ?? '' ) . "\n\n";
+		foreach (D38_SECTIONS_ACCUEIL as $section) {
+			$composition = $registre->get_registered("debarras38/$section");
+			$contenu .= trim($composition['content'] ?? '') . "\n\n";
 		}
 
 		$page = wp_insert_post(
 			array(
-				'post_type'    => 'page',
-				'post_status'  => 'publish',
-				'post_title'   => 'Accueil',
-				'post_name'    => 'accueil',
-				'post_content' => wp_slash( $contenu ),
+				'post_type' => 'page',
+				'post_status' => 'publish',
+				'post_title' => 'Accueil',
+				'post_name' => 'accueil',
+				'post_content' => wp_slash($contenu),
 			)
 		);
 
-		if ( $page && ! is_wp_error( $page ) ) {
-			update_option( 'd38_page_accueil', $page );
-			update_option( 'show_on_front', 'page' );
-			update_option( 'page_on_front', $page );
+		if ($page && !is_wp_error($page)) {
+			update_option('d38_page_accueil', $page);
+			update_option('show_on_front', 'page');
+			update_option('page_on_front', $page);
 		}
 	}
 );

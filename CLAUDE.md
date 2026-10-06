@@ -29,6 +29,7 @@ debarras38/
     ├── css/main.css     CSS compilé, ne pas modifier à la main
     ├── js/motion.js     bibliothèque Motion (Framer Motion, version sans React), hébergée localement
     ├── js/animations.js toutes les animations du site
+    ├── js/entete.js     bouton de menu de l'en-tête, sous 960 px
     ├── js/formulaire.js envoi du formulaire sans recharger la page
     ├── fonts/           WOFF2
     └── img/             logos fournis, dessins et formes
@@ -40,7 +41,7 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 
 | Rôle | Composition | Contenu |
 |---|---|---|
-| Navigation | `header` | Étiquette flottante : logo, menu, numéro. Menu replié sous 960 px. |
+| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons se replient dans la carte, derrière le bouton de menu (`entete.js`). Pictogrammes Lucide (`icone-*.svg`). |
 | Accroche + visuel | `hero` | Titre en deux phrases (service en Encre, slogan en Bleu canard), deux boutons, puis le grand visuel de la mare (`.d38-tableau`). |
 | Bandeau | `communes` | Les communes desservies, qui défilent (`#secteur`). |
 | Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : visuel, texte, bouton. |
@@ -95,6 +96,7 @@ Ajouter `--watch` pendant le développement. Installer Sass : binaire autonome (
 - Sass : un fichier partiel par composant, `@use` uniquement, aucune couleur en dur hors de `abstracts/_tokens.scss`.
 - Une section de page = un bloc Groupe `section.d38-section` + une composition dans `patterns/`. Le fond se règle avec la couleur de fond native du bloc ; le texte s'adapte tout seul.
 - Les animations ciblent des classes, jamais un contenu précis : une section ajoutée par le client est animée sans rien coder. Si `prefers-reduced-motion` est actif, les vagues sont posées mais immobiles et rien d'autre ne bouge. Le contenu reste visible sans JavaScript.
+- Boutons : trois styles du bloc Bouton, au choix dans l'éditeur (principal, contour, plein). Un bloc ne recolore pas ses boutons ; il peut seulement les resserrer avec `--bouton-hauteur`, `--bouton-marge-bloc` et `--bouton-marge-ligne`, comme l'en-tête.
 - Les coordonnées (téléphone, e-mail, adresse) ne s'écrivent jamais en dur : elles viennent de `d38_coord()` ou de la liaison de blocs `debarras38/coordonnees`.
 - Les textes du site suivent le chapitre « Ton » ci-dessous. Aucune promesse chiffrée (délai, tarif, gratuité) sans validation du client.
 

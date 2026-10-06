@@ -1,53 +1,73 @@
 @use "../abstracts" as *;
 
+// Trois styles, au choix dans l'éditeur : principal (par défaut), contour, plein.
+// Un bloc peut resserrer les boutons qu'il contient avec --bouton-hauteur,
+// --bouton-marge-bloc et --bouton-marge-ligne (voir layout/_entete.scss).
+
 // Bouton principal : fond Jaune caneton, texte Encre. Un seul par écran.
 .wp-block-button__link,
 .d38-formulaire button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.625rem;
-	min-height: $hauteur-bouton;
-	padding: 0.75rem 1.5rem;
-	border-radius: $rayon-bouton;
-	text-decoration: none;
-	cursor: pointer;
-	transition: background-color 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: var(--bouton-hauteur, #{$hauteur-bouton});
+  padding: var(--bouton-marge-bloc, 0.75rem) var(--bouton-marge-ligne, 1.5rem);
+  border-radius: $rayon-bouton;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 
-	&:hover {
-		background-color: var(--jaune-caneton-survol);
-	}
+  &:hover {
+    background-color: var(--jaune-caneton-survol);
+  }
 
-	&:disabled {
-		cursor: progress;
-	}
+  &:disabled {
+    cursor: progress;
+  }
 }
 
 // Bouton secondaire : contour de 2 px dans la couleur des liens du fond où il
 // se trouve. Au survol, il se remplit de cette couleur.
 // Le sélecteur est long pour passer devant les styles par défaut de WordPress.
-.wp-block-button.is-style-outline > .wp-block-button__link.wp-element-button:not(.has-text-color) {
-	padding: calc(0.75rem - 2px) calc(1.5rem - 2px);
-	border: 2px solid var(--lien);
-	background-color: transparent;
-	color: var(--lien);
+.wp-block-button.is-style-outline
+  > .wp-block-button__link.wp-element-button:not(.has-text-color) {
+  padding: calc(var(--bouton-marge-bloc, 0.75rem) - 2px)
+    calc(var(--bouton-marge-ligne, 1.5rem) - 2px);
+  border: 2px solid var(--lien);
+  background-color: transparent;
+  color: var(--lien);
 
-	&:hover {
-		background-color: var(--lien);
-		color: var(--fond);
-	}
+  &:hover {
+    background-color: var(--lien);
+    color: var(--fond);
+  }
+}
+
+// Bouton plein : rempli de la couleur des liens du fond où il se trouve. Il
+// fonce légèrement au survol.
+.wp-block-button.is-style-plein
+  > .wp-block-button__link.wp-element-button:not(.has-background) {
+  background-color: var(--lien);
+  color: var(--fond);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--lien) 80%, var(--texte));
+  }
 }
 
 .wp-block-buttons {
-	gap: 0.875rem;
+  gap: 0.875rem;
 }
 
 // Pictogramme de téléphone devant le numéro.
 .d38-bouton--telephone .wp-block-button__link::before {
-	content: "";
-	flex: none;
-	width: 1.125rem;
-	height: 1.125rem;
-	background: currentColor;
-	mask: url("../img/icone-telephone.svg") center / contain no-repeat;
+  content: "";
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  background: currentColor;
+  mask: url("../img/icone-telephone.svg") center / contain no-repeat;
 }
