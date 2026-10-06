@@ -1,0 +1,99 @@
+@use "sass:string";
+@use "../abstracts" as *;
+
+$pastille: 3.5rem;
+$fil: 1.5rem;
+$canard: 3.75rem;
+$hauteur-canard: calc(#{$canard} * 252 / 262);
+
+// Les étapes se numérotent seules : en ajouter une ne demande aucun réglage.
+//
+// Le canard (::before) suit le fil de l'eau (::after) à mesure que la page
+// défile : il descend le long des étapes sur téléphone, il les longe de gauche
+// à droite sur grand écran. Son ventre trempe dans le fil.
+.d38-etapes {
+	// Avancement du canard, de 0 à 1, réglé par animations.js.
+	--avance: 0;
+
+	position: relative;
+	display: grid;
+	gap: 2.5rem 2rem;
+	padding-left: calc(#{$canard} + 1.25rem);
+	counter-reset: etape;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+	}
+
+	&::before {
+		@include forme("canard.svg", var(--bleu-canard));
+
+		top: calc(var(--avance) * (100% - #{$hauteur-canard}));
+		left: 0;
+		width: $canard;
+		aspect-ratio: string.unquote($canard-proportions);
+	}
+
+	&::after {
+		top: 0;
+		bottom: 0;
+		left: calc(#{$canard} * 0.62);
+		width: $fil;
+		background: var(--vert-eau);
+		mask: url("../img/fil-sillage-vertical.svg") center top / 100% auto repeat-y;
+		transform-origin: top;
+		transition: scale 1.6s $doux 0.3s;
+	}
+
+	@include ecran($ecran-large) {
+		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+		margin-top: calc(#{$hauteur-canard} + 1rem);
+		padding: calc(#{$fil} + 2rem) 0 0;
+
+		&::before {
+			top: calc(#{$hauteur-canard} * -0.78);
+			left: calc(var(--avance) * (100% - #{$canard}));
+			scale: -1 1;
+		}
+
+		&::after {
+			right: 0;
+			bottom: auto;
+			left: 0;
+			width: auto;
+			height: $fil;
+			mask: url("../img/fil-sillage.svg") left center / auto 100% repeat-x;
+			transform-origin: left;
+		}
+	}
+}
+
+.d38-etape {
+	position: relative;
+	margin: 0;
+	counter-increment: etape;
+
+	&::before {
+		content: counter(etape);
+		display: grid;
+		place-items: center;
+		width: $pastille;
+		height: $pastille;
+		margin-bottom: 1.25rem;
+		border-radius: $rayon-bouton;
+		background: var(--bleu-canard);
+		color: var(--creme);
+		font: 800 1.75rem/1 var(--police-titres);
+		transition: background-color 0.4s, color 0.4s, scale 0.5s $doux;
+	}
+
+	h3 {
+		margin: 0 0 0.5rem;
+	}
+
+	p {
+		margin: 0;
+	}
+}

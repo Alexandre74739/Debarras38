@@ -1,0 +1,162 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"layout": {
+			"contentSize": "1200px",
+			"wideSize": "1200px"
+		},
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"custom": false,
+			"customGradient": false,
+			"customDuotone": false,
+			"palette": [
+				{ "slug": "bleu-canard", "name": "Bleu canard", "color": "#0B5D66" },
+				{ "slug": "jaune-caneton", "name": "Jaune caneton", "color": "#FFC53D" },
+				{ "slug": "plume", "name": "Plume", "color": "#F6F1E4" },
+				{ "slug": "encre", "name": "Encre", "color": "#0B2A30" },
+				{ "slug": "vert-eau", "name": "Vert d’eau", "color": "#BFE3DD" },
+				{ "slug": "creme", "name": "Crème", "color": "#FDFFF7" }
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"dropCap": false,
+			"fontStyle": false,
+			"fontWeight": false,
+			"letterSpacing": false,
+			"textDecoration": false,
+			"textTransform": false,
+			"fluid": true,
+			"fontFamilies": [
+				{
+					"slug": "titres",
+					"name": "Gabarito",
+					"fontFamily": "\"Gabarito\", \"Trebuchet MS\", sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Gabarito",
+							"fontWeight": "400 900",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/gabarito-latin-wght-normal.woff2" ]
+						}
+					]
+				},
+				{
+					"slug": "textes",
+					"name": "Atkinson Hyperlegible",
+					"fontFamily": "\"Atkinson Hyperlegible\", Verdana, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontWeight": "400",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" ]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontWeight": "400",
+							"fontStyle": "italic",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/atkinson-hyperlegible-latin-400-italic.woff2" ]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontWeight": "700",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2" ]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontWeight": "700",
+							"fontStyle": "italic",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/atkinson-hyperlegible-latin-700-italic.woff2" ]
+						}
+					]
+				}
+			],
+			"fontSizes": [
+				{ "slug": "legende", "name": "Légende", "size": "0.9375rem", "fluid": false },
+				{ "slug": "texte", "name": "Texte courant", "size": "1.125rem", "fluid": false },
+				{ "slug": "sous-titre", "name": "Sous-titre", "size": "1.5rem", "fluid": { "min": "1.25rem", "max": "1.5rem" } },
+				{ "slug": "titre-section", "name": "Titre de section", "size": "2.25rem", "fluid": { "min": "1.75rem", "max": "2.25rem" } },
+				{ "slug": "titre-principal", "name": "Titre principal", "size": "3.5rem", "fluid": { "min": "2.5rem", "max": "3.5rem" } }
+			]
+		},
+		"spacing": {
+			"units": [ "px", "rem", "%" ],
+			"padding": false,
+			"margin": false,
+			"blockGap": false
+		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"shadow": {
+			"defaultPresets": false
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--creme)",
+			"text": "var(--wp--preset--color--encre)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--textes)",
+			"fontSize": "var(--wp--preset--font-size--texte)",
+			"lineHeight": "1.6"
+		},
+		"spacing": {
+			"blockGap": "1.25rem"
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--titres)",
+					"fontWeight": "700",
+					"lineHeight": "1.1"
+				}
+			},
+			"h1": {
+				"typography": { "fontSize": "var(--wp--preset--font-size--titre-principal)", "fontWeight": "800" }
+			},
+			"h2": {
+				"typography": { "fontSize": "var(--wp--preset--font-size--titre-section)" }
+			},
+			"h3": {
+				"typography": { "fontSize": "var(--wp--preset--font-size--sous-titre)", "fontWeight": "600" }
+			},
+			"link": {
+				"typography": { "textDecoration": "underline" }
+			},
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--jaune-caneton)",
+					"text": "var(--wp--preset--color--encre)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--titres)",
+					"fontSize": "var(--wp--preset--font-size--texte)",
+					"fontWeight": "700",
+					"lineHeight": "1.2"
+				},
+				"border": { "radius": "12px", "width": "0" }
+			}
+		}
+	},
+	"templateParts": [
+		{ "name": "header", "title": "En-tête", "area": "header" },
+		{ "name": "footer", "title": "Pied de page", "area": "footer" }
+	]
+}

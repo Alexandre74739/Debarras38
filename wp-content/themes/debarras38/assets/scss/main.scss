@@ -1,0 +1,31 @@
+// Debarras38 : feuille de style du thème.
+// Compilée vers ../css/main.css, chargée sur le site et dans l'éditeur.
+
+@use "base/racine";
+@use "base/typographie";
+@use "base/accessibilite";
+
+@use "layout/structure";
+@use "layout/entete";
+@use "layout/section";
+@use "layout/pied";
+
+@use "components/logo";
+@use "components/boutons";
+@use "components/ondes";
+@use "components/tableau";
+@use "components/visuel";
+@use "components/rangees";
+@use "components/cartes";
+@use "components/appel";
+@use "components/communes";
+@use "components/etapes";
+@use "components/questions";
+@use "components/formulaire";
+
+@use "sections/hero";
+@use "sections/secteur";
+@use "sections/faq";
+@use "sections/contact";
+
+@use "base/animations";

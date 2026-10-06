@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+$eau: clamp(3rem, 8vw, 5.5rem);
+
+// Bande d'appel : une phrase et un bouton, au-dessus de l'eau.
+.d38-appel {
+	--vague-1: var(--encre);
+	--vague-2: var(--encre);
+	--niveau-fond: #{$eau};
+	--niveau-devant: calc(#{$eau} * 0.55);
+
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem 3rem;
+	padding: clamp(1.75rem, 5vw, 3.5rem);
+	padding-bottom: calc(clamp(1.75rem, 5vw, 3.5rem) + #{$eau} + 1.5rem);
+	border-radius: $rayon-carte;
+
+	> * {
+		margin: 0;
+	}
+
+	&__phrase {
+		@include mesure(34rem);
+
+		font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.25rem);
+	}
+}

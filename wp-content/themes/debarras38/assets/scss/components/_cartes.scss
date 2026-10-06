@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+.d38-cartes {
+	display: grid;
+	gap: 1.25rem;
+
+	@include ecran($ecran-moyen) {
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+	}
+}
+
+.d38-carte {
+	margin: 0;
+	padding: clamp(1.5rem, 3vw, 2.25rem);
+	border-radius: $rayon-carte;
+	background: var(--creme);
+
+	// Sur une section Crème, la carte passe en Plume pour rester visible.
+	.has-creme-background-color > .d38-cartes > & {
+		background: var(--plume);
+	}
+
+	h3 {
+		margin: 0 0 0.75rem;
+	}
+
+	p {
+		margin: 0;
+	}
+}

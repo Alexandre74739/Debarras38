@@ -1,0 +1,35 @@
+@use "../abstracts" as *;
+
+// Le logo n'est jamais déformé : la largeur est fixée, la hauteur suit.
+// Largeurs minimales de la charte : principal 120 px, secondaire 90 px, réduit 48 px.
+.d38-logo {
+	margin: 0;
+
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	// Logo réduit sur téléphone, logo principal dès qu'il y a de la largeur.
+	&--principal {
+		display: none;
+		width: clamp(10rem, 16vw, 12.5rem);
+
+		@include ecran($ecran-moyen) {
+			display: block;
+		}
+	}
+
+	&--reduit {
+		width: 5.5rem;
+
+		@include ecran($ecran-moyen) {
+			display: none;
+		}
+	}
+
+	&--secondaire {
+		width: 9rem;
+	}
+}

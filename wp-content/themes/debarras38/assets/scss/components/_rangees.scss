@@ -1,0 +1,40 @@
+@use "../abstracts" as *;
+
+// Rangées en quinconce : visuel d'un côté, texte de l'autre, en alternance.
+.d38-rangees {
+	display: grid;
+	gap: clamp(3rem, 8vw, 6.5rem);
+}
+
+.d38-rangee {
+	display: grid;
+	align-items: center;
+	gap: 1.75rem;
+	margin: 0;
+
+	@include ecran($ecran-large) {
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(3rem, 6vw, 5.5rem);
+
+		&:nth-child(even) .d38-visuel {
+			order: 2;
+		}
+	}
+
+	&__texte {
+		> * {
+			margin-block: 0;
+		}
+
+		h3 {
+			font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2rem);
+			font-weight: 700;
+		}
+
+		p {
+			@include mesure(34rem);
+
+			margin-block: 1rem 1.75rem;
+		}
+	}
+}

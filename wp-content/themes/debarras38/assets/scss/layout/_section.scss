@@ -1,0 +1,39 @@
+@use "../abstracts" as *;
+
+// Une section occupe toute la largeur. Son contenu est centré par le
+// remplissage latéral, ce qui laisse chaque bloc libre de sa propre largeur.
+.d38-section {
+  @include gouttieres;
+
+  position: relative;
+  margin-block: 0;
+  padding-block: var(--espace-section);
+
+  // Se colle à la section précédente, quand elles ont le même fond.
+  &--serree {
+    padding-top: 0;
+  }
+
+  > p:not([class]) {
+    @include mesure;
+  }
+}
+
+// Titre de section : centré, avec un texte d'introduction facultatif.
+.d38-entete-section {
+  max-width: 46rem;
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+
+  > * {
+    margin-block: 0;
+  }
+
+  h2 + * {
+    margin-top: 1rem;
+  }
+
+  .d38-chapo {
+    margin-inline: auto;
+  }
+}

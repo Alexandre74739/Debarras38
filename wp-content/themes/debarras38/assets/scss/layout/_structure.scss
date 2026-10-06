@@ -1,0 +1,16 @@
+// Empilement général : en-tête, contenu, pied de page, sans marge entre eux.
+
+.wp-site-blocks > *,
+.d38-principal > *,
+.wp-block-post-content > .d38-section {
+  margin-block-start: 0;
+}
+
+.d38-principal {
+  overflow-x: clip;
+}
+
+// Pages simples (mentions légales, etc.)
+.d38-page {
+  padding: var(--espace-section) var(--gouttiere);
+}

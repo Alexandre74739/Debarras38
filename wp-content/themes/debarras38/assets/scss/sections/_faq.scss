@@ -1,0 +1,28 @@
+@use "../abstracts" as *;
+
+// Le titre reste en vue à gauche pendant que les questions défilent à droite.
+.d38-faq {
+	display: grid;
+	gap: 2rem;
+
+	@include ecran($ecran-large) {
+		grid-template-columns: 4fr 7fr;
+		align-items: start;
+		gap: 5rem;
+	}
+
+	> * {
+		margin-block: 0;
+	}
+
+	&__titre {
+		h2 {
+			margin: 0;
+		}
+
+		@include ecran($ecran-large) {
+			position: sticky;
+			top: 7.5rem;
+		}
+	}
+}

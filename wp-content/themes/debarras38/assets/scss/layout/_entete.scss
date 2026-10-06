@@ -1,0 +1,101 @@
+@use "../abstracts" as *;
+
+// L'en-tête flotte au-dessus de la page, comme une étiquette posée dessus.
+header.wp-block-template-part {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 50;
+  margin-top: 0.75rem;
+  padding-inline: var(--gouttiere);
+  pointer-events: none;
+}
+
+.d38-entete {
+  max-width: var(--largeur-contenu);
+  margin-inline: auto;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  gap: 0.75rem;
+  border: 2px solid var(--bleu-canard);
+  border-radius: $rayon-carte;
+  background: var(--creme);
+  pointer-events: auto;
+
+  @include ecran($ecran-moyen) {
+    padding: 0.625rem 0.625rem 0.625rem 1.25rem;
+    gap: 1.5rem;
+  }
+
+  &__actions {
+    gap: clamp(0.5rem, 2vw, 2rem);
+  }
+
+  // Le numéro reste sur une ligne. Sur les très petits écrans, il ne garde
+  // que son pictogramme : le texte reste lu par les lecteurs d'écran.
+  &__appel .wp-block-button__link {
+    white-space: nowrap;
+
+    @include sous($ecran-moyen) {
+      padding-inline: 0.75rem;
+      font-size: 1rem;
+    }
+
+    @include sous($ecran-etroit) {
+      gap: 0;
+      font-size: 0;
+    }
+  }
+}
+
+.d38-menu {
+  flex-wrap: nowrap;
+  font-family: var(--police-titres);
+  font-weight: 600;
+
+  .wp-block-navigation__container {
+    flex-wrap: nowrap;
+  }
+
+  .wp-block-navigation-item__content {
+    padding-block: 0.5rem;
+    color: var(--encre);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--bleu-canard);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.35em;
+    }
+  }
+
+  .wp-block-navigation__responsive-container-open,
+  .wp-block-navigation__responsive-container-close {
+    min-width: 3rem;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--bleu-canard);
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open {
+    padding: var(--gouttiere);
+    background: var(--creme);
+    color: var(--encre);
+    font-size: 1.5rem;
+  }
+
+  // WordPress déplie le menu dès 600 px. Les liens n'y tiennent pas à côté du
+  // logo et du numéro : le bouton de menu reste en place jusqu'au grand écran.
+  @include sous($ecran-large) {
+    .wp-block-navigation__responsive-container:not(.hidden-by-default):not(
+        .is-menu-open
+      ) {
+      display: none;
+    }
+
+    .wp-block-navigation__responsive-container-open:not(.always-shown) {
+      display: flex;
+    }
+  }
+}

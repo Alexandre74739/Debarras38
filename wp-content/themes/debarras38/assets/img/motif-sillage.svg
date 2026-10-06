@@ -1,0 +1,7 @@
+<svg class="d38-motif__dessin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 560" fill="none" focusable="false">
+<g class="d38-motif__bandes" stroke="currentColor" stroke-width="30">
+<path class="d38-motif__bande" pathLength="1" d="M1470 20C1300 70 1130 110 1060 220C1020 285 1050 330 1100 380"/>
+<path class="d38-motif__bande" pathLength="1" d="M1470 110C1350 150 1230 190 1170 270C1140 312 1160 350 1200 390"/>
+</g>
+<path class="d38-motif__vague" fill="currentColor" d="M0 330C90 330 130 452 250 452C400 452 370 232 560 214C760 196 960 356 1170 322C1300 300 1380 236 1440 214V560H0Z"/>
+</svg>

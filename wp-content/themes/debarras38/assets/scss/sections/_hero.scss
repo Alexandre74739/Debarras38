@@ -1,0 +1,33 @@
+@use "../abstracts" as *;
+
+// Accroche centrée, puis le grand visuel sur toute la largeur du contenu.
+.d38-hero {
+	padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+
+	&__texte {
+		max-width: 54rem;
+		margin-inline: auto;
+		text-align: center;
+
+		> * {
+			margin-block: 0;
+		}
+	}
+
+	// Deux phrases, deux couleurs : le service en Encre, le slogan en Bleu canard.
+	h1 {
+		margin-bottom: 1.5rem;
+		color: var(--encre);
+	}
+
+	.d38-chapo {
+		@include mesure(36rem);
+
+		margin-inline: auto;
+	}
+
+	.wp-block-buttons {
+		justify-content: center;
+		margin-top: 2rem;
+	}
+}

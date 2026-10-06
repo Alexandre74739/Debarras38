@@ -1,0 +1,38 @@
+@use "../abstracts" as *;
+
+$ecart: 0.75rem;
+
+// Les communes desservies, en étiquettes. animations.js les fait défiler.
+.d38-communes {
+	@include liste-nue;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: $ecart;
+
+	li {
+		padding: 0.5rem 1.125rem;
+		border-radius: $rayon-bouton;
+		background: var(--plume);
+		color: var(--bleu-canard);
+		font: 600 1.0625rem/1.4 var(--police-titres);
+		white-space: nowrap;
+	}
+}
+
+// Mise en mouvement : la liste est doublée et glisse sans fin.
+.d38-defile {
+	overflow: hidden;
+
+	&__piste {
+		display: flex;
+		width: max-content;
+	}
+
+	.d38-communes {
+		flex: none;
+		flex-wrap: nowrap;
+		padding-right: $ecart;
+	}
+}

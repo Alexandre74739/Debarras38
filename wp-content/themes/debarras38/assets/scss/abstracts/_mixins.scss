@@ -1,0 +1,43 @@
+@use "tokens" as *;
+
+@mixin ecran($largeur) {
+	@media (min-width: $largeur) {
+		@content;
+	}
+}
+
+@mixin sous($largeur) {
+	@media (max-width: calc(#{$largeur} - 0.01rem)) {
+		@content;
+	}
+}
+
+// Limite la longueur des lignes : 55 à 75 caractères en texte courant.
+@mixin mesure($largeur: $mesure-texte) {
+	max-width: $largeur;
+}
+
+// Centre le contenu d'un bloc pleine largeur par son remplissage latéral.
+@mixin gouttieres {
+	padding-inline: max(var(--gouttiere), calc((100% - var(--largeur-contenu)) / 2));
+}
+
+@mixin titre-capitales {
+	font-family: var(--police-titres);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	line-height: 1.3;
+	text-transform: uppercase;
+}
+
+@mixin liste-nue {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// Pose un dessin de assets/img/ comme une forme pleine, dans la couleur donnée.
+@mixin forme($fichier, $couleur) {
+	background: $couleur;
+	mask: url("../img/#{$fichier}") center / 100% 100% no-repeat;
+}

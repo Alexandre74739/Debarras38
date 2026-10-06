@@ -1,0 +1,122 @@
+@use "../abstracts" as *;
+
+// Les vagues qui bougent.
+//
+// Une onde est une bande dont le bord ondule. Sa nappe est plus longue qu'elle
+// d'une ondulation : animations.js la fait glisser d'une ondulation, en boucle,
+// et le mouvement est sans couture. Elle sert à trois endroits :
+//   - en haut d'une section (.d38-bord-vague), dans la couleur de la section ;
+//   - sur les bords de page d'une section (.d38-rives) ;
+//   - au-dessus des nappes d'eau d'un encadré (.d38-vagues).
+
+.d38-onde {
+	--onde-hauteur: clamp(1.25rem, 3.2vw, 3rem);
+	--onde-pas: calc(var(--onde-hauteur) * #{$onde-rapport});
+
+	position: absolute;
+	right: 0;
+	left: 0;
+	height: var(--onde-hauteur);
+	overflow: hidden;
+	pointer-events: none;
+
+	&__nappe {
+		display: block;
+		width: calc(100% + var(--onde-pas));
+		height: 100%;
+		background: var(--fond);
+		mask: url("../img/onde.svg") left bottom / var(--onde-pas) 100% repeat-x;
+	}
+
+	&--haut {
+		bottom: calc(100% - 1px);
+	}
+
+	// Bords de page : la même bande, couchée le long du bord. Sa longueur est
+	// la hauteur de la section, mesurée par animations.js.
+	&--gauche,
+	&--droite {
+		--onde-hauteur: clamp(1.25rem, 2.2vw, 2.25rem);
+
+		top: 0;
+		display: none;
+		width: var(--longueur, 100%);
+
+		@include ecran($ecran-tres-large) {
+			display: block;
+		}
+
+		.d38-onde__nappe {
+			background: var(--rive, var(--vert-eau));
+		}
+	}
+
+	&--gauche {
+		right: auto;
+		left: var(--onde-hauteur);
+		transform-origin: 0 0;
+		rotate: 90deg;
+	}
+
+	&--droite {
+		right: var(--onde-hauteur);
+		left: auto;
+		transform-origin: 100% 0;
+		rotate: -90deg;
+	}
+}
+
+// Bord supérieur en vague. Sans JavaScript, la vague est fixe.
+.d38-bord-vague:not(.est-ondule)::before {
+	--onde-hauteur: clamp(1.25rem, 3.2vw, 3rem);
+
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: calc(100% - 1px);
+	left: 0;
+	height: var(--onde-hauteur);
+	background: var(--fond);
+	mask: url("../img/onde.svg") left bottom / calc(var(--onde-hauteur) * #{$onde-rapport}) 100% repeat-x;
+	pointer-events: none;
+}
+
+// Encadré où passent des vagues : deux nappes d'eau posées par animations.js,
+// chacune surmontée d'une onde. L'encadré choisit leurs couleurs.
+.d38-vagues,
+.d38-visuel--vagues {
+	position: relative;
+	overflow: hidden;
+
+	> :not(.d38-vague) {
+		position: relative;
+		z-index: 2;
+	}
+}
+
+.d38-vague {
+	--fond: var(--vague-fond);
+
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	height: var(--niveau);
+	background: var(--fond);
+	pointer-events: none;
+
+	&--fond {
+		--niveau: var(--niveau-fond, 34%);
+		--vague-fond: var(--vague-1);
+	}
+
+	&--devant {
+		--niveau: var(--niveau-devant, 17%);
+		--vague-fond: var(--vague-2);
+	}
+
+	.d38-onde {
+		--onde-hauteur: clamp(0.875rem, 2vw, 1.75rem);
+	}
+}

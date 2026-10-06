@@ -1,0 +1,40 @@
+// Valeurs de la charte graphique. Aucune couleur ne s'écrit ailleurs qu'ici.
+
+$couleurs: (
+	"bleu-canard": #0b5d66,
+	"jaune-caneton": #ffc53d,
+	"plume": #f6f1e4,
+	"encre": #0b2a30,
+	"vert-eau": #bfe3dd,
+	"creme": #fdfff7,
+);
+
+// Fonds sur lesquels textes, titres et liens passent en Crème.
+$fonds-sombres: ("bleu-canard", "encre");
+
+$police-titres: "Gabarito", "Trebuchet MS", sans-serif;
+$police-textes: "Atkinson Hyperlegible", Verdana, sans-serif;
+
+$rayon-bouton: 12px;
+$rayon-carte: 20px;
+$hauteur-bouton: 48px;
+$trait: 3px;
+
+$largeur-contenu: 75rem;
+$mesure-texte: 42rem; // 55 à 75 caractères par ligne
+
+// Courbe commune à toutes les transitions.
+$doux: cubic-bezier(0.22, 1, 0.36, 1);
+
+// Points de rupture
+$ecran-etroit: 23rem;
+$ecran-moyen: 37.5rem;
+$ecran-large: 60rem;
+$ecran-tres-large: 80rem;
+
+// Proportions des dessins de assets/img/.
+$onde-rapport: 10; // largeur d'une ondulation, en hauteurs d'onde (onde.svg)
+$tableau-proportions: "1440 / 620";
+$motif-proportions: "1440 / 560";
+$d-canard-proportions: "255 / 275";
+$canard-proportions: "262 / 252";

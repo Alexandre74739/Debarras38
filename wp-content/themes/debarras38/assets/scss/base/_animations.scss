@@ -1,0 +1,48 @@
+@use "../abstracts" as *;
+
+// États de départ des animations.
+//
+// La classe « d38-anime » est posée sur <html> avant l'affichage, seulement si
+// JavaScript tourne et que le visiteur n'a pas demandé moins de mouvement.
+// assets/js/animations.js ajoute « est-vu » à chaque section qui entre à
+// l'écran. Sans « d38-anime », rien n'est masqué.
+
+.d38-anime {
+	.d38-section:not(.d38-hero):not(.d38-secteur):not(.est-vu) > :not(.d38-onde) {
+		opacity: 0;
+	}
+
+	// Le titre principal n'est jamais masqué : il s'affiche tout de suite.
+	.d38-hero:not(.est-vu) {
+		.d38-hero__texte > :not(h1),
+		.d38-tableau {
+			opacity: 0;
+		}
+	}
+
+	.d38-section:not(.est-vu) {
+		.d38-trace {
+			stroke-dashoffset: 1;
+		}
+
+		.d38-etapes::after {
+			scale: 1 0;
+
+			@include ecran($ecran-large) {
+				scale: 0 1;
+			}
+		}
+	}
+
+	// Une étape s'allume quand le canard arrive à sa hauteur.
+	.d38-etape:not(.est-passee)::before {
+		background: var(--vert-eau);
+		color: var(--bleu-canard);
+		scale: 0.86;
+	}
+}
+
+// Mots d'un titre, découpés par animations.js pour apparaître un à un.
+.d38-mot {
+	display: inline-block;
+}

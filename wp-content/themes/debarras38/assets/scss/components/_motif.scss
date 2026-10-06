@@ -1,0 +1,119 @@
+@use "sass:map";
+@use "sass:math";
+@use "../abstracts" as *;
+
+// Les décors posés en bas d'une section : le motif (vague et deux bandes,
+// charte chapitre 5) et la scène de la mare.
+//
+// Un décor garde toujours ses proportions. La section réserve sous son texte
+// la hauteur qu'il occupe : aucun texte ne passe par-dessus le dessin.
+
+// Hauteur à dégager, en fraction de la largeur de l'écran.
+@function reserve($dessin, $partie: "reserve") {
+	@return math.div(map.get($dessin, $partie), map.get($dessin, "largeur"));
+}
+
+%decor {
+	padding-bottom: calc(var(--motif-reserve) + clamp(1.5rem, 5vw, 4.5rem));
+
+	> :not(.d38-motif) {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.d38-motif {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	color: var(--bleu-canard);
+	pointer-events: none;
+
+	&__dessin {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		display: block;
+		width: calc(100% * var(--motif-echelle));
+		height: auto;
+		overflow: visible;
+	}
+
+	// Les bandes se tracent à l'arrivée : leur longueur est normalisée à 1.
+	&__bande {
+		stroke-dasharray: 1 1;
+	}
+}
+
+// Le motif : sur téléphone, il est agrandi et cadré à droite, le texte reste
+// au-dessus. Sur grand écran, le texte tient à gauche des bandes.
+.d38-motif-sillage {
+	@extend %decor;
+
+	--motif-echelle: 1.6;
+	--motif-reserve: calc(100vw * var(--motif-echelle) * #{reserve($motif-sillage, "hauteur")});
+
+	@include ecran($ecran-large) {
+		--motif-echelle: 1;
+		--motif-reserve: calc(100vw * #{reserve($motif-sillage)});
+
+		> :not(.d38-motif) {
+			max-width: min(44rem, 58%);
+		}
+	}
+}
+
+// La mare : sur téléphone, la scène est agrandie et recadrée sur le canard.
+.d38-scene-mare {
+	@extend %decor;
+
+	--motif-echelle: 2;
+	--motif-decalage: -8%;
+	--motif-reserve: calc(100vw * var(--motif-echelle) * #{reserve($scene-mare)});
+
+	@include ecran($ecran-large) {
+		--motif-echelle: 1;
+		--motif-decalage: 0%;
+	}
+
+	.d38-motif__dessin {
+		right: var(--motif-decalage);
+	}
+}
+
+.d38-scene {
+	// Le canard se balance autour de son propre centre.
+	&__canard,
+	&__nage,
+	&__nuage,
+	&__soleil {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+}
+
+// Dans l'éditeur, les SVG ne sont pas injectés : les mêmes dessins sont posés
+// en fond pour que la section garde son allure.
+.editor-styles-wrapper {
+	.d38-motif-sillage::after,
+	.d38-scene-mare::after {
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: calc(100% * var(--motif-echelle));
+		pointer-events: none;
+	}
+
+	.d38-motif-sillage::after {
+		aspect-ratio: #{map.get($motif-sillage, "largeur")} / #{map.get($motif-sillage, "hauteur")};
+		background: var(--bleu-canard);
+		mask: url("../img/motif-sillage.svg") center / 100% 100% no-repeat;
+	}
+
+	.d38-scene-mare::after {
+		right: var(--motif-decalage);
+		aspect-ratio: #{map.get($scene-mare, "largeur")} / #{map.get($scene-mare, "hauteur")};
+		background: url("../img/scene-mare.svg") center / 100% 100% no-repeat;
+	}
+}

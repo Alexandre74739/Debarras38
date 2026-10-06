@@ -1,0 +1,6 @@
+// Navigation au clavier : contour de 3 px décalé de 3 px, en Encre sur fond
+// clair et en Crème sur fond sombre (charte, chapitre 8).
+:focus-visible {
+	outline: 3px solid var(--texte);
+	outline-offset: 3px;
+}

@@ -1,0 +1,51 @@
+@use "../abstracts" as *;
+
+// Demande de devis : le numéro en grand à gauche, le formulaire à droite.
+.d38-contact {
+	display: grid;
+	gap: 2.5rem;
+
+	@include ecran($ecran-large) {
+		grid-template-columns: 5fr 6fr;
+		align-items: start;
+		gap: clamp(3rem, 6vw, 5rem);
+	}
+
+	> * {
+		margin-block: 0;
+	}
+
+	&__texte {
+		> * {
+			margin-block: 0 1.25rem;
+		}
+
+		@include ecran($ecran-large) {
+			position: sticky;
+			top: 7.5rem;
+		}
+	}
+
+	// Le numéro, comme sur la bâche : en grand, en Gabarito.
+	.d38-numero {
+		margin-block: 2rem 0.5rem;
+		font: 800 clamp(2.25rem, 4.4vw, 3.75rem) / 1 var(--police-titres);
+		letter-spacing: -0.02em;
+		white-space: nowrap;
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+				text-decoration-thickness: 0.06em;
+				text-underline-offset: 0.12em;
+			}
+		}
+	}
+
+	&__formulaire {
+		padding: clamp(1.25rem, 4vw, 2.5rem);
+		border-radius: $rayon-carte;
+	}
+}

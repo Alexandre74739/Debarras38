@@ -1,0 +1,48 @@
+@use "../abstracts" as *;
+
+.d38-questions {
+	border-top: 2px solid var(--vert-eau);
+
+	.wp-block-details {
+		margin: 0;
+		border-bottom: 2px solid var(--vert-eau);
+
+		> :not(summary) {
+			@include mesure;
+
+			margin: 0 0 1.5rem;
+		}
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding-block: 1.25rem;
+		color: var(--bleu-canard);
+		font: 600 clamp(1.125rem, 1rem + 0.6vw, 1.375rem) / 1.3 var(--police-titres);
+		list-style: none;
+		cursor: pointer;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		// Un « plus » qui pivote en croix à l'ouverture.
+		&::after {
+			content: "";
+			flex: none;
+			width: 1.125rem;
+			height: 1.125rem;
+			background:
+				linear-gradient(currentColor 0 0) center / 100% $trait no-repeat,
+				linear-gradient(currentColor 0 0) center / $trait 100% no-repeat;
+			transition: transform 0.3s $doux;
+		}
+	}
+
+	[open] > summary::after {
+		transform: rotate(45deg);
+	}
+}

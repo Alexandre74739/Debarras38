@@ -1,0 +1,44 @@
+@use "../abstracts" as *;
+
+h1,
+h2,
+h3,
+h4 {
+	color: var(--titre);
+	text-wrap: balance;
+}
+
+h1 {
+	letter-spacing: -0.015em;
+	line-height: 1.04;
+}
+
+p {
+	text-wrap: pretty;
+
+	// Une coordonnée laissée vide dans les réglages ne laisse pas de trou.
+	&:empty {
+		display: none;
+	}
+}
+
+// Un lien dans un texte : souligné, et le soulignement ne disparaît jamais.
+a:not(.wp-element-button) {
+	color: var(--lien);
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.18em;
+}
+
+// Le slogan sous le logo : capitales, Gabarito Bold (charte, chapitre 6).
+.d38-slogan {
+	@include titre-capitales;
+
+	color: var(--vert-eau);
+	font-size: 1rem;
+}
+
+.d38-chapo {
+	@include mesure;
+
+	font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
+}

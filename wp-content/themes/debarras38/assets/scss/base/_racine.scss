@@ -1,0 +1,64 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "../abstracts" as *;
+
+:root {
+	@each $nom, $valeur in $couleurs {
+		--#{$nom}: #{$valeur};
+	}
+
+	// « Le bouton principal fonce légèrement » au survol.
+	--jaune-caneton-survol: #{color.scale(map.get($couleurs, "jaune-caneton"), $lightness: -12%)};
+
+	--police-titres: #{$police-titres};
+	--police-textes: #{$police-textes};
+
+	--gouttiere: clamp(1.25rem, 5vw, 3rem);
+	--largeur-contenu: #{$largeur-contenu};
+	--espace-section: clamp(4rem, 9vw, 7.5rem);
+
+	// Couleurs du contenu, redéfinies par chaque fond de la palette ci-dessous.
+	--fond: var(--creme);
+	--texte: var(--encre);
+	--titre: var(--bleu-canard);
+	--lien: var(--bleu-canard);
+}
+
+// Un bloc qui reçoit une couleur de fond règle lui-même la couleur de ce qu'il
+// contient. Le fond le plus proche l'emporte : une carte claire dans une
+// section sombre retrouve ses textes en Encre.
+@each $nom, $valeur in $couleurs {
+	$texte: "encre";
+	$titre: "bleu-canard";
+
+	@if list.index($fonds-sombres, $nom) {
+		$texte: "creme";
+		$titre: "creme";
+	}
+
+	.has-#{$nom}-background-color {
+		--fond: var(--#{$nom});
+		--texte: var(--#{$texte});
+		--titre: var(--#{$titre});
+		--lien: var(--#{$titre});
+
+		color: var(--texte);
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 6.5rem;
+
+	@media (prefers-reduced-motion: reduce) {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	background: var(--creme);
+	color: var(--encre);
+	font: 400 1.125rem/1.6 var(--police-textes);
+	-webkit-font-smoothing: antialiased;
+}

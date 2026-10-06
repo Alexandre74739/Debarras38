@@ -1,0 +1,16 @@
+<svg class="d38-tableau__dessin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMax slice" fill="none" focusable="false">
+<g class="d38-tableau__bandes" stroke="#0B5D66" stroke-width="30">
+<path class="d38-trace" pathLength="1" d="M1470 30C1300 80 1130 120 1060 230C1020 295 1050 340 1100 420"/>
+<path class="d38-trace" pathLength="1" d="M1470 120C1350 160 1230 200 1170 280C1140 322 1160 360 1200 430"/>
+</g>
+<g transform="translate(560 96)">
+<g class="d38-tableau__nage">
+<g class="d38-tableau__canard">
+<path fill="#0B5D66" d="M96 400L109.717 270.125C109.717 270.125 83.7604 255.337 101.429 212.113C107.497 197.269 140.473 165.397 121.278 144.003C104.701 139.637 76.9985 139.201 65.4378 123.919C60.153 116.934 58.6759 110.024 68.0553 110.024C77.2166 110.897 88.9244 110.438 107.536 99.1091C115.825 67.6736 153.125 66.5061 172.32 85.28C185.592 101.119 189.333 124.574 172.32 170.199C180.608 209.494 189.372 213.453 210.71 229.141C234 246 270 238 294 206C304 262 300 400 240 400Z"/>
+<circle fill="#BFE3DD" cx="140.037" cy="107.405" r="11.779"/>
+</g>
+</g>
+</g>
+<path class="d38-tableau__eau d38-tableau__eau--fond" fill="#0B5D66" d="M-720 372q180-52 360 0t360 0t360 0t360 0t360 0t360 0t360 0t360 0V620H-720Z"/>
+<path class="d38-tableau__eau d38-tableau__eau--devant" fill="#0B2A30" d="M-720 486q180 44 360 0t360 0t360 0t360 0t360 0t360 0t360 0t360 0V620H-720Z"/>
+</svg>

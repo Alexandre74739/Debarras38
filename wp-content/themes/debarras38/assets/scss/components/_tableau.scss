@@ -1,0 +1,50 @@
+@use "sass:string";
+@use "../abstracts" as *;
+
+// Le grand visuel sous l'accroche : la mare, le canard, les deux bandes du
+// motif. Le dessin (assets/img/tableau-mare.svg) est injecté par inc/motif.php
+// et recadré sur le canard quand l'écran rétrécit.
+.d38-tableau {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 4 / 3;
+	margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+	border-radius: $rayon-carte;
+
+	@include ecran($ecran-moyen) {
+		aspect-ratio: 16 / 9;
+	}
+
+	@include ecran($ecran-large) {
+		aspect-ratio: string.unquote($tableau-proportions);
+	}
+
+	&__dessin {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	// Chaque partie animée tourne et glisse autour de son propre centre.
+	&__canard,
+	&__nage,
+	&__eau,
+	&__bandes {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+}
+
+// Trait qui se trace à l'arrivée : sa longueur est normalisée à 1.
+.d38-trace {
+	stroke-dasharray: 1 1;
+}
+
+// Dans l'éditeur, le SVG n'est pas injecté : il est posé en image de fond.
+.editor-styles-wrapper .d38-tableau {
+	background-image: url("../img/tableau-mare.svg");
+	background-position: center bottom;
+	background-size: cover;
+}
