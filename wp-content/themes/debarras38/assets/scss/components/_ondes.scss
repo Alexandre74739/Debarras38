@@ -6,6 +6,7 @@
 // d'une ondulation : animations.js la fait glisser d'une ondulation, en boucle,
 // et le mouvement est sans couture. Elle sert à trois endroits :
 //   - en haut d'une section (.d38-bord-vague), dans la couleur de la section ;
+//   - au-dessus de la nappe d'eau d'une section où un bloc flotte (.d38-flotte) ;
 //   - sur les bords de page d'une section (.d38-rives) ;
 //   - au-dessus des nappes d'eau d'un encadré (.d38-vagues).
 
@@ -89,6 +90,20 @@
 	overflow: hidden;
 
 	> :not(.d38-vague) {
+		position: relative;
+		z-index: 2;
+	}
+}
+
+// Section où un bloc flotte : une seule nappe, posée par animations.js, dont
+// la vague passe derrière le bloc. --niveau-fond règle la hauteur de l'eau.
+.d38-flotte {
+	--vague-1: var(--vert-eau);
+
+	// L'eau reste sous la vague de la section suivante.
+	isolation: isolate;
+
+	> :not(.d38-vague, .d38-onde) {
 		position: relative;
 		z-index: 2;
 	}

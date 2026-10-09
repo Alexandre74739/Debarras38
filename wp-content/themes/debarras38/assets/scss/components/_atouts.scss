@@ -1,0 +1,60 @@
+@use "../abstracts" as *;
+
+// Les atouts : quelques mots chacun, précédés d'un pictogramme Lucide
+// (lucide.dev). Une ligne de la liste choisit son pictogramme par sa classe ;
+// sans classe, elle reçoit une coche.
+$pictogrammes: (
+	"lieu": "icone-repere.svg",
+	"visite": "icone-oeil.svg",
+	"devis": "icone-devis.svg",
+	"soin": "icone-eclat.svg",
+);
+
+.d38-atouts {
+	@include liste-nue;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+	gap: 1rem clamp(1.5rem, 3vw, 3rem);
+
+	// Sur une seule ligne dès que la place le permet.
+	@include ecran($ecran-tres-large) {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	li {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font: 600 1.125rem/1.3 var(--police-titres);
+		transition: color 0.2s;
+
+		&::before {
+			content: "";
+			flex: none;
+			width: 1.625rem;
+			height: 1.625rem;
+			background: var(--vert-eau);
+			mask: url("../img/icone-coche.svg") center / contain no-repeat;
+			transition: background-color 0.2s, scale 0.3s $doux;
+		}
+
+		// Au survol, le texte et le pictogramme échangent leurs couleurs, et le
+		// pictogramme grossit un peu. animations.js soulève la ligne.
+		&:hover {
+			color: var(--vert-eau);
+
+			&::before {
+				background: var(--texte);
+				scale: 1.15;
+			}
+		}
+	}
+
+	@each $nom, $fichier in $pictogrammes {
+		.d38-atout--#{$nom}::before {
+			mask-image: url("../img/#{$fichier}");
+		}
+	}
+}

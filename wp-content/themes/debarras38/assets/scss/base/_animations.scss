@@ -8,7 +8,7 @@
 // l'écran. Sans « d38-anime », rien n'est masqué.
 
 .d38-anime {
-	.d38-section:not(.d38-hero):not(.d38-secteur):not(.est-vu) > :not(.d38-onde) {
+	.d38-section:not(.d38-hero):not(.est-vu) > :not(.d38-onde):not(.d38-vague) {
 		opacity: 0;
 	}
 

@@ -26,8 +26,6 @@ $images  = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:navigation-link {"label":"Déroulement","url":"<?php echo $accueil; ?>#deroulement","kind":"custom","isTopLevelLink":true} /-->
 
-<!-- wp:navigation-link {"label":"Secteur","url":"<?php echo $accueil; ?>#secteur","kind":"custom","isTopLevelLink":true} /-->
-
 <!-- wp:navigation-link {"label":"Questions","url":"<?php echo $accueil; ?>#questions","kind":"custom","isTopLevelLink":true} /-->
 <!-- /wp:navigation -->
 

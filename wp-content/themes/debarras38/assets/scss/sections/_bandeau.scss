@@ -1,0 +1,32 @@
+@use "../abstracts" as *;
+
+// Bandeau de réassurance : une carte qui flotte entre l'accroche et la section
+// suivante, comme la carte de l'en-tête. Elle commence sous le premier écran :
+// rien n'en dépasse tant qu'on est sur l'accroche. De l'eau passe derrière
+// elle, et la vague de la section suivante la referme.
+$retrait: 1.5rem; // espace entre l'accroche et la carte
+$ombre: color-mix(in srgb, var(--encre) 28%, transparent);
+
+.d38-bandeau {
+	--bas: clamp(3rem, 7vw, 5.5rem); // place de l'eau sous la carte
+
+	// La vague passe au milieu de la carte, quelle que soit sa hauteur : la
+	// moitié de la section, corrigée de l'écart entre ses deux remplissages.
+	--niveau-fond: calc(50% + (var(--bas) - #{$retrait}) / 2 - 0.5rem);
+
+	padding-block: $retrait var(--bas);
+
+	> * {
+		margin-block: 0;
+	}
+
+	&__carte {
+		padding: clamp(1.25rem, 2.4vw, 1.75rem) clamp(1.25rem, 3vw, 2.5rem);
+		border-radius: $rayon-carte;
+		box-shadow: 0 0.75rem 2rem -0.75rem $ombre;
+
+		> * {
+			margin-block: 0;
+		}
+	}
+}

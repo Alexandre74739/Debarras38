@@ -63,7 +63,7 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li><a href="<?php echo $accueil; ?>#secteur">Grenoble et toute l’Isère</a></li>
+<li><a href="<?php echo $accueil; ?>#questions">Grenoble et toute l’Isère</a></li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:group --></div>

@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
  * Sections de la page d'accueil, dans l'ordre d'affichage.
  * Chaque entrée est le nom d'un fichier de patterns/.
  */
-const D38_SECTIONS_ACCUEIL = array('hero', 'communes', 'services', 'appel', 'cas', 'etapes', 'faq', 'contact');
+const D38_SECTIONS_ACCUEIL = array('hero', 'atouts', 'services', 'appel', 'cas', 'etapes', 'faq', 'contact');
 
 add_action(
 	'after_setup_theme',

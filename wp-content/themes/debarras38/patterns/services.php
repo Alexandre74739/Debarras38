@@ -6,8 +6,8 @@
  * Description: Un titre, puis des rangées qui alternent visuel et texte. Glissez une photo dans un visuel pour remplacer le décor.
  */
 ?>
-<!-- wp:group {"tagName":"section","metadata":{"name":"Services"},"align":"full","className":"d38-section d38-services d38-rives","backgroundColor":"creme","layout":{"type":"default"}} -->
-<section id="services" class="wp-block-group alignfull d38-section d38-services d38-rives has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Services"},"align":"full","className":"d38-section d38-services d38-rives d38-bord-vague","backgroundColor":"creme","layout":{"type":"default"}} -->
+<section id="services" class="wp-block-group alignfull d38-section d38-services d38-rives d38-bord-vague has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete-section"><!-- wp:heading -->
 <h2 class="wp-block-heading">Une entreprise de débarras à Grenoble qui vide toute la maison</h2>
 <!-- /wp:heading -->

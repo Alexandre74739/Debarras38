@@ -9,7 +9,7 @@
  *   1. Outils        défilement, découpe des titres, création d'éléments
  *   2. Vagues        ondes en haut des sections, sur les bords, dans les encadrés
  *   3. Apparitions   sections, rangées, titres mot par mot
- *   4. Scènes        le grand visuel, le bandeau des communes, les étapes
+ *   4. Scènes        le grand visuel, les étapes
  *   5. Interactions  boutons, cartes, questions
  */
 ( () => {
@@ -35,6 +35,9 @@
 
 	// Blocs dont on anime les enfants un par un plutôt que le bloc entier.
 	const GROUPES = '.d38-entete-section, .d38-cartes, .d38-etapes, .d38-questions, .d38-faq__titre, .d38-contact__texte, .d38-appel';
+
+	// Blocs qu'on anime en entier, puis dont on anime chaque ligne de liste.
+	const CARTES_A_LIGNES = '.d38-bandeau__carte';
 
 	/* 1. Outils ----------------------------------------------------------- */
 
@@ -132,6 +135,7 @@
 			poserOnde( section, 'haut', rang % 2 ? -22 : 22 );
 			section.classList.add( 'est-ondule' );
 		} );
+
 	};
 
 	/**
@@ -154,6 +158,9 @@
 			poserOnde( creer( 'd38-vague d38-vague--fond', encadre ), 'haut', 30 );
 			poserOnde( creer( 'd38-vague d38-vague--devant', encadre ), 'haut', -44 );
 		} );
+
+		// Une seule nappe sous ce qui flotte (.d38-flotte) : la carte du bandeau.
+		document.querySelectorAll( '.d38-flotte' ).forEach( ( section ) => poserOnde( creer( 'd38-vague d38-vague--fond', section ), 'haut', 26 ) );
 	};
 
 	/* 3. Apparitions ------------------------------------------------------ */
@@ -163,8 +170,15 @@
 	 */
 	const elementsDe = ( section ) =>
 		[ ...section.children ]
-			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-rangees' ) )
-			.flatMap( ( element ) => ( element.matches( GROUPES ) ? [ ...element.children ].filter( ( enfant ) => ! enfant.matches( '.d38-vague' ) ) : [ element ] ) );
+			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-rangees' ) )
+			.flatMap( ( element ) => {
+				if ( element.matches( GROUPES ) ) {
+					return [ ...element.children ].filter( ( enfant ) => ! enfant.matches( '.d38-vague' ) );
+				}
+
+				// Une carte arrive d'abord, puis ses lignes une à une.
+				return element.matches( CARTES_A_LIGNES ) ? [ element, ...element.querySelectorAll( 'li' ) ] : [ element ];
+			} );
 
 	/**
 	 * Fait apparaître des éléments en cascade. Un titre arrive mot par mot,
@@ -291,37 +305,6 @@
 	};
 
 	/**
-	 * Communes : la liste est doublée, puis défile sans fin. Elle ralentit au survol.
-	 */
-	const defilerCommunes = () => {
-		document.querySelectorAll( '.d38-secteur .d38-communes' ).forEach( ( liste ) => {
-			const cadre = document.createElement( 'div' );
-			const piste = document.createElement( 'div' );
-
-			cadre.className = 'd38-defile';
-			piste.className = 'd38-defile__piste';
-			liste.replaceWith( cadre );
-			cadre.append( piste );
-			piste.append( liste );
-
-			// Assez de copies pour couvrir deux fois la largeur de l'écran.
-			do {
-				const copie = liste.cloneNode( true );
-
-				copie.setAttribute( 'aria-hidden', 'true' );
-				piste.append( copie );
-			} while ( piste.scrollWidth < window.innerWidth * 2 );
-
-			const defile = animate( piste, { x: [ '0%', `${ -100 / piste.children.length }%` ] }, { duration: liste.offsetWidth / 45, ...EN_BOUCLE } );
-
-			hover( cadre, () => {
-				defile.speed = 0.35;
-				return () => ( defile.speed = 1 );
-			} );
-		} );
-	};
-
-	/**
 	 * Déroulement : le canard avance le long du fil pendant le défilement, et
 	 * chaque étape s'allume quand il arrive à sa hauteur.
 	 */
@@ -349,6 +332,12 @@
 			return () => animate( carte, { y: 0 }, RESSORT );
 		} );
 
+		// Un atout se soulève ; ses couleurs s'échangent en CSS (components/_atouts.scss).
+		hover( '.d38-atouts li', ( atout ) => {
+			animate( atout, { y: -4 }, RESSORT );
+			return () => animate( atout, { y: 0 }, RESSORT );
+		} );
+
 		document.querySelectorAll( '.d38-questions details' ).forEach( ( question ) => {
 			question.addEventListener( 'toggle', () => {
 				if ( question.open ) {
@@ -373,12 +362,11 @@
 	document.querySelectorAll( '.d38-section' ).forEach( ( section ) => {
 		if ( section.classList.contains( 'd38-hero' ) ) {
 			animerHero( section );
-		} else if ( ! section.classList.contains( 'd38-secteur' ) ) {
+		} else {
 			animerSection( section );
 		}
 	} );
 
-	defilerCommunes();
 	suivreEtapes();
 	animerInteractions();
 } )();
