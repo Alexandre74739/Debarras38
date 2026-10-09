@@ -12,9 +12,9 @@
 		opacity: 0;
 	}
 
-	// Le titre principal n'est jamais masqué : il s'affiche tout de suite.
 	.d38-hero:not(.est-vu) {
-		.d38-hero__texte > :not(h1),
+		.d38-hero__texte > *,
+		.d38-hero__visuel,
 		.d38-tableau {
 			opacity: 0;
 		}

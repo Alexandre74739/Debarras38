@@ -174,7 +174,7 @@
 		elements.forEach( ( element, rang ) => {
 			const depart = rang * pas;
 
-			if ( element.matches( 'h2, h3' ) ) {
+			if ( element.matches( 'h1, h2, h3' ) ) {
 				const mots = decouperMots( element );
 
 				mots.forEach( ( mot ) => ( mot.style.opacity = 0 ) );
@@ -267,16 +267,27 @@
 	};
 
 	/**
-	 * Haut de page : joué au chargement. Le titre principal ne bouge pas.
+	 * Haut de page : joué au chargement. Le titre principal arrive mot par mot,
+	 * le reste du texte à sa suite. L'image arrive en tournant légèrement, puis
+	 * remonte un peu au défilement.
 	 */
 	const animerHero = ( hero ) => {
-		const textes = [ ...hero.querySelectorAll( '.d38-hero__texte > :not(h1)' ) ];
+		const visuel = hero.querySelector( '.d38-hero__visuel' );
 
-		textes.forEach( ( element ) => ( element.style.opacity = 0 ) );
+		if ( visuel ) {
+			visuel.style.opacity = 0;
+		}
+
+		reveler( [ ...hero.querySelectorAll( '.d38-hero__texte > *' ) ], 0.12 );
 		animerTableau( hero );
 		hero.classList.add( 'est-vu' );
 
-		animate( textes, { opacity: 1, y: [ 20, 0 ] }, { duration: 0.8, ease: DOUX, delay: stagger( 0.1, { startDelay: 0.1 } ) } );
+		if ( visuel ) {
+			animate( visuel, { opacity: 1, scale: [ 0.9, 1 ], rotate: [ -6, 0 ] }, { duration: 1.1, ease: DOUX, delay: 0.25 } );
+			// L'image monte du fond de la forme : son masque la découpe au ras du contour.
+			animate( visuel.querySelectorAll( '.d38-blob img' ), { y: [ '55%', '0%' ] }, { duration: 1.4, ease: DOUX, delay: 0.45 } );
+			auDefilement( hero, [ 'start start', 'end start' ], ( avance ) => ( visuel.style.translate = `0 ${ -40 * avance }px` ) );
+		}
 	};
 
 	/**

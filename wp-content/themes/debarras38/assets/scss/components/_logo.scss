@@ -5,6 +5,12 @@
 .d38-logo {
   margin: 0;
 
+  // Un logo cliquable : sans cela, le lien laisse un vide sous l'image et le
+  // logo n'est plus centré dans son bloc.
+  a {
+    display: block;
+  }
+
   img {
     display: block;
     width: 100%;

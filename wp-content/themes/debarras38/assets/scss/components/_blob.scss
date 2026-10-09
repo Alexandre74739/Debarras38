@@ -1,0 +1,62 @@
+@use "../abstracts" as *;
+
+// Une image qui sort d'une forme presque ronde (assets/img/blob.svg).
+//
+// L'image est plus grande que la forme. Elle en sort par le haut et par les
+// côtés, et la forme la coupe en bas : son masque (blob-sortie.svg) est la
+// forme, ouverte sur toute sa moitié haute. Les réglages ci-dessous sont
+// calés sur le canard : la tête sort en haut à gauche, la queue reste dedans,
+// l'œil reste sur la forme.
+
+$sortie: 18%; // de combien l'image peut dépasser par le haut (hauteur du masque : blob-sortie.svg)
+
+// À augmenter à chaque retouche de blob.svg ou de blob-sortie.svg : le
+// navigateur recharge alors les deux fichiers au lieu de garder les anciens.
+$version: 3;
+
+.d38-blob {
+	position: relative;
+	aspect-ratio: 1;
+	margin: 0;
+
+	// La couleur de fond choisie dans l'éditeur colore la forme, pas le
+	// rectangle du bloc. WordPress pose cette couleur avec !important.
+	&.has-background {
+		background-color: transparent !important;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--fond);
+		mask: url("../img/blob.svg?v=#{$version}") center / 100% 100% no-repeat;
+	}
+
+	.wp-block-image {
+		position: absolute;
+		inset: (-$sortie) 0 0;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		margin: 0;
+		mask: url("../img/blob-sortie.svg?v=#{$version}") center / 100% 100% no-repeat;
+
+		img {
+			display: block;
+			flex: none;
+			width: 105%;
+			max-width: none;
+			height: auto;
+			max-height: 100%;
+			object-fit: contain;
+			object-position: center bottom;
+			translate: 5% 2.6%;
+		}
+
+		// Une photo rectangulaire a le haut arrondi. Un dessin (SVG) n'est pas rogné.
+		img:not([src$=".svg"]) {
+			border-radius: $rayon-carte $rayon-carte 0 0;
+		}
+	}
+}

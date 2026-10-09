@@ -1,33 +1,99 @@
 @use "../abstracts" as *;
 
-// Accroche centrée, puis le grand visuel sur toute la largeur du contenu.
+// Premier écran : avec l'en-tête, l'accroche tient dans la hauteur de la
+// fenêtre. Le texte à gauche, l'image dans sa forme à droite ; l'un sous
+// l'autre sous 960 px.
+//
+// Un très grand titre, peu de texte, beaucoup d'air. Pour tenir dans l'écran,
+// les tailles et les espaces suivent aussi sa hauteur (unités svh) : sur un
+// écran bas, tout se resserre. Si le texte seul est plus haut que l'écran, la
+// section s'allonge plutôt que de le couper.
 .d38-hero {
-	padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+	--bouton-hauteur: clamp(3rem, 7svh, 3.5rem);
+	--bouton-marge-ligne: 1.75rem;
 
-	&__texte {
-		max-width: 54rem;
-		margin-inline: auto;
-		text-align: center;
+	display: grid;
+	// Sous le texte, l'image prend la hauteur qui reste.
+	grid-template-rows: auto minmax(8rem, 1fr);
+	gap: clamp(1.5rem, 4svh, 3rem);
+	min-height: calc(100vh - var(--entete-hauteur) - var(--wp-admin--admin-bar--height, 0px));
+	min-height: calc(100svh - var(--entete-hauteur) - var(--wp-admin--admin-bar--height, 0px));
+	padding-block: clamp(1rem, 3svh, 3rem) clamp(1.5rem, 5svh, 4rem);
 
-		> * {
-			margin-block: 0;
-		}
+	@include ecran($ecran-large) {
+		grid-template: auto / minmax(0, 1.1fr) minmax(0, 1fr);
+		align-content: center;
+		align-items: center;
+		gap: clamp(3rem, 6vw, 6rem);
 	}
 
-	// Deux phrases, deux couleurs : le service en Encre, le slogan en Bleu canard.
+	> *,
+	&__texte > * {
+		margin-block: 0;
+	}
+
+	// Le service en Encre, le lieu en Bleu canard. Le titre dépasse ici les
+	// 56 px de la charte : c'est lui qui porte tout l'écran.
 	h1 {
-		margin-bottom: 1.5rem;
+		margin-bottom: clamp(0.75rem, 2.4svh, 2rem);
 		color: var(--encre);
+		font-size: clamp(2.5rem, min(1.5rem + 3.6vw, 9svh), 4.5rem);
+		letter-spacing: -0.025em;
+		line-height: 1;
+	}
+
+	// Le slogan, en sous-titre sous le titre principal.
+	&__slogan {
+		margin-bottom: clamp(0.625rem, 1.8svh, 1.5rem);
+		color: var(--bleu-canard);
+		font-family: var(--police-titres);
+		font-size: clamp(1.375rem, min(1.1rem + 1vw, 3.6svh), 1.875rem);
+		font-weight: 600;
+		line-height: 1.2;
 	}
 
 	.d38-chapo {
-		@include mesure(36rem);
-
-		margin-inline: auto;
+		@include mesure(34rem);
 	}
 
 	.wp-block-buttons {
-		justify-content: center;
-		margin-top: 2rem;
+		gap: 1rem;
+		margin-top: clamp(1.25rem, 3.6svh, 3rem);
+	}
+
+	// Sous 960 px, la forme remplit la hauteur laissée par le texte.
+	&__visuel {
+		align-self: center;
+		justify-self: center;
+		height: 100%;
+		max-width: 100%;
+		max-height: 24rem;
+		aspect-ratio: 1;
+
+		// À côté du texte, elle se règle par sa largeur, sans dépasser la
+		// hauteur de l'écran. Sur grand écran, elle déborde un peu de la
+		// colonne, vers le bord de la page.
+		@include ecran($ecran-large) {
+			justify-self: auto;
+			width: min(100%, 44rem, 66svh);
+			height: auto;
+			max-height: none;
+			margin-inline: auto;
+		}
+
+		@include ecran($ecran-tres-large) {
+			width: min(112%, 44rem, 66svh);
+			margin-right: -12%;
+		}
+	}
+}
+
+// Dans l'éditeur, la hauteur de la fenêtre est celle de la page entière.
+.editor-styles-wrapper .d38-hero {
+	min-height: 0;
+
+	.d38-hero__visuel {
+		width: min(100%, 24rem);
+		height: auto;
 	}
 }

@@ -26,12 +26,16 @@ add_action(
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		wp_enqueue_style('debarras38', D38_URI . '/assets/css/main.css', array(), D38_VERSION);
+		// Chaque fichier porte la date de sa dernière modification : le
+		// navigateur recharge un fichier dès qu'il change, sans vider le cache.
+		$version = static fn(string $fichier): string => (string) filemtime(D38_DIR . $fichier);
+
+		wp_enqueue_style('debarras38', D38_URI . '/assets/css/main.css', array(), $version('/assets/css/main.css'));
 
 		wp_enqueue_script('motion', D38_URI . '/assets/js/motion.js', array(), '12', array('strategy' => 'defer'));
-		wp_enqueue_script('debarras38', D38_URI . '/assets/js/animations.js', array('motion'), D38_VERSION, array('strategy' => 'defer'));
-		wp_enqueue_script('debarras38-entete', D38_URI . '/assets/js/entete.js', array(), D38_VERSION, array('strategy' => 'defer'));
-		wp_enqueue_script('debarras38-formulaire', D38_URI . '/assets/js/formulaire.js', array('motion'), D38_VERSION, array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38', D38_URI . '/assets/js/animations.js', array('motion'), $version('/assets/js/animations.js'), array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38-entete', D38_URI . '/assets/js/entete.js', array(), $version('/assets/js/entete.js'), array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38-formulaire', D38_URI . '/assets/js/formulaire.js', array('motion'), $version('/assets/js/formulaire.js'), array('strategy' => 'defer'));
 	}
 );
 

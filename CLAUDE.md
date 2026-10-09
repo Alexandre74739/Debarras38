@@ -42,7 +42,7 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 | Rôle | Composition | Contenu |
 |---|---|---|
 | Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons se replient dans la carte, derrière le bouton de menu (`entete.js`). Pictogrammes Lucide (`icone-*.svg`). |
-| Accroche + visuel | `hero` | Titre en deux phrases (service en Encre, slogan en Bleu canard), deux boutons, puis le grand visuel de la mare (`.d38-tableau`). |
+| Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
 | Bandeau | `communes` | Les communes desservies, qui défilent (`#secteur`). |
 | Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : visuel, texte, bouton. |
 | Appel | `appel` | Une phrase et le bouton principal, dans un encadré où passent des vagues. |
@@ -59,7 +59,7 @@ Le modèle prévoit aussi des logos clients, des témoignages et des chiffres : 
 Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
 
 - Pas de surtitres au-dessus des titres, pas de petites barres ni d'équerres décoratives.
-- Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard.
+- Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard. Une exception, voulue par Alexandre : la forme qui découpe l'image de l'accroche (`blob.svg`).
 - Les vagues bougent : en haut des sections (`.d38-bord-vague`), sur les bords de page (`.d38-rives`, à partir de 1280 px), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
 - Les visuels des rangées (`.d38-visuel--canard`, `--sillage`, `--vagues`) sont des décors faits avec les formes de la marque. Une image glissée dans le bloc les recouvre : c'est l'emplacement des futures photos de chantier.
 - Le Jaune caneton ne sert qu'au bouton principal.
@@ -97,8 +97,7 @@ Ajouter `--watch` pendant le développement. Installer Sass : binaire autonome (
 - Une section de page = un bloc Groupe `section.d38-section` + une composition dans `patterns/`. Le fond se règle avec la couleur de fond native du bloc ; le texte s'adapte tout seul.
 - Les animations ciblent des classes, jamais un contenu précis : une section ajoutée par le client est animée sans rien coder. Si `prefers-reduced-motion` est actif, les vagues sont posées mais immobiles et rien d'autre ne bouge. Le contenu reste visible sans JavaScript.
 - Boutons : trois styles du bloc Bouton, au choix dans l'éditeur (principal, contour, plein). Un bloc ne recolore pas ses boutons ; il peut seulement les resserrer avec `--bouton-hauteur`, `--bouton-marge-bloc` et `--bouton-marge-ligne`, comme l'en-tête.
-- Les coordonnées (téléphone, e-mail, adresse) ne s'écrivent jamais en dur : elles viennent de `d38_coord()` ou de la liaison de blocs `debarras38/coordonnees`.
-- Les textes du site suivent le chapitre « Ton » ci-dessous. Aucune promesse chiffrée (délai, tarif, gratuité) sans validation du client.
+- Les coordonnées (téléphone, e-mail, adresse) ne s'écrivent jamais en dur : elles viennent de `d38_coord()` ou de la liaison de blocs `debarras38/coordonnees`.- Les textes du site suivent le chapitre « Ton » ci-dessous. Aucune promesse chiffrée (délai, tarif, gratuité) sans validation du client.
 
 ### Ce que le client peut faire seul
 

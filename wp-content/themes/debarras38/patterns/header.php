@@ -33,7 +33,7 @@ $images  = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"is-style-plein"} -->
-<div class="wp-block-button is-style-plein"><a class="wp-block-button__link wp-element-button" href="<?php echo $accueil; ?>#devis">Demander un devis</a></div>
+<div class="wp-block-button is-style-plein"><a class="wp-block-button__link wp-element-button" href="<?php echo $accueil; ?>#devis">Recevoir mon devis</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></div>

@@ -19,6 +19,12 @@ $filet: color-mix(in srgb, var(--bleu-canard) 12%, transparent);
 $duree: 0.3s;
 $trait-carte: 2px;
 
+// Hauteur de l'en-tête, carte repliée. L'accroche s'en sert pour remplir le
+// reste de l'écran (sections/_hero.scss).
+:root {
+  --entete-hauteur: calc(0.75rem + #{$hauteur} + 2 * #{$marge} + 2 * #{$trait-carte});
+}
+
 // L'en-tête reste en haut de l'écran pendant le défilement.
 header.wp-block-template-part {
   position: sticky;
@@ -27,7 +33,7 @@ header.wp-block-template-part {
   box-sizing: border-box;
   // Hauteur de la carte repliée : dépliée, elle déborde et recouvre la page
   // au lieu de la pousser vers le bas.
-  height: calc(0.75rem + #{$hauteur} + 2 * #{$marge} + 2 * #{$trait-carte});
+  height: var(--entete-hauteur);
   padding: 0.75rem var(--gouttiere) 0;
   pointer-events: none;
 
@@ -49,17 +55,10 @@ header.wp-block-template-part {
   gap: 0 1rem;
   border: $trait-carte solid $filet;
   border-radius: $rayon-carte;
-  background-color: color-mix(in srgb, var(--creme) 90%, transparent);
-  backdrop-filter: blur(8px);
+  background-color: var(--creme);
   box-shadow: 0 0.25rem 1rem -0.25rem
     color-mix(in srgb, var(--encre) 20%, transparent);
   pointer-events: auto;
-  transition: background-color $duree;
-
-  // Dépliée, la carte est opaque : la page ne se voit pas à travers le menu.
-  &.est-ouvert {
-    background-color: var(--creme);
-  }
 
   @include sous($ecran-large) {
     flex-wrap: wrap;
