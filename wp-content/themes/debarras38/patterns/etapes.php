@@ -40,11 +40,11 @@
 
 <!-- wp:group {"className":"d38-etape","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-etape"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Nous vidons, nous trions</h3>
+<h3 class="wp-block-heading">Nous vidons</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Le jour convenu, nous sortons tout. Ce qui peut resservir est mis de côté, le reste part en déchetterie. Vous n’avez rien à porter.</p>
+<p>Le jour convenu, nous sortons tout et l’emportons en déchetterie. Vous n’avez rien à porter.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

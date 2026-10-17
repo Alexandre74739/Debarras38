@@ -36,7 +36,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:group {"className":"d38-carte d38-carte\u002d\u002davant","backgroundColor":"bleu-canard","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-carte d38-carte--avant has-bleu-canard-background-color has-background"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Le tri et le débarrassage, pièce par pièce</h3>
+<h3 class="wp-block-heading">Le débarrassage, pièce par pièce</h3>
 <!-- /wp:heading -->
 
 <!-- wp:image {"sizeSlug":"large","className":"d38-visuel"} -->
@@ -44,7 +44,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
-<p>Nous trions sur place&nbsp;: ce qui peut resservir est mis de côté, le reste part en déchetterie. Puis nous sortons tout, du plus petit carton à l’armoire la plus lourde.</p>
+<p>Nous sortons tout, du plus petit carton à l’armoire la plus lourde, puis nous l’emportons en déchetterie.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

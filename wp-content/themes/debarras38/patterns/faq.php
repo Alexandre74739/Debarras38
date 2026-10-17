@@ -22,7 +22,7 @@
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Que devient ce que vous emportez ?</summary><!-- wp:paragraph -->
-<p>Nous trions sur place. Ce qui peut resservir est mis de côté, le reste est déposé en déchetterie. Rien ne finit au coin d’un bois.</p>
+<p>Nous l’emportons en déchetterie. Rien ne finit au coin d’un bois.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 

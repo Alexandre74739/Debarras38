@@ -258,15 +258,11 @@
 			animate( code, { opacity: 1, y: [ 48, 0 ], scale: [ 0.9, 1 ] }, { duration: 1, ease: DOUX, delay: depart } );
 		},
 
-		// La bande d'appel se soulève de la page : son ombre s'allonge à mesure
-		// qu'elle monte. Ses bandes entrent par le coin (CSS, .est-vu), puis
-		// le titre, la phrase et le bouton.
+		// La bande d'appel remonte en grandissant un peu. Ses bandes entrent
+		// par le coin (CSS, .est-vu), puis le titre, la phrase et le bouton.
 		'.d38-appel': ( carte, depart ) => {
-			const ombre = getComputedStyle( carte ).boxShadow;
-			const aPlat = ombre.replace( /(-?[\d.]+px)\s+(-?[\d.]+px)\s+(-?[\d.]+px)/, '0px 0px $3' );
-
 			carte.style.opacity = 0;
-			animate( carte, { opacity: 1, y: [ 32, 0 ], scale: [ 0.97, 1 ], boxShadow: [ aPlat, ombre ] }, { duration: 0.9, ease: DOUX, delay: depart } );
+			animate( carte, { opacity: 1, y: [ 32, 0 ], scale: [ 0.97, 1 ] }, { duration: 0.9, ease: DOUX, delay: depart } );
 			reveler( [ ...carte.querySelectorAll( '.d38-appel__texte > *, .wp-block-button' ) ], 0.15, depart + 0.35 );
 		},
 

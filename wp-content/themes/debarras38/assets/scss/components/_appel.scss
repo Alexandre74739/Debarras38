@@ -1,10 +1,9 @@
 @use "../abstracts" as *;
 
 $marge: clamp(1.75rem, 4vw, 3rem);
-$ombre: 0.5rem;
 
 // Bande d'appel : un titre, un paragraphe et le bouton principal, sur une
-// carte Bleu canard posée sur la page par une ombre franche. Deux bandes Vert
+// carte Bleu canard, sans ombre. Deux bandes Vert
 // d'eau sortent par le coin (Vert d'eau sur Bleu canard) ; aucun texte ne
 // passe dessus.
 .d38-appel {
@@ -15,10 +14,8 @@ $ombre: 0.5rem;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1.5rem 3rem;
-	margin-right: $ombre;
 	padding: $marge;
 	border-radius: $rayon-carte;
-	box-shadow: $ombre $ombre 0 var(--encre);
 
 	> * {
 		margin: 0;

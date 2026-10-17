@@ -20,7 +20,7 @@
 	transition: box-shadow 0.35s $doux;
 
 	// Au survol, la carte se soulève (animations.js) et pose une ombre douce,
-	// floue : l'ombre franche décalée reste à la seule bande d'appel.
+	// floue, jamais d'ombre franche décalée.
 	&:hover {
 		box-shadow: 0 1.25rem 2.5rem -0.75rem color-mix(in srgb, var(--encre) 28%, transparent);
 	}

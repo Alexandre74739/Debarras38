@@ -21,7 +21,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"d38-chapo"} -->
-<p class="d38-chapo">Maison, appartement, cave, grenier ou garage : nous vidons, nous trions, nous nettoyons. Nous venons voir, vous recevez un devis écrit, et vous pouvez nous confier les clés. À Grenoble et partout en Isère.</p>
+<p class="d38-chapo">Maison, appartement, cave, grenier ou garage : nous vidons, nous nettoyons. Nous venons voir, vous recevez un devis écrit, et vous pouvez nous confier les clés. À Grenoble et partout en Isère.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
