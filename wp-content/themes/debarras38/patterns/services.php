@@ -11,11 +11,11 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"tagName":"section","metadata":{"name":"Services"},"align":"full","className":"d38-section d38-services d38-rives d38-bord-vague","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section id="services" class="wp-block-group alignfull d38-section d38-services d38-rives d38-bord-vague has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete-section"><!-- wp:heading -->
-<h2 class="wp-block-heading">Débarras et nettoyage à Grenoble, de la cave au grenier</h2>
+<h2 class="wp-block-heading">Votre entreprise de débarrassage à Grenoble, de la cave au grenier</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"d38-chapo"} -->
-<p class="d38-chapo">Chaque pièce a son lot de choses qui attendent leur tour. Dites-nous lesquelles : nous les sortons, nous trions, et nous nettoyons derrière.</p>
+<p class="d38-chapo">Ne restez pas dans votre coin. Montrez-nous ce qui doit partir : une pièce ou une maison entière, nous sortons tout et nous laissons la place nette, à Grenoble et partout en Isère.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
