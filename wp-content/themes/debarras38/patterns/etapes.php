@@ -10,7 +10,11 @@
 <section id="deroulement" class="wp-block-group alignfull d38-section has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete-section"><!-- wp:heading -->
 <h2 class="wp-block-heading">Un débarrassage à Grenoble, en quatre temps</h2>
-<!-- /wp:heading --></div>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"d38-chapo"} -->
+<p class="d38-chapo">Pas besoin de tout préparer&nbsp;: un appel suffit pour commencer. Voici ce qui se passe ensuite, étape par étape.</p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"d38-etapes","layout":{"type":"default"}} -->
@@ -20,7 +24,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Par téléphone ou avec le formulaire, vous nous décrivez les lieux : une cave, un grenier, une maison entière. Nous fixons un moment pour venir voir.</p>
+<p>Par téléphone ou avec le formulaire, vous nous décrivez les lieux en quelques mots&nbsp;: une cave, un grenier, une maison entière. Nous convenons d’un rendez-vous.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -30,7 +34,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Sur place, nous regardons le volume, l’accès, les étages. Vous recevez un devis écrit avant toute intervention.</p>
+<p>Sur place, nous regardons le volume, les accès et les étages. Vous recevez ensuite un devis écrit&nbsp;: rien ne commence sans votre accord.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -40,7 +44,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Ce qui peut resservir est mis de côté. Le reste part en déchetterie.</p>
+<p>Le jour convenu, nous sortons tout. Ce qui peut resservir est mis de côté, le reste part en déchetterie. Vous n’avez rien à porter.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -50,7 +54,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Un coup de balai partout, jusque dans les coins. Vous retrouvez des pièces propres.</p>
+<p>Un coup de balai partout, jusque dans les coins, puis les sols lavés. Vous retrouvez des pièces vides et propres, prêtes pour la suite.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>

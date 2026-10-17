@@ -2,7 +2,8 @@
 @use "../abstracts" as *;
 
 $pastille: 3.5rem;
-$fil: 1.5rem;
+$fil: 1.75rem;
+$fil-pas: calc(#{$fil} * 160 / 30); // une ondulation de fil-sillage.svg
 $canard: 3.75rem;
 $hauteur-canard: calc(#{$canard} * 252 / 262);
 
@@ -14,6 +15,8 @@ $hauteur-canard: calc(#{$canard} * 252 / 262);
 .d38-etapes {
 	// Avancement du canard, de 0 à 1, réglé par animations.js.
 	--avance: 0;
+	// Longueur d'une ondulation du fil, pour le faire couler sans couture.
+	--fil-pas: #{$fil-pas};
 
 	position: relative;
 	display: grid;

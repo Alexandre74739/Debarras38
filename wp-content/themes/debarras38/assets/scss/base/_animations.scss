@@ -81,6 +81,16 @@
 	}
 
 
+	// Le fil du déroulement coule à contre-courant du canard, d'une
+	// ondulation à la fois : la boucle est sans couture.
+	.d38-etapes::after {
+		animation: d38-fil-monte 7s linear infinite;
+
+		@include ecran($ecran-large) {
+			animation-name: d38-fil-recule;
+		}
+	}
+
 	// Une étape s'allume quand le canard arrive à sa hauteur : sa pastille se
 	// remplit, son texte remonte en pleine couleur.
 	.d38-etape:not(.est-passee)::before {
@@ -98,6 +108,26 @@
 	.d38-etape:not(.est-passee) > * {
 		opacity: 0.3;
 		translate: 0 0.5rem;
+	}
+}
+
+@keyframes d38-fil-monte {
+	from {
+		mask-position: center 0;
+	}
+
+	to {
+		mask-position: center calc(-1 * var(--fil-pas));
+	}
+}
+
+@keyframes d38-fil-recule {
+	from {
+		mask-position: 0 center;
+	}
+
+	to {
+		mask-position: calc(-1 * var(--fil-pas)) center;
 	}
 }
 
