@@ -101,7 +101,7 @@
 	 * Le mouvement est recalculé quand la taille de l'onde change.
 	 *
 	 * @param {Element} hote     Élément qui reçoit l'onde.
-	 * @param {string}  position « haut », « gauche » ou « droite ».
+	 * @param {string}  position « haut » (modificateur .d38-onde--haut).
 	 * @param {number}  vitesse  En pixels par seconde. Négative : sens inverse.
 	 */
 	const poserOnde = ( hote, position, vitesse ) => {
@@ -136,18 +136,6 @@
 			section.classList.add( 'est-ondule' );
 		} );
 
-	};
-
-	/**
-	 * Bords de page : une onde descend à gauche, une autre remonte à droite.
-	 */
-	const ondulerRives = () => {
-		document.querySelectorAll( '.d38-rives' ).forEach( ( section ) => {
-			poserOnde( section, 'gauche', -26 );
-			poserOnde( section, 'droite', -34 );
-
-			new ResizeObserver( () => section.style.setProperty( '--longueur', `${ section.offsetHeight }px` ) ).observe( section );
-		} );
 	};
 
 	/**
@@ -353,7 +341,6 @@
 	/* Mise en route ------------------------------------------------------- */
 
 	ondulerBords();
-	ondulerRives();
 	remplirEncadres();
 
 	if ( ! ANIME ) {

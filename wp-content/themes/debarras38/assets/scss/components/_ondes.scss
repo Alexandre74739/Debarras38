@@ -7,7 +7,6 @@
 // et le mouvement est sans couture. Elle sert à trois endroits :
 //   - en haut d'une section (.d38-bord-vague), dans la couleur de la section ;
 //   - au-dessus de la nappe d'eau d'une section où un bloc flotte (.d38-flotte) ;
-//   - sur les bords de page d'une section (.d38-rives) ;
 //   - au-dessus des nappes d'eau d'un encadré (.d38-vagues).
 
 .d38-onde {
@@ -31,39 +30,6 @@
 
 	&--haut {
 		bottom: calc(100% - 1px);
-	}
-
-	// Bords de page : la même bande, couchée le long du bord. Sa longueur est
-	// la hauteur de la section, mesurée par animations.js.
-	&--gauche,
-	&--droite {
-		--onde-hauteur: clamp(1.25rem, 2.2vw, 2.25rem);
-
-		top: 0;
-		display: none;
-		width: var(--longueur, 100%);
-
-		@include ecran($ecran-tres-large) {
-			display: block;
-		}
-
-		.d38-onde__nappe {
-			background: var(--rive, var(--vert-eau));
-		}
-	}
-
-	&--gauche {
-		right: auto;
-		left: var(--onde-hauteur);
-		transform-origin: 0 0;
-		rotate: 90deg;
-	}
-
-	&--droite {
-		right: var(--onde-hauteur);
-		left: auto;
-		transform-origin: 100% 0;
-		rotate: -90deg;
 	}
 }
 

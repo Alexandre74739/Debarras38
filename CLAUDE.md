@@ -60,7 +60,7 @@ Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
 
 - Pas de surtitres au-dessus des titres, pas de petites barres ni d'équerres décoratives.
 - Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard. Une exception, voulue par Alexandre : la forme qui découpe l'image de l'accroche (`blob.svg`).
-- Les vagues bougent : en haut des sections (`.d38-bord-vague`), sur les bords de page (`.d38-rives`, à partir de 1280 px), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
+- Les vagues bougent : en haut des sections (`.d38-bord-vague`), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
 - Les visuels des rangées sont de vraies photos, posées par le client (bloc Image `.d38-visuel`, cadre 4/3 recadré automatiquement). En attendant, ils affichent `photo-a-venir.svg` (D-canard sur Vert d’eau).
 - Le Jaune caneton ne sert qu'au bouton principal.
 
