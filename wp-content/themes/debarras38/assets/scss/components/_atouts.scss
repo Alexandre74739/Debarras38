@@ -1,21 +1,26 @@
 @use "../abstracts" as *;
 
-// Les atouts : quelques mots chacun, précédés d'un pictogramme Lucide
-// (lucide.dev). Une ligne de la liste choisit son pictogramme par sa classe ;
+// Les atouts : quelques mots chacun, précédés d’un pictogramme maison
+// (assets/img/icone-*.svg). Une ligne de la liste choisit son pictogramme par sa classe ;
 // sans classe, elle reçoit une coche.
 $pictogrammes: (
 	"lieu": "icone-repere.svg",
 	"visite": "icone-oeil.svg",
 	"devis": "icone-devis.svg",
-	"soin": "icone-eclat.svg",
+	"soin": "icone-seau.svg",
 );
 
 .d38-atouts {
 	@include liste-nue;
 
+	// Une, deux ou quatre colonnes, jamais trois : une ligne de trois laisserait
+	// un atout seul en dessous.
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 	gap: 1rem clamp(1.5rem, 3vw, 3rem);
+
+	@include ecran($ecran-moyen) {
+		grid-template-columns: repeat(2, 1fr);
+	}
 
 	// Sur une seule ligne dès que la place le permet.
 	@include ecran($ecran-tres-large) {

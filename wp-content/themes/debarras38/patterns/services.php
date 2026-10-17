@@ -27,7 +27,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:group {"className":"d38-rangee__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-rangee__texte"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Débarras de maison et d’appartement à Grenoble</h3>
+<h3 class="wp-block-heading">Débarrassage de maison et d’appartement à Grenoble</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
@@ -50,7 +50,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:group {"className":"d38-rangee__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-rangee__texte"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Débarras de cave, de grenier et de garage</h3>
+<h3 class="wp-block-heading">Débarrassage de cave, de grenier et de garage</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
@@ -67,11 +67,11 @@ $images = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:group {"className":"d38-rangee__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-rangee__texte"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Nettoyage après débarras et fin de bail</h3>
+<h3 class="wp-block-heading">Nettoyage après débarrassage et fin de bail</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Une pièce vide n’est pas encore une pièce propre. Après le débarras, nous balayons, nous dépoussiérons, nous lavons les sols et l’intérieur des placards. Vous rendez les clés pour l’état des lieux ou la vente, sans un mouton de poussière dans les coins.</p>
+<p>Une pièce vide n’est pas encore une pièce propre. Après le débarrassage, nous balayons, nous dépoussiérons, nous lavons les sols et l’intérieur des placards. Vous rendez les clés pour l’état des lieux ou la vente, sans un mouton de poussière dans les coins.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->

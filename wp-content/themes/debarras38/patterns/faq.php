@@ -9,13 +9,13 @@
 <!-- wp:group {"tagName":"section","metadata":{"name":"Questions"},"align":"full","className":"d38-section d38-faq","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section id="questions" class="wp-block-group alignfull d38-section d38-faq has-creme-background-color has-background"><!-- wp:group {"className":"d38-faq__titre","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-faq__titre"><!-- wp:heading -->
-<h2 class="wp-block-heading">Débarras et nettoyage : ce qu’on nous demande avant de nous confier les clés</h2>
+<h2 class="wp-block-heading">Débarrassage et nettoyage : ce qu’on nous demande avant de nous confier les clés</h2>
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"d38-questions","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-questions"><!-- wp:details -->
-<details class="wp-block-details"><summary>Combien coûte un débarras à Grenoble ?</summary><!-- wp:paragraph -->
+<details class="wp-block-details"><summary>Combien coûte un débarrassage à Grenoble ?</summary><!-- wp:paragraph -->
 <p>Tout dépend du volume à sortir, de l’accès (étage, ascenseur, stationnement) et du nettoyage à prévoir. C’est pour cela que nous venons voir avant de chiffrer : vous recevez un devis écrit, et vous savez ce que vous payez avant que le premier carton ne sorte.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
@@ -27,7 +27,7 @@
 <!-- /wp:details -->
 
 <!-- wp:details -->
-<details class="wp-block-details"><summary>Faut-il être présent pendant le débarras ?</summary><!-- wp:paragraph -->
+<details class="wp-block-details"><summary>Faut-il être présent pendant le débarrassage ?</summary><!-- wp:paragraph -->
 <p>Ce n’est pas obligatoire. Vous pouvez nous confier les clés : nous vous les rendons une fois le logement vidé et nettoyé.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
@@ -46,12 +46,12 @@
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Faites-vous aussi le nettoyage ?</summary><!-- wp:paragraph -->
-<p>Oui. Après le débarras, nous balayons, nous dépoussiérons et nous lavons les sols, jusque dans les recoins. C’est l’idéal avant un état des lieux de sortie ou une mise en vente.</p>
+<p>Oui. Après le débarrassage, nous balayons, nous dépoussiérons et nous lavons les sols, jusque dans les recoins. C’est l’idéal avant un état des lieux de sortie ou une mise en vente.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 
 <!-- wp:details -->
-<details class="wp-block-details"><summary>Combien de temps dure un débarras ?</summary><!-- wp:paragraph -->
+<details class="wp-block-details"><summary>Combien de temps dure un débarrassage ?</summary><!-- wp:paragraph -->
 <p>Une cave ne prend pas le temps d’une maison de quatre pièces. Lors de la visite, nous vous indiquons la durée prévue, et le jour de l’intervention est fixé avec vous.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->

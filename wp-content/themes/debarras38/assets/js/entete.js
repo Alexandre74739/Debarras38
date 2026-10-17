@@ -43,16 +43,19 @@
     bascule.setAttribute("aria-expanded", ouvert);
   };
 
+  // Les deux boutons sont en haut de l'écran, sous la marge que la page garde
+  // pour l'en-tête (scroll-padding-top) : un focus ordinaire ferait remonter
+  // la page pour les « montrer ». Ils sont déjà visibles.
   const ouvrir = () => {
     regler(true);
-    fermer.focus();
+    fermer.focus({ preventScroll: true });
   };
 
   const refermer = (rendreLaMain = true) => {
     regler(false);
 
     if (rendreLaMain) {
-      bascule.focus();
+      bascule.focus({ preventScroll: true });
     }
   };
 

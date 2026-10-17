@@ -41,12 +41,12 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 
 | Rôle | Composition | Contenu |
 |---|---|---|
-| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes Lucide (`icone-*.svg`). |
+| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes maison (`icone-*.svg`). |
 | Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
-| Bandeau | `atouts` | Bandeau de réassurance (`#atouts`) : une carte Bleu canard qui flotte entre l'accroche et les services, comme la carte de l'en-tête. Elle commence sous le premier écran : rien n'en dépasse sur l'accroche. Quatre atouts en quelques mots, chacun avec un pictogramme Lucide ; ni titre ni bouton. De l'eau Vert d'eau passe derrière la carte (`.d38-flotte`), refermée par la vague des services. Tient la place d'un « ils nous font confiance », sans rien inventer. La liste des communes n'est plus dans la page. |
+| Bandeau | `atouts` | Bandeau de réassurance (`#atouts`) : une carte Bleu canard qui flotte entre l'accroche et les services, comme la carte de l'en-tête. Elle commence sous le premier écran : rien n'en dépasse sur l'accroche. Quatre atouts en quelques mots, chacun avec un pictogramme maison ; ni titre ni bouton. Une colonne sur téléphone, deux sur tablette, quatre en ligne à partir de 80rem : jamais trois, qui laisserait un atout seul. De l'eau Vert d'eau passe derrière la carte (`.d38-flotte`), refermée par la vague des services. Tient la place d'un « ils nous font confiance », sans rien inventer. La liste des communes n'est plus dans la page. |
 | Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : photo (bloc Image `.d38-visuel`), titre, paragraphe, bouton. La rangée cave/grenier/garage n’a pas de bouton. |
 | Appel | `appel` | Titre, phrase et bouton principal sur une carte Bleu canard à ombre franche Encre ; deux bandes Vert d'eau sortent par le coin haut droit (`sillage-coin.svg`). Ni vagues ni canard, choix d'Alexandre. À l'arrivée, la carte se soulève (son ombre s'allonge), les bandes entrent par le coin, puis titre mot par mot, phrase, bouton. |
-| Situations | `cas` | Trois cartes : succession, déménagement, logement à rendre. |
+| Situations | `cas` | Une carte en avant (Bleu canard, avec le canard, textes en bas) et les autres empilées à côté (Crème, Vert d'eau) : succession, déménagement, logement à rendre (`.d38-cartes--une`, `.d38-cartes__suite`). Chaque carte prend son fond dans l'éditeur. |
 | Déroulement | `etapes` | Étapes numérotées, que le canard parcourt au défilement. |
 | Questions | `faq` | Blocs Détails, repris dans les données structurées. |
 | Appel final | `contact` | Numéro en grand et formulaire de devis (`#devis`). |
@@ -63,6 +63,9 @@ Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
 - Les vagues bougent : en haut des sections (`.d38-bord-vague`), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
 - Les visuels des rangées sont de vraies photos, posées par le client (bloc Image `.d38-visuel`, cadre 4/3 recadré automatiquement). En attendant, ils affichent `photo-a-venir.svg` (D-canard sur Vert d’eau).
 - Le Jaune caneton ne sert qu'au bouton principal.
+- Pictogrammes dessinés pour le site, jamais Lucide ni une autre bibliothèque. Grille de 24, aplats pleins avec découpes (l'œil du canard est un trou, comme dans le D-canard) et bandes d'épaisseur constante (trait de 2,25 à 2,75, bouts ronds) ; l'ondulation du sillage remplace certaines droites (repère, devis, seau, menu : trois vagues de même longueur). Posés en masque CSS, ils prennent la couleur voulue.
+- Ombre franche Encre (décalée, sans flou) : seulement sur la bande d'appel. Étendue aux autres cartes, elle tire le site vers le néo-brutalisme, un style tout fait qui n'est pas celui de la marque.
+- Le site écrit « débarrassage », jamais « débarras » (choix d'Alexandre, octobre 2026), h1, titres, textes et SEO compris. Seul le nom Debarras38 garde « debarras ».
 
 ### Couleurs du contenu
 
@@ -80,6 +83,8 @@ Un bloc qui reçoit une couleur de fond règle seul la couleur de ce qu'il conti
 - WordPress met en cache la liste des compositions. Après avoir ajouté un fichier dans `patterns/` : `wp eval 'wp_get_theme()->delete_pattern_cache();'`.
 - La page d'accueil est créée une seule fois, à l'activation du thème. Modifier une composition ne modifie pas la page déjà créée.
 - Les déplacements liés au défilement passent par `auDefilement()` dans `animations.js` (propriété CSS `translate`), pas par `scroll( animate() )`, qui jouait l'animation dès le chargement.
+- Motion réécrit la valeur finale d'une animation juste après `.finished` : retirer un style animé à l'image suivante (`requestAnimationFrame`), comme dans `devoiler()`.
+- `focus()` sur un bouton de l'en-tête fait remonter la page (il est sous la marge de `scroll-padding-top`) : `focus({ preventScroll: true })`.
 
 ### Commandes
 
@@ -95,7 +100,7 @@ Ajouter `--watch` pendant le développement. Installer Sass : binaire autonome (
 - Nommage en français, comme dans la charte (`--bleu-canard`, `.d38-carte`, `d38_coord()`).
 - Sass : un fichier partiel par composant, `@use` uniquement, aucune couleur en dur hors de `abstracts/_tokens.scss`.
 - Une section de page = un bloc Groupe `section.d38-section` + une composition dans `patterns/`. Le fond se règle avec la couleur de fond native du bloc ; le texte s'adapte tout seul.
-- Les animations ciblent des classes, jamais un contenu précis : une section ajoutée par le client est animée sans rien coder. Si `prefers-reduced-motion` est actif, les vagues sont posées mais immobiles et rien d'autre ne bouge. Le contenu reste visible sans JavaScript.
+- Les animations ciblent des classes, jamais un contenu précis : une section ajoutée par le client est animée sans rien coder. Chaque rôle a son arrivée (`ARRIVEES` dans `animations.js`) : la carte des atouts remonte de l'eau, la bande d'appel se soulève (son ombre s'allonge), les cartes et les questions se dévoilent depuis un bord, les étapes s'allument au passage du canard, le numéro s'écrit, le formulaire se déroule. Les titres arrivent mot par mot ; le fondu montant ne reste qu'au texte courant. Si `prefers-reduced-motion` est actif, les vagues sont posées mais immobiles et rien d'autre ne bouge. Le contenu reste visible sans JavaScript.
 - Boutons : trois styles du bloc Bouton, au choix dans l'éditeur (principal, contour, plein). Un bloc ne recolore pas ses boutons ; il peut seulement les resserrer avec `--bouton-hauteur`, `--bouton-marge-bloc` et `--bouton-marge-ligne`, comme l'en-tête.
 - Les coordonnées (téléphone, e-mail, adresse) ne s'écrivent jamais en dur : elles viennent de `d38_coord()` ou de la liaison de blocs `debarras38/coordonnees`.- Les textes du site suivent le chapitre « Ton » ci-dessous. Aucune promesse chiffrée (délai, tarif, gratuité) sans validation du client.
 
@@ -297,7 +302,7 @@ body {
 
 Cible : particuliers de Grenoble et de l'Isère qui cherchent un débarras ou un nettoyage.
 
-- Requêtes principales : débarras Grenoble, entreprise de débarras Grenoble, entreprise de nettoyage Grenoble, débarras Isère (38).
+- Requêtes principales : débarras Grenoble, entreprise de débarras Grenoble, entreprise de nettoyage Grenoble, débarras Isère (38). Le site écrit « débarrassage » (voir Direction artistique) : ces requêtes ne figurent plus mot pour mot dans les titres.
 - Requêtes de service : débarras maison, débarras appartement, débarras cave, débarras grenier, débarras garage, vide maison, débarras succession, nettoyage après débarras, nettoyage fin de bail, devis débarras.
 - Requêtes locales : débarras + commune (Échirolles, Saint-Martin-d'Hères, Fontaine, Meylan, Voiron, Vizille…).
 - Un seul `h1` par page, des `h2` qui portent un service et un lieu, sans bourrage : la voix de la charte passe avant la densité de mots-clés.

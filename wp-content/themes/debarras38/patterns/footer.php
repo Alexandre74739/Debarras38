@@ -46,20 +46,20 @@ $images  = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:group {"className":"d38-pied__bloc","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-pied__bloc"><!-- wp:heading {"level":2,"className":"d38-pied__titre"} -->
-<h2 class="wp-block-heading d38-pied__titre">Débarras et nettoyage</h2>
+<h2 class="wp-block-heading d38-pied__titre">Débarrassage et nettoyage</h2>
 <!-- /wp:heading -->
 
 <!-- wp:list {"className":"d38-pied__liens"} -->
 <ul class="wp-block-list d38-pied__liens"><!-- wp:list-item -->
-<li><a href="<?php echo $accueil; ?>#services">Débarras de maison et d’appartement</a></li>
+<li><a href="<?php echo $accueil; ?>#services">Débarrassage de maison et d’appartement</a></li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li><a href="<?php echo $accueil; ?>#services">Débarras de cave, grenier et garage</a></li>
+<li><a href="<?php echo $accueil; ?>#services">Débarrassage de cave, grenier et garage</a></li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
-<li><a href="<?php echo $accueil; ?>#services">Nettoyage après débarras</a></li>
+<li><a href="<?php echo $accueil; ?>#services">Nettoyage après débarrassage</a></li>
 <!-- /wp:list-item -->
 
 <!-- wp:list-item -->
@@ -70,6 +70,6 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"d38-pied__mention"} -->
-<p class="d38-pied__mention">© <?php echo esc_html( gmdate( 'Y' ) ); ?> Debarras38, débarras et nettoyage à Grenoble et en Isère. Site conçu par <a href="https://fablioo.fr">Fablioo</a>.</p>
+<p class="d38-pied__mention">© <?php echo esc_html( gmdate( 'Y' ) ); ?> Debarras38, débarrassage et nettoyage à Grenoble et en Isère. Site conçu par <a href="https://fablioo.fr">Fablioo</a>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

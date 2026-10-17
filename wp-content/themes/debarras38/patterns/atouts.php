@@ -22,7 +22,7 @@
 <!-- /wp:list-item -->
 
 <!-- wp:list-item {"className":"d38-atout--soin"} -->
-<li class="d38-atout--soin">Débarras et nettoyage</li>
+<li class="d38-atout--soin">Débarrassage et nettoyage</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:group --></section>

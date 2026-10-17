@@ -34,13 +34,7 @@
 	const EN_BOUCLE = { repeat: Infinity, ease: 'linear' };
 
 	// Blocs dont on anime les enfants un par un plutôt que le bloc entier.
-	const GROUPES = '.d38-entete-section, .d38-cartes, .d38-etapes, .d38-questions, .d38-faq__titre, .d38-contact__texte';
-
-	// Blocs qu'on anime en entier, puis ce qu'ils contiennent un à un.
-	const CARTES = {
-		'.d38-bandeau__carte': 'li',
-		'.d38-appel': '.d38-appel__texte > *, .wp-block-button',
-	};
+	const GROUPES = '.d38-entete-section, .d38-faq__titre, .d38-contact__texte';
 
 	/* 1. Outils ----------------------------------------------------------- */
 
@@ -162,64 +156,123 @@
 	const elementsDe = ( section ) =>
 		[ ...section.children ]
 			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-rangees' ) )
-			.flatMap( ( element ) => {
-				if ( element.matches( GROUPES ) ) {
-					return [ ...element.children ].filter( ( enfant ) => ! enfant.matches( '.d38-vague' ) );
-				}
-
-				// Une carte arrive d'abord, puis son contenu.
-				const carte = Object.keys( CARTES ).find( ( selecteur ) => element.matches( selecteur ) );
-
-				return carte ? [ element, ...element.querySelectorAll( CARTES[ carte ] ) ] : [ element ];
-			} );
+			.flatMap( ( element ) => ( element.matches( GROUPES ) ? [ ...element.children ] : [ element ] ) );
 
 	/**
-	 * Fait apparaître des éléments en cascade. Un titre arrive mot par mot,
-	 * le reste en montant légèrement.
+	 * Fait apparaître des éléments en cascade, chacun à sa manière (arriver).
 	 */
-	const reveler = ( elements, pas = 0.08 ) => {
-		elements.forEach( ( element, rang ) => {
-			const depart = rang * pas;
-
-			if ( element.matches( 'h1, h2, h3' ) ) {
-				const mots = decouperMots( element );
-
-				// Le titre a pu être masqué en entier en attendant (rangées) :
-				// ce sont désormais ses mots qui portent l'apparition.
-				mots.forEach( ( mot ) => ( mot.style.opacity = 0 ) );
-				element.style.removeProperty( 'opacity' );
-				animate( mots, { opacity: 1, y: [ '0.7em', '0em' ], rotate: [ 4, 0 ] }, { duration: 0.75, ease: DOUX, delay: stagger( 0.045, { startDelay: depart } ) } );
-				return;
-			}
-
-			element.style.opacity = 0;
-			animate( element, { opacity: 1, y: [ 32, 0 ] }, { duration: 0.85, ease: DOUX, delay: depart } );
-		} );
+	const reveler = ( elements, pas = 0.08, debut = 0 ) => {
+		elements.forEach( ( element, rang ) => arriver( element, debut + rang * pas ) );
 	};
 
 	/**
-	 * Bande d'appel : la carte se soulève de la page, son ombre s'allonge à
-	 * mesure qu'elle monte. Ses bandes entrent ensuite par le coin (CSS, .est-vu).
+	 * Arrivée d'un élément. Un bloc qui a la sienne (ARRIVEES) la joue ; sinon
+	 * un titre arrive mot par mot, un texte en montant légèrement.
 	 */
-	const soulever = ( carte ) => {
-		const ombre = getComputedStyle( carte ).boxShadow;
-		const aPlat = ombre.replace( /(-?[\d.]+px)\s+(-?[\d.]+px)\s+(-?[\d.]+px)/, '0px 0px $3' );
+	const arriver = ( element, depart ) => {
+		const propre = Object.keys( ARRIVEES ).find( ( selecteur ) => element.matches( selecteur ) );
 
-		animate( carte, { boxShadow: [ aPlat, ombre ], scale: [ 0.97, 1 ] }, { duration: 0.9, ease: DOUX } );
+		if ( propre ) {
+			ARRIVEES[ propre ]( element, depart );
+			return;
+		}
+
+		if ( element.matches( 'h1, h2, h3' ) ) {
+			const mots = decouperMots( element );
+
+			// Le titre a pu être masqué en entier en attendant (rangées) :
+			// ce sont désormais ses mots qui portent l'apparition.
+			mots.forEach( ( mot ) => ( mot.style.opacity = 0 ) );
+			element.style.removeProperty( 'opacity' );
+			animate( mots, { opacity: 1, y: [ '0.7em', '0em' ], rotate: [ 4, 0 ] }, { duration: 0.75, ease: DOUX, delay: stagger( 0.045, { startDelay: depart } ) } );
+			return;
+		}
+
+		element.style.opacity = 0;
+		animate( element, { opacity: 1, y: [ 32, 0 ] }, { duration: 0.85, ease: DOUX, delay: depart } );
+	};
+
+	/**
+	 * Dévoile un élément depuis un bord, par une découpe qui s'ouvre. La
+	 * découpe finit 1rem au-delà de l'élément, pour ne jamais couper son
+	 * contour de focus, puis elle est retirée. Motion réécrit la valeur finale
+	 * juste après la fin de l'animation : on attend l'image suivante.
+	 */
+	const devoiler = ( element, depart, cache, duree = 1 ) => {
+		element.style.clipPath = cache;
+		animate( element, { clipPath: [ cache, 'inset(-1rem -1rem -1rem -1rem)' ] }, { duration: duree, ease: DOUX, delay: depart } ).finished.then( () =>
+			requestAnimationFrame( () => element.style.removeProperty( 'clip-path' ) )
+		);
+	};
+
+	const DEPUIS_LE_BAS = 'inset(100% -1rem -1rem -1rem)';
+	const DEPUIS_LA_GAUCHE = 'inset(-1rem 100% -1rem -1rem)';
+	const DEPUIS_LE_HAUT = 'inset(-1rem -1rem 100% -1rem)';
+
+	/**
+	 * Arrivées propres à un rôle, par classe. Une section ajoutée dans
+	 * l'éditeur qui reprend ces blocs les reçoit sans rien coder.
+	 */
+	const ARRIVEES = {
+		// Le bandeau des atouts remonte à la surface de l'eau, en se redressant ;
+		// ses atouts glissent ensuite un à un.
+		'.d38-bandeau__carte': ( carte, depart ) => {
+			const atouts = carte.querySelectorAll( 'li' );
+
+			carte.style.opacity = 0;
+			atouts.forEach( ( atout ) => ( atout.style.opacity = 0 ) );
+			animate( carte, { opacity: 1, y: [ 56, 0 ], rotate: [ -1.5, 0 ] }, { duration: 1, ease: DOUX, delay: depart } );
+			animate( atouts, { opacity: 1, x: [ -16, 0 ] }, { duration: 0.6, ease: DOUX, delay: stagger( 0.1, { startDelay: depart + 0.45 } ) } );
+		},
+
+		// La bande d'appel se soulève de la page : son ombre s'allonge à mesure
+		// qu'elle monte. Ses bandes entrent par le coin (CSS, .est-vu), puis
+		// le titre, la phrase et le bouton.
+		'.d38-appel': ( carte, depart ) => {
+			const ombre = getComputedStyle( carte ).boxShadow;
+			const aPlat = ombre.replace( /(-?[\d.]+px)\s+(-?[\d.]+px)\s+(-?[\d.]+px)/, '0px 0px $3' );
+
+			carte.style.opacity = 0;
+			animate( carte, { opacity: 1, y: [ 32, 0 ], scale: [ 0.97, 1 ], boxShadow: [ aPlat, ombre ] }, { duration: 0.9, ease: DOUX, delay: depart } );
+			reveler( [ ...carte.querySelectorAll( '.d38-appel__texte > *, .wp-block-button' ) ], 0.15, depart + 0.35 );
+		},
+
+		// Situations : la carte en avant s'ouvre depuis le bas, les autres se
+		// déplient depuis son côté, l'une après l'autre.
+		'.d38-cartes': ( cartes, depart ) => {
+			cartes.querySelectorAll( '.d38-carte' ).forEach( ( carte, rang ) => {
+				const enAvant = rang === 0 && cartes.matches( '.d38-cartes--une' );
+
+				devoiler( carte, depart + rang * 0.15, enAvant ? DEPUIS_LE_BAS : DEPUIS_LA_GAUCHE, enAvant ? 1.1 : 0.9 );
+			} );
+		},
+
+		// Déroulement : rien ne monte. Le fil se trace (CSS), et chaque étape
+		// s'allume quand le canard arrive à sa hauteur (suivreEtapes).
+		'.d38-etapes': ( etapes, depart ) => {
+			etapes.style.opacity = 0;
+			animate( etapes, { opacity: 1 }, { duration: 0.6, delay: depart } );
+		},
+
+		// Questions : chaque ligne s'écrit de gauche à droite, filet compris.
+		'.d38-questions': ( questions, depart ) => {
+			[ ...questions.children ].forEach( ( question, rang ) => devoiler( question, depart + rang * 0.08, DEPUIS_LA_GAUCHE, 0.8 ) );
+		},
+
+		// Demande de devis : le numéro s'écrit comme sur la bâche, le
+		// formulaire se déroule comme une feuille.
+		'.d38-numero': ( numero, depart ) => devoiler( numero, depart, DEPUIS_LA_GAUCHE, 0.9 ),
+		'.d38-contact__formulaire': ( formulaire, depart ) => devoiler( formulaire, depart + 0.1, DEPUIS_LE_HAUT, 1.1 ),
 	};
 
 	/**
 	 * Sections : jouées une fois, à l'entrée dans l'écran.
 	 */
 	const animerSection = ( section ) => {
-		const appels = section.querySelectorAll( '.d38-appel' );
-
 		inView(
 			section,
 			() => {
-				// Une bande d'appel prend le temps de se poser avant son contenu.
-				reveler( elementsDe( section ), appels.length ? 0.2 : 0.08 );
-				appels.forEach( soulever );
+				reveler( elementsDe( section ) );
 				section.classList.add( 'est-vu' );
 			},
 			{ margin: '0px 0px -15% 0px' }

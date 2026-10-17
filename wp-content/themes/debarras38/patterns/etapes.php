@@ -9,7 +9,7 @@
 <!-- wp:group {"tagName":"section","metadata":{"name":"Déroulement"},"align":"full","className":"d38-section d38-bord-vague","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section id="deroulement" class="wp-block-group alignfull d38-section d38-bord-vague has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete-section"><!-- wp:heading -->
-<h2 class="wp-block-heading">Un débarras à Grenoble, en quatre temps</h2>
+<h2 class="wp-block-heading">Un débarrassage à Grenoble, en quatre temps</h2>
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
 

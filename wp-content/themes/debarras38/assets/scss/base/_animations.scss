@@ -44,11 +44,23 @@
 		clip-path: inset(0 0 100% 100%);
 	}
 
-	// Une étape s'allume quand le canard arrive à sa hauteur.
+	// Une étape s'allume quand le canard arrive à sa hauteur : sa pastille se
+	// remplit, son texte remonte en pleine couleur.
 	.d38-etape:not(.est-passee)::before {
 		background: var(--vert-eau);
 		color: var(--bleu-canard);
 		scale: 0.86;
+	}
+
+	.d38-etape > * {
+		transition:
+			opacity 0.5s,
+			translate 0.6s $doux;
+	}
+
+	.d38-etape:not(.est-passee) > * {
+		opacity: 0.3;
+		translate: 0 0.5rem;
 	}
 }
 

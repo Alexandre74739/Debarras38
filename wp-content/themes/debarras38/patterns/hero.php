@@ -13,7 +13,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"tagName":"section","metadata":{"name":"Accroche"},"align":"full","className":"d38-section d38-hero","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section class="wp-block-group alignfull d38-section d38-hero has-creme-background-color has-background"><!-- wp:group {"className":"d38-hero__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-hero__texte"><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Débarras et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à Grenoble</mark></h1>
+<h1 class="wp-block-heading">Débarrassage et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à Grenoble</mark></h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"d38-hero__slogan"} -->
@@ -34,7 +34,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"className":"d38-hero__visuel","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-hero__visuel"><!-- wp:group {"className":"d38-blob","backgroundColor":"bleu-canard","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-blob has-bleu-canard-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo $images; ?>/canard-vert-eau.svg" alt="Le canard de Debarras38, entreprise de débarras et de nettoyage à Grenoble"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo $images; ?>/canard-vert-eau.svg" alt="Le canard de Debarras38, entreprise de débarrassage et de nettoyage à Grenoble"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>
