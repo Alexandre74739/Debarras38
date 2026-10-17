@@ -44,6 +44,18 @@
 		clip-path: inset(0 0 100% 100%);
 	}
 
+	// Page introuvable : ses deux paires de bandes entrent par leur bord.
+	.d38-erreur::before,
+	.d38-erreur::after {
+		transition: clip-path 1.2s $doux 0.3s;
+	}
+
+	.d38-erreur:not(.est-vu)::before,
+	.d38-erreur:not(.est-vu)::after {
+		clip-path: inset(0 0 100% 100%);
+	}
+
+
 	// Une étape s'allume quand le canard arrive à sa hauteur : sa pastille se
 	// remplit, son texte remonte en pleine couleur.
 	.d38-etape:not(.est-passee)::before {

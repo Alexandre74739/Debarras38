@@ -225,6 +225,13 @@
 			animate( atouts, { opacity: 1, x: [ -16, 0 ] }, { duration: 0.6, ease: DOUX, delay: stagger( 0.1, { startDelay: depart + 0.45 } ) } );
 		},
 
+		// Page introuvable : le « 404 » remonte en grandissant un peu, avant
+		// le titre, la phrase et le bouton.
+		'.d38-erreur__code': ( code, depart ) => {
+			code.style.opacity = 0;
+			animate( code, { opacity: 1, y: [ 48, 0 ], scale: [ 0.9, 1 ] }, { duration: 1, ease: DOUX, delay: depart } );
+		},
+
 		// La bande d'appel se soulève de la page : son ombre s'allonge à mesure
 		// qu'elle monte. Ses bandes entrent par le coin (CSS, .est-vu), puis
 		// le titre, la phrase et le bouton.

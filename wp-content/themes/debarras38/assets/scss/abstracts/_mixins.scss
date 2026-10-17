@@ -41,3 +41,35 @@
 	background: $couleur;
 	mask: url("../img/#{$fichier}") center / 100% 100% no-repeat;
 }
+
+// Deux bandes Vert d'eau qui entrent par le coin haut droit d'une carte Bleu
+// canard et en ressortent par le bord droit (motif de la charte, Vert d'eau
+// sur Bleu canard), comme sur la bande d'appel. La carte garde assez de place
+// en haut à droite pour qu'aucun texte ne passe dessus. Leur arrivée est dans
+// base/_animations.scss.
+@mixin bandes-coin {
+	position: relative;
+	overflow: hidden;
+
+	> * {
+		position: relative;
+	}
+
+	&::after {
+		@include forme("sillage-coin.svg", var(--vert-eau));
+
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: clamp(8rem, 16vw, 13rem);
+		aspect-ratio: 2;
+		pointer-events: none;
+	}
+
+	@include sous($ecran-moyen) {
+		&::after {
+			width: 7rem;
+		}
+	}
+}

@@ -54,6 +54,10 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 
 Le modèle prévoit aussi des logos clients, des témoignages et des chiffres : il n'y en a pas de réels, donc rien n'est inventé. Les communes, les situations et le déroulement tiennent ces places.
 
+### Page introuvable
+
+`templates/404.html` et `sections/_erreur.scss`. Sans cadre : sur un écran Crème, un grand « 404 » Bleu canard, le titre en Encre, la phrase et le bouton, tout centré. La section remplit l'écran sous l'en-tête, le texte centré dedans. Sur les côtés, deux paires de bandes Bleu canard qui entrent par un bord et en ressortent (`sillage-bord.svg`) : en bas à gauche (en miroir) et au milieu du bord droit, sur environ la moitié de la hauteur (`--bandes`). Sous 80rem, le texte prend la largeur : les bandes de la bande d'appel (`sillage-coin.svg`) passent dans les coins bas gauche et haut droit. Le pied de page la referme par sa vague Encre (`.d38-pied-vague` sur la partie de modèle). Alexandre a écarté : la carte flottant sur l'eau, la carte Bleu canard aux bandes de coin, les bandes traversant l'écran, les bandes sur toute la hauteur, la vague du bas avec le canard, les pictogrammes flottants.
+
 ### Direction artistique du site
 
 Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
@@ -84,6 +88,7 @@ Un bloc qui reçoit une couleur de fond règle seul la couleur de ce qu'il conti
 - La page d'accueil est créée une seule fois, à l'activation du thème. Modifier une composition ne modifie pas la page déjà créée.
 - Les déplacements liés au défilement passent par `auDefilement()` dans `animations.js` (propriété CSS `translate`), pas par `scroll( animate() )`, qui jouait l'animation dès le chargement.
 - Motion réécrit la valeur finale d'une animation juste après `.finished` : retirer un style animé à l'image suivante (`requestAnimationFrame`), comme dans `devoiler()`.
+- WordPress 7.1 donne la classe `wp-block-paragraph` à chaque paragraphe : un sélecteur `p:not([class])` ne cible plus rien (c'est le cas de la règle de largeur dans `layout/_section.scss`).
 - `focus()` sur un bouton de l'en-tête fait remonter la page (il est sous la marge de `scroll-padding-top`) : `focus({ preventScroll: true })`.
 
 ### Commandes

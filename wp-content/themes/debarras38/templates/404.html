@@ -1,7 +1,12 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"d38-principal d38-page","layout":{"type":"constrained","contentSize":"720px"}} -->
-<main class="wp-block-group d38-principal d38-page"><!-- wp:heading {"level":1} -->
+<!-- wp:group {"tagName":"main","className":"d38-principal","layout":{"type":"default"}} -->
+<main class="wp-block-group d38-principal"><!-- wp:group {"tagName":"section","metadata":{"name":"Page introuvable"},"align":"full","className":"d38-section d38-erreur","backgroundColor":"creme","layout":{"type":"default"}} -->
+<section class="wp-block-group alignfull d38-section d38-erreur has-creme-background-color has-background"><!-- wp:paragraph {"className":"d38-erreur__code"} -->
+<p class="d38-erreur__code">404</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Cette page n’existe pas.</h1>
 <!-- /wp:heading -->
 
@@ -13,7 +18,8 @@
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/">Revenir à l’accueil</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></main>
+<!-- /wp:buttons --></section>
+<!-- /wp:group --></main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"d38-bord-vague d38-pied-vague"} /-->

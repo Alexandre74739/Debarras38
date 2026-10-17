@@ -1,0 +1,116 @@
+@use "../abstracts" as *;
+
+// Page introuvable : sur Crème, le texte au centre d'une section qui remplit
+// l'écran sous l'en-tête, comme l'accroche de l'accueil. Le pied de page la
+// referme par sa vague.
+//
+// Sur les côtés, deux paires de bandes Bleu canard qui entrent par un bord
+// et en ressortent (sillage-bord.svg) : en bas à gauche (::before, en
+// miroir) et au milieu du bord droit (::after). Elles prennent une bonne
+// moitié de la hauteur. Sous 80rem, le texte prend la largeur : elles se
+// replient dans deux coins opposés. Rien ne passe sur le texte.
+.d38-erreur {
+	--bandes: clamp(18rem, 55%, 30rem);
+
+	position: relative;
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	min-height: calc(100vh - var(--entete-hauteur) - var(--wp-admin--admin-bar--height, 0px));
+	min-height: calc(100svh - var(--entete-hauteur) - var(--wp-admin--admin-bar--height, 0px));
+	padding-block: clamp(2rem, 6svh, 4rem) clamp(4rem, 10svh, 6rem);
+	overflow: hidden;
+	text-align: center;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		width: 9rem;
+		aspect-ratio: 2;
+		background: var(--bleu-canard);
+		mask: url("../img/sillage-coin.svg") center / 100% 100% no-repeat;
+		pointer-events: none;
+	}
+
+	// Écran étroit : en bas à gauche, la paire de la bande d'appel retournée…
+	&::before {
+		bottom: 0;
+		left: 0;
+		rotate: 180deg;
+	}
+
+	// … et en haut à droite, la même.
+	&::after {
+		top: 0;
+		right: 0;
+	}
+
+	// Grand écran : les deux paires sur les bords, sur une bonne hauteur.
+	@include ecran($ecran-tres-large) {
+		padding-block: clamp(2rem, 6svh, 4rem);
+
+		&::before,
+		&::after {
+			width: auto;
+			height: var(--bandes);
+			aspect-ratio: 200 / 300;
+			mask-image: url("../img/sillage-bord.svg");
+		}
+
+		// Calée dans le coin : le bas de la paire passe sous la vague du pied.
+		&::before {
+			bottom: -1.5rem;
+			rotate: none;
+			scale: -1 1;
+		}
+
+		&::after {
+			top: 50%;
+			translate: 0 -50%;
+		}
+	}
+
+	> * {
+		margin: 0;
+	}
+
+	> * + * {
+		margin-top: 1rem;
+	}
+
+	&__code {
+		color: var(--bleu-canard);
+		font: 800 clamp(6rem, 4rem + 10vw, 12rem) / 0.85 var(--police-titres);
+		letter-spacing: -0.03em;
+	}
+
+	h1 {
+		color: var(--encre);
+		font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+	}
+
+	// WordPress donne une classe à chaque paragraphe : on vise la phrase par
+	// élimination.
+	p:not(.d38-erreur__code) {
+		max-width: 32rem;
+		font-size: 1.1875rem;
+	}
+
+	.wp-block-buttons {
+		justify-content: center;
+		margin-top: 2rem;
+	}
+}
+
+// Pied de page qui suit une section claire : sa vague Encre la referme. Le
+// filet qui le sépare d'une section Encre n'a pas lieu d'être sous la vague.
+footer.d38-pied-vague {
+	--fond: var(--encre);
+
+	position: relative;
+
+	.d38-pied {
+		border-top: 0;
+	}
+}

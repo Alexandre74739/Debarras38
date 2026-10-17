@@ -8,7 +8,8 @@ $ombre: 0.5rem;
 // d'eau sortent par le coin (Vert d'eau sur Bleu canard) ; aucun texte ne
 // passe dessus.
 .d38-appel {
-	position: relative;
+	@include bandes-coin;
+
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -16,26 +17,11 @@ $ombre: 0.5rem;
 	gap: 1.5rem 3rem;
 	margin-right: $ombre;
 	padding: $marge;
-	overflow: hidden;
 	border-radius: $rayon-carte;
 	box-shadow: $ombre $ombre 0 var(--encre);
 
 	> * {
-		position: relative;
 		margin: 0;
-	}
-
-	// Les deux bandes, du bord haut au bord droit.
-	&::after {
-		@include forme("sillage-coin.svg", var(--vert-eau));
-
-		content: "";
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: clamp(8rem, 16vw, 13rem);
-		aspect-ratio: 2;
-		pointer-events: none;
 	}
 
 	&__texte {
@@ -68,9 +54,5 @@ $ombre: 0.5rem;
 	// Sur téléphone, les bandes restent dans le coin, au-dessus du titre.
 	@include sous($ecran-moyen) {
 		padding-top: calc(#{$marge} + 2.5rem);
-
-		&::after {
-			width: 7rem;
-		}
 	}
 }
