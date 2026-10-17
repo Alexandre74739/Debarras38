@@ -34,10 +34,13 @@
 	const EN_BOUCLE = { repeat: Infinity, ease: 'linear' };
 
 	// Blocs dont on anime les enfants un par un plutôt que le bloc entier.
-	const GROUPES = '.d38-entete-section, .d38-cartes, .d38-etapes, .d38-questions, .d38-faq__titre, .d38-contact__texte, .d38-appel';
+	const GROUPES = '.d38-entete-section, .d38-cartes, .d38-etapes, .d38-questions, .d38-faq__titre, .d38-contact__texte';
 
-	// Blocs qu'on anime en entier, puis dont on anime chaque ligne de liste.
-	const CARTES_A_LIGNES = '.d38-bandeau__carte';
+	// Blocs qu'on anime en entier, puis ce qu'ils contiennent un à un.
+	const CARTES = {
+		'.d38-bandeau__carte': 'li',
+		'.d38-appel': '.d38-appel__texte > *, .wp-block-button',
+	};
 
 	/* 1. Outils ----------------------------------------------------------- */
 
@@ -164,8 +167,10 @@
 					return [ ...element.children ].filter( ( enfant ) => ! enfant.matches( '.d38-vague' ) );
 				}
 
-				// Une carte arrive d'abord, puis ses lignes une à une.
-				return element.matches( CARTES_A_LIGNES ) ? [ element, ...element.querySelectorAll( 'li' ) ] : [ element ];
+				// Une carte arrive d'abord, puis son contenu.
+				const carte = Object.keys( CARTES ).find( ( selecteur ) => element.matches( selecteur ) );
+
+				return carte ? [ element, ...element.querySelectorAll( CARTES[ carte ] ) ] : [ element ];
 			} );
 
 	/**
@@ -193,13 +198,28 @@
 	};
 
 	/**
+	 * Bande d'appel : la carte se soulève de la page, son ombre s'allonge à
+	 * mesure qu'elle monte. Ses bandes entrent ensuite par le coin (CSS, .est-vu).
+	 */
+	const soulever = ( carte ) => {
+		const ombre = getComputedStyle( carte ).boxShadow;
+		const aPlat = ombre.replace( /(-?[\d.]+px)\s+(-?[\d.]+px)\s+(-?[\d.]+px)/, '0px 0px $3' );
+
+		animate( carte, { boxShadow: [ aPlat, ombre ], scale: [ 0.97, 1 ] }, { duration: 0.9, ease: DOUX } );
+	};
+
+	/**
 	 * Sections : jouées une fois, à l'entrée dans l'écran.
 	 */
 	const animerSection = ( section ) => {
+		const appels = section.querySelectorAll( '.d38-appel' );
+
 		inView(
 			section,
 			() => {
-				reveler( elementsDe( section ) );
+				// Une bande d'appel prend le temps de se poser avant son contenu.
+				reveler( elementsDe( section ), appels.length ? 0.2 : 0.08 );
+				appels.forEach( soulever );
 				section.classList.add( 'est-vu' );
 			},
 			{ margin: '0px 0px -15% 0px' }

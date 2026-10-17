@@ -34,6 +34,16 @@
 		}
 	}
 
+	// Les bandes de la bande d'appel entrent par le coin haut droit, une fois
+	// la carte posée.
+	.d38-appel::after {
+		transition: clip-path 1.1s $doux 0.45s;
+	}
+
+	.d38-section:not(.est-vu) .d38-appel::after {
+		clip-path: inset(0 0 100% 100%);
+	}
+
 	// Une étape s'allume quand le canard arrive à sa hauteur.
 	.d38-etape:not(.est-passee)::before {
 		background: var(--vert-eau);
