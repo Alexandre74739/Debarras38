@@ -31,6 +31,7 @@ debarras38/
     ├── js/animations.js toutes les animations du site
     ├── js/entete.js     tiroir de navigation de l’en-tête, sous 960 px
     ├── js/formulaire.js envoi du formulaire sans recharger la page
+    ├── js/editeur.js    éditeur : format « Souligner d’une vague » du titre principal
     ├── fonts/           WOFF2
     └── img/             logos fournis, dessins et formes
 ```
@@ -42,11 +43,11 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 | Rôle | Composition | Contenu |
 |---|---|---|
 | Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes maison (`icone-*.svg`). |
-| Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
+| Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, « Grenoble » souligné d'une vague Jaune caneton qui se trace au chargement, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
 | Bandeau | `atouts` | Bandeau de réassurance (`#atouts`) : une carte Bleu canard qui flotte entre l'accroche et les services, comme la carte de l'en-tête. Elle commence sous le premier écran : rien n'en dépasse sur l'accroche. Quatre atouts en quelques mots, chacun avec un pictogramme maison ; ni titre ni bouton. Une colonne sur téléphone, deux sur tablette, quatre en ligne à partir de 80rem : jamais trois, qui laisserait un atout seul. De l'eau Vert d'eau passe derrière la carte (`.d38-flotte`), refermée par la vague des services. Tient la place d'un « ils nous font confiance », sans rien inventer. La liste des communes n'est plus dans la page. |
 | Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : photo (bloc Image `.d38-visuel`), titre, paragraphe, bouton. La rangée cave/grenier/garage n’a pas de bouton. |
 | Appel | `appel` | Titre, phrase et bouton principal sur une carte Bleu canard à ombre franche Encre ; deux bandes Vert d'eau sortent par le coin haut droit (`sillage-coin.svg`). Ni vagues ni canard, choix d'Alexandre. À l'arrivée, la carte se soulève (son ombre s'allonge), les bandes entrent par le coin, puis titre mot par mot, phrase, bouton. |
-| Situations | `cas` | Une carte en avant (Bleu canard, avec le canard, textes en bas) et les autres empilées à côté (Crème, Vert d'eau) : succession, déménagement, logement à rendre (`.d38-cartes--une`, `.d38-cartes__suite`). Chaque carte prend son fond dans l'éditeur. |
+| Avant, pendant, après | `cas` | Section Vert d'eau, vague animée en haut, coulure en bas (la section Déroulement qui suit n'a donc pas de vague). Un même chantier en trois cartes par ligne (`.d38-cartes--trio`) : un titre (`h3`), la photo (bloc Image `.d38-visuel`, `photo-a-venir.svg` en attendant celles du client) avec sa légende « Avant », « Pendant » ou « Après » posée en étiquette dans son coin (pas de surtitre), puis un paragraphe. Elle remplace les situations (succession, déménagement, location), qui redisaient les services. La carte « Pendant », au milieu, est mise en avant (`.d38-carte--avant`) : Bleu canard, plus haute que ses voisines, un canard de sa couleur posé sur son bord haut, qui flotte doucement sur place (`d38-canard-flotte`, `base/_animations.scss`) ; sous 60rem, il se tourne vers la carte. Sous le titre de la section, un paragraphe d'introduction (`.d38-chapo`). Le bec aux deux yeux du A du logo (`bec-canard.svg`, Vert d'eau) est dans son coin haut droit ; elle passe en tête sous 60rem. Arrivée propre : les cartes sont distribuées comme un jeu (la carte en avant se pose, les autres sortent de derrière elle), Alexandre a écarté pour le canard : nager d'un bout à l'autre de la carte (« trop peu naturel »), barboter tête dans la carte (« étrange »). Une carte peut finir par une liste à coches et un lien calé en bas. Chaque carte prend son fond dans l'éditeur. |
 | Déroulement | `etapes` | Étapes numérotées, que le canard parcourt au défilement. |
 | Questions | `faq` | Blocs Détails, repris dans les données structurées. |
 | Appel final | `contact` | Numéro en grand et formulaire de devis (`#devis`). |
@@ -63,11 +64,12 @@ Le modèle prévoit aussi des logos clients, des témoignages et des chiffres : 
 Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
 
 - Pas de surtitres au-dessus des titres, pas de petites barres ni d'équerres décoratives.
-- Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard. Une exception, voulue par Alexandre : la forme qui découpe l'image de l'accroche (`blob.svg`).
+- Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard. Deux exceptions, voulues par Alexandre : la forme qui découpe l'image de l'accroche (`blob.svg`) et la coulure en bas de la section Avant, pendant, après (`.d38-bord-coulure`, `coulure.svg` dessiné par Alexandre, `components/_coulure.scss` : la couleur de la section déborde sur la suivante en un bord ondulé d'où tombe une grosse goutte, qui coule à son arrivée).
 - Les vagues bougent : en haut des sections (`.d38-bord-vague`), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
 - Les visuels des rangées sont de vraies photos, posées par le client (bloc Image `.d38-visuel`, cadre 4/3 recadré automatiquement). En attendant, ils affichent `photo-a-venir.svg` (D-canard sur Vert d’eau).
-- Le Jaune caneton ne sert qu'au bouton principal.
+- Le Jaune caneton ne sert qu'au bouton principal. Une exception, voulue par Alexandre : le soulignement en vague du titre principal (`.d38-souligne`).
 - Pictogrammes dessinés pour le site, jamais Lucide ni une autre bibliothèque. Grille de 24, aplats pleins avec découpes (l'œil du canard est un trou, comme dans le D-canard) et bandes d'épaisseur constante (trait de 2,25 à 2,75, bouts ronds) ; l'ondulation du sillage remplace certaines droites (repère, devis, seau, menu : trois vagues de même longueur). Posés en masque CSS, ils prennent la couleur voulue.
+- Au survol, une carte (`.d38-carte`) se soulève et pose une ombre douce et floue, jamais franche.
 - Ombre franche Encre (décalée, sans flou) : seulement sur la bande d'appel. Étendue aux autres cartes, elle tire le site vers le néo-brutalisme, un style tout fait qui n'est pas celui de la marque.
 - Le site écrit « débarrassage », jamais « débarras » (choix d'Alexandre, octobre 2026), h1, titres, textes et SEO compris. Seul le nom Debarras38 garde « debarras ».
 
@@ -112,6 +114,7 @@ Ajouter `--watch` pendant le développement. Installer Sass : binaire autonome (
 ### Ce que le client peut faire seul
 
 - Modifier un texte : Pages → Accueil, cliquer dans le texte.
+- Souligner des mots du titre principal d'une vague : les sélectionner, puis flèche de la barre d'outils → « Souligner d’une vague ». Le bouton n'apparaît que dans un titre de niveau 1 ; un second clic retire le soulignement.
 - Ajouter une section : bouton « + » → Compositions → « Debarras38 ».
 - Supprimer ou déplacer une section : vue en liste de l'éditeur.
 - Changer téléphone, e-mail, adresse, horaires, titre et description SEO : menu « Debarras38 » de l'administration.

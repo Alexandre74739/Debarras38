@@ -11,10 +11,19 @@
 }
 
 .d38-carte {
+	display: flex;
+	flex-direction: column;
 	margin: 0;
 	padding: clamp(1.5rem, 3vw, 2.25rem);
 	border-radius: $rayon-carte;
 	background: var(--creme);
+	transition: box-shadow 0.35s $doux;
+
+	// Au survol, la carte se soulève (animations.js) et pose une ombre douce,
+	// floue : l'ombre franche décalée reste à la seule bande d'appel.
+	&:hover {
+		box-shadow: 0 1.25rem 2.5rem -0.75rem color-mix(in srgb, var(--encre) 28%, transparent);
+	}
 
 	// Sur une section Crème, la carte passe en Plume pour rester visible.
 	.has-creme-background-color > .d38-cartes > & {
@@ -25,53 +34,153 @@
 		margin: 0 0 0.75rem;
 	}
 
-	p {
+	p,
+	ul {
 		margin: 0;
+	}
+
+	> * + p,
+	> * + ul {
+		margin-top: 1rem;
+	}
+
+	// Ce que comprend l'intervention : une coche maison devant chaque point.
+	ul {
+		@include liste-nue;
+
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	li {
+		display: flex;
+		gap: 0.625rem;
+
+		&::before {
+			content: "";
+			flex: none;
+			width: 1.25rem;
+			height: 1.25rem;
+			margin-top: 0.2em;
+			background: var(--titre);
+			mask: url("../img/icone-coche.svg") center / contain no-repeat;
+		}
+	}
+
+	// Une photo dans une carte : sa légende (« Avant », « Pendant »…) devient
+	// une étiquette posée dans son coin, pas un surtitre au-dessus du titre.
+	.d38-visuel {
+		margin-top: 0.5rem;
+
+		figcaption {
+			position: absolute;
+			top: 0.875rem;
+			left: 0.875rem;
+			margin: 0;
+			padding: 0.375rem 0.875rem;
+			border-radius: 999px;
+			background: var(--bleu-canard);
+			color: var(--creme);
+			font: 700 0.875rem/1.2 var(--police-titres);
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+		}
+	}
+
+	// Sur la carte Bleu canard, l'étiquette passe en Crème pour se détacher.
+	&.has-bleu-canard-background-color .d38-visuel figcaption {
+		background: var(--creme);
+		color: var(--bleu-canard);
+	}
+
+	// Un lien en dernier (« Demander un devis ») se cale en bas de la carte :
+	// d'une carte à l'autre, les liens restent alignés.
+	> p:last-child:has(> a:only-child) {
+		margin-top: auto;
+		padding-top: 1.5rem;
+		font: 700 1.125rem/1.3 var(--police-titres);
 	}
 }
 
-// Une carte en avant, les autres empilées à côté (.d38-cartes__suite). Chaque
-// carte prend son fond dans l'éditeur ; le texte s'adapte seul. La carte en
-// avant porte le canard, ses textes posés en bas.
-.d38-cartes--une {
+// Trois cartes par ligne, celle du milieu mise en avant (.d38-carte--avant) :
+// plus haute que ses voisines, en Bleu canard, un canard qui sort de son bord
+// supérieur, de la même couleur qu'elle. Une carte dupliquée dans l'éditeur
+// passe à la ligne suivante, trois par trois.
+.d38-cartes--trio {
+	// La place du canard, au-dessus de la carte mise en avant.
+	--canard: clamp(4rem, 7vw, 5.5rem);
+
+	padding-top: var(--canard);
+
 	@include ecran($ecran-moyen) {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	@include ecran($ecran-large) {
-		grid-template-columns: 6fr 5fr;
-	}
-
-	> .d38-carte {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-
-		&::before {
-			@include forme("canard.svg", var(--vert-eau));
-
-			content: "";
-			flex: none;
-			width: clamp(3.5rem, 6vw, 5rem);
-			aspect-ratio: string.unquote($canard-proportions);
-			margin-bottom: auto;
-		}
-
-		h3 {
-			margin: 1.5rem 0 0;
-			font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-		}
-
-		p {
-			@include mesure(34rem);
-		}
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+		padding-block: calc(var(--canard) + 1rem) 1.5rem;
 	}
 }
 
-// La colonne de droite ne garde pas la marge que WordPress donne au second
-// bloc d'un groupe : elle s'aligne en haut sur la carte en avant.
-.d38-cartes__suite {
-	display: grid;
-	gap: 1.25rem;
-	margin: 0;
+.d38-carte--avant {
+	position: relative;
+
+	// Au-dessus de ses voisines, qui sortent de derrière elle à leur arrivée.
+	z-index: 1;
+
+	// Sur téléphone et tablette, elle passe en tête, sur toute la largeur.
+	order: -1;
+	grid-column: 1 / -1;
+
+	--marge-carte: clamp(1.5rem, 3vw, 2.25rem);
+	--bec: clamp(2.5rem, 4vw, 3.25rem);
+
+	// Le canard, posé sur le bord haut à gauche, de la couleur de la carte.
+	// Il flotte doucement, comme porté par l'eau (base/_animations.scss).
+	&::before {
+		@include forme("canard.svg", var(--fond));
+
+		content: "";
+		position: absolute;
+		bottom: calc(100% - 0.5rem);
+		left: var(--marge-carte);
+		width: var(--canard);
+		aspect-ratio: string.unquote($canard-proportions);
+		transform-origin: 50% 100%;
+		pointer-events: none;
+
+		// Sur téléphone et tablette, la carte est seule sur sa ligne : le
+		// canard se tourne vers elle.
+		@include sous($ecran-large) {
+			scale: -1 1;
+		}
+	}
+
+	// Le bec et les deux yeux du A du logo, dans le coin haut droit, en Vert
+	// d'eau (motif de la charte : Vert d'eau sur Bleu canard).
+	&::after {
+		@include forme("bec-canard.svg", var(--vert-eau));
+
+		content: "";
+		position: absolute;
+		top: var(--marge-carte);
+		right: var(--marge-carte);
+		width: var(--bec);
+		aspect-ratio: string.unquote($bec-proportions);
+		pointer-events: none;
+	}
+
+	h3 {
+		padding-right: calc(var(--bec) + 1rem);
+	}
+
+	// Sur grand écran, elle reprend sa place au milieu et dépasse de la
+	// ligne en haut comme en bas.
+	@include ecran($ecran-large) {
+		order: 0;
+		grid-column: auto;
+		margin-block: -1.5rem;
+		padding-block: clamp(2.25rem, 4vw, 3.25rem);
+	}
 }

@@ -1,0 +1,47 @@
+@use "../abstracts" as *;
+
+// Bord inférieur en coulure (.d38-bord-coulure) : la couleur de la section
+// déborde sur la suivante : un bord ondulé, d’où tombe une grosse goutte.
+// Le dessin (coulure.svg) couvre toute la largeur ; il est un peu aplati
+// pour ne pas descendre trop bas sur grand écran.
+//
+// animations.js pose la coulure dans un élément (.d38-coulure) pour la
+// faire couler à son arrivée. Sans JavaScript, elle est posée telle
+// quelle par le pseudo-élément.
+
+%coulure {
+	position: absolute;
+	top: calc(100% - 1px);
+	right: 0;
+	left: 0;
+	z-index: 1;
+	// Pas d'écart entre les blocs (WordPress en donne un à chaque enfant).
+	margin: 0;
+	height: clamp(5rem, 16vw, 15rem);
+	background: var(--fond);
+	mask: url("../img/coulure.svg") center top / 100% 100% no-repeat;
+	transform-origin: top;
+	pointer-events: none;
+}
+
+// Le haut du dessin est déjà de la couleur de la section : elle garde moins
+// de marge en bas.
+.d38-bord-coulure {
+	padding-bottom: clamp(1rem, 3vw, 3rem);
+}
+
+.d38-bord-coulure:not(.a-coule)::after {
+	@extend %coulure;
+
+	content: "";
+}
+
+.d38-coulure {
+	@extend %coulure;
+}
+
+// La coulure déborde sur la section suivante : son contenu commence
+// sous elle.
+.d38-bord-coulure + .d38-section {
+	padding-top: calc(var(--espace-section) + clamp(2.5rem, 9vw, 8.5rem));
+}

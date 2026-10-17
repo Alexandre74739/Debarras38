@@ -13,7 +13,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"tagName":"section","metadata":{"name":"Accroche"},"align":"full","className":"d38-section d38-hero","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section class="wp-block-group alignfull d38-section d38-hero has-creme-background-color has-background"><!-- wp:group {"className":"d38-hero__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-hero__texte"><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Débarrassage et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à Grenoble</mark></h1>
+<h1 class="wp-block-heading">Débarrassage et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à <span class="d38-souligne">Grenoble</span></mark></h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"d38-hero__slogan"} -->

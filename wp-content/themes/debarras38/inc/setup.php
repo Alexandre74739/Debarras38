@@ -39,6 +39,20 @@ add_action(
 	}
 );
 
+// Éditeur : le format « Souligner d'une vague » du titre principal.
+add_action(
+	'enqueue_block_editor_assets',
+	static function (): void {
+		wp_enqueue_script(
+			'debarras38-editeur',
+			D38_URI . '/assets/js/editeur.js',
+			array('wp-rich-text', 'wp-block-editor', 'wp-element', 'wp-data'),
+			(string) filemtime(D38_DIR . '/assets/js/editeur.js'),
+			true
+		);
+	}
+);
+
 /**
  * En-tête du document : polices préchargées, favicon, et les classes qui
  * préparent le menu replié (d38-js) et les animations (d38-anime). Sans

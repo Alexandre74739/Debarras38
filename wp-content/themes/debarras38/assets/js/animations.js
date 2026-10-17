@@ -71,7 +71,9 @@
 		textes.forEach( ( texte ) => {
 			const fragment = document.createDocumentFragment();
 
-			texte.textContent.split( /(\s+)/ ).forEach( ( morceau ) => {
+			// Les espaces insécables (avant « : », « ? »…) ne séparent pas les
+			// mots : la ponctuation reste collée au mot qui la précède.
+			texte.textContent.split( /([^\S  ]+)/ ).forEach( ( morceau ) => {
 				if ( ! morceau.trim() ) {
 					fragment.append( morceau );
 					return;
@@ -136,6 +138,31 @@
 	};
 
 	/**
+	 * Bord inférieur en coulure : les gouttes coulent quand le bas de la
+	 * section arrive à l'écran.
+	 */
+	const coulerBords = () => {
+		document.querySelectorAll( '.d38-bord-coulure' ).forEach( ( section ) => {
+			const coulure = creer( 'd38-coulure', section );
+
+			section.classList.add( 'a-coule' );
+
+			if ( ! ANIME ) {
+				return;
+			}
+
+			coulure.style.transform = 'scaleY(0.3)';
+			inView(
+				coulure,
+				() => {
+					animate( coulure, { scaleY: [ 0.3, 1 ] }, { duration: 2.2, ease: DOUX } );
+				},
+				{ margin: '0px 0px -10% 0px' }
+			);
+		} );
+	};
+
+	/**
 	 * Encadrés : deux nappes d'eau qui ondulent en sens contraires.
 	 */
 	const remplirEncadres = () => {
@@ -155,7 +182,7 @@
 	 */
 	const elementsDe = ( section ) =>
 		[ ...section.children ]
-			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-rangees' ) )
+			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-coulure, .d38-rangees' ) )
 			.flatMap( ( element ) => ( element.matches( GROUPES ) ? [ ...element.children ] : [ element ] ) );
 
 	/**
@@ -205,7 +232,6 @@
 		);
 	};
 
-	const DEPUIS_LE_BAS = 'inset(100% -1rem -1rem -1rem)';
 	const DEPUIS_LA_GAUCHE = 'inset(-1rem 100% -1rem -1rem)';
 	const DEPUIS_LE_HAUT = 'inset(-1rem -1rem 100% -1rem)';
 
@@ -244,14 +270,39 @@
 			reveler( [ ...carte.querySelectorAll( '.d38-appel__texte > *, .wp-block-button' ) ], 0.15, depart + 0.35 );
 		},
 
-		// Situations : la carte en avant s'ouvre depuis le bas, les autres se
-		// déplient depuis son côté, l'une après l'autre.
-		'.d38-cartes': ( cartes, depart ) => {
-			cartes.querySelectorAll( '.d38-carte' ).forEach( ( carte, rang ) => {
-				const enAvant = rang === 0 && cartes.matches( '.d38-cartes--une' );
+		// Situations : les cartes sont distribuées comme un jeu. La carte mise
+		// en avant se pose la première ; les autres sortent de derrière elle,
+		// inclinées, et filent à leur place. Le canard flotte sur son bord
+		// (CSS, base/_animations.scss).
+		'.d38-cartes--trio': ( cartes, depart ) => {
+			const avant = cartes.querySelector( '.d38-carte--avant' ) ?? cartes.firstElementChild;
+			const centre = ( carte ) => {
+				const cadre = carte.getBoundingClientRect();
 
-				devoiler( carte, depart + rang * 0.15, enAvant ? DEPUIS_LE_BAS : DEPUIS_LA_GAUCHE, enAvant ? 1.1 : 0.9 );
-			} );
+				return [ cadre.left + cadre.width / 2, cadre.top + cadre.height / 2 ];
+			};
+			const [ x, y ] = centre( avant );
+
+			avant.style.opacity = 0;
+			animate( avant, { opacity: 1 }, { duration: 0.3, delay: depart } );
+			animate( avant, { y: [ 64, 0 ], scale: [ 0.88, 1 ] }, { type: 'spring', stiffness: 220, damping: 20, delay: depart } );
+
+			[ ...cartes.querySelectorAll( '.d38-carte' ) ]
+				.filter( ( carte ) => carte !== avant )
+				.forEach( ( carte, rang ) => {
+					const [ cx, cy ] = centre( carte );
+					const cote = Math.sign( cx - x ) || ( rang % 2 ? 1 : -1 );
+					const delai = depart + 0.35 + rang * 0.1;
+
+					carte.style.opacity = 0;
+					animate( carte, { opacity: 1 }, { duration: 0.25, delay: delai } );
+					animate( carte, { x: [ x - cx, 0 ], y: [ y - cy, 0 ], rotate: [ -10 * cote, 0 ], scale: [ 0.85, 1 ] }, { type: 'spring', stiffness: 160, damping: 19, delay: delai } );
+				} );
+		},
+
+		// Autres cartes : chacune se déplie depuis la gauche, l'une après l'autre.
+		'.d38-cartes': ( cartes, depart ) => {
+			cartes.querySelectorAll( '.d38-carte' ).forEach( ( carte, rang ) => devoiler( carte, depart + rang * 0.15, DEPUIS_LA_GAUCHE, 0.9 ) );
 		},
 
 		// Déroulement : rien ne monte. Le fil se trace (CSS), et chaque étape
@@ -421,6 +472,7 @@
 	/* Mise en route ------------------------------------------------------- */
 
 	ondulerBords();
+	coulerBords();
 	remplirEncadres();
 
 	if ( ! ANIME ) {

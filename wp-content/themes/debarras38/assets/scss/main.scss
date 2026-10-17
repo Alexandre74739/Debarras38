@@ -13,6 +13,7 @@
 @use "components/logo";
 @use "components/boutons";
 @use "components/ondes";
+@use "components/coulure";
 @use "components/blob";
 @use "components/tableau";
 @use "components/visuel";
@@ -23,6 +24,7 @@
 @use "components/etapes";
 @use "components/questions";
 @use "components/formulaire";
+@use "components/souligne";
 
 @use "sections/hero";
 @use "sections/bandeau";

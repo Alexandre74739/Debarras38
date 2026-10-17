@@ -1,0 +1,21 @@
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+@use "../abstracts" as *;
+
+// Soulignement en vague, posé dans l'éditeur sur quelques mots du titre
+// principal (format « Souligner d'une vague », assets/js/editeur.js).
+//
+// Le trait est une image de fond plutôt qu'un pseudo-élément : si les mots
+// soulignés passent sur deux lignes, chaque ligne garde son trait. Une image
+// de fond ne prend pas de masque : la couleur est écrite dans le dessin, à
+// partir de la palette.
+$souligne-couleur: string.slice(meta.inspect(map.get($couleurs, "jaune-caneton")), 2);
+$souligne-dessin: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M4 10C40 3 70 3 100 8s62 6 96 -1' fill='none' stroke='%23#{$souligne-couleur}' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E";
+
+.d38-souligne {
+	padding-bottom: 0.08em;
+	background: url($souligne-dessin) left bottom / 100% 0.22em no-repeat;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
