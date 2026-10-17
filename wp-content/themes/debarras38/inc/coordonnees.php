@@ -23,7 +23,7 @@ function d38_coord_champs(): array {
 		'ville'           => array( 'Ville', 'text', 'Grenoble', '' ),
 		'horaires'        => array( 'Horaires', 'text', '', 'Exemple : « Du lundi au samedi, de 8 h à 19 h ». Laissez vide pour ne rien afficher.' ),
 		'seo_titre'       => array( 'Titre dans Google', 'text', 'Débarras Grenoble (38) : cave, grenier, maison | Debarras38', '60 caractères au plus.' ),
-		'seo_description' => array( 'Description dans Google', 'textarea', 'Entreprise de débarras et de nettoyage à Grenoble et en Isère. Cave, grenier, garage, appartement, maison entière : nous vidons, nous trions, nous nettoyons.', '155 caractères au plus.' ),
+		'seo_description' => array( 'Description dans Google', 'textarea', 'Débarras et nettoyage à Grenoble et en Isère : maison, appartement, cave, grenier, garage. Visite sur place, devis écrit. On passe dans tous les coins.', '155 caractères au plus.' ),
 	);
 }
 

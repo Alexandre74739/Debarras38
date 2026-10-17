@@ -15,7 +15,7 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"className":"d38-entete","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group d38-entete"><!-- wp:group {"className":"d38-entete__logo","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete__logo"><!-- wp:image {"linkDestination":"custom","className":"d38-logo d38-logo--principal"} -->
-<figure class="wp-block-image d38-logo d38-logo--principal"><a href="<?php echo $accueil; ?>"><img src="<?php echo $images; ?>/logo-primary.svg" alt="Debarras38, débarras et nettoyage à Grenoble : retour à l’accueil"/></a></figure>
+<figure class="wp-block-image d38-logo d38-logo--principal"><a href="<?php echo $accueil; ?>"><img src="<?php echo $images; ?>/logo-primary.png" width="1000" height="322" alt="Debarras38, débarras et nettoyage à Grenoble : retour à l’accueil"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group -->
 

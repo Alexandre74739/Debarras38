@@ -29,7 +29,7 @@ debarras38/
     ├── css/main.css     CSS compilé, ne pas modifier à la main
     ├── js/motion.js     bibliothèque Motion (Framer Motion, version sans React), hébergée localement
     ├── js/animations.js toutes les animations du site
-    ├── js/entete.js     bouton de menu de l'en-tête, sous 960 px
+    ├── js/entete.js     tiroir de navigation de l’en-tête, sous 960 px
     ├── js/formulaire.js envoi du formulaire sans recharger la page
     ├── fonts/           WOFF2
     └── img/             logos fournis, dessins et formes
@@ -41,10 +41,10 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 
 | Rôle | Composition | Contenu |
 |---|---|---|
-| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons se replient dans la carte, derrière le bouton de menu (`entete.js`). Pictogrammes Lucide (`icone-*.svg`). |
+| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes Lucide (`icone-*.svg`). |
 | Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
 | Bandeau | `atouts` | Bandeau de réassurance (`#atouts`) : une carte Bleu canard qui flotte entre l'accroche et les services, comme la carte de l'en-tête. Elle commence sous le premier écran : rien n'en dépasse sur l'accroche. Quatre atouts en quelques mots, chacun avec un pictogramme Lucide ; ni titre ni bouton. De l'eau Vert d'eau passe derrière la carte (`.d38-flotte`), refermée par la vague des services. Tient la place d'un « ils nous font confiance », sans rien inventer. La liste des communes n'est plus dans la page. |
-| Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : visuel, texte, bouton. |
+| Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : photo (bloc Image `.d38-visuel`), titre, paragraphe, bouton. La rangée cave/grenier/garage n’a pas de bouton. |
 | Appel | `appel` | Une phrase et le bouton principal, dans un encadré où passent des vagues. |
 | Situations | `cas` | Trois cartes : succession, déménagement, logement à rendre. |
 | Déroulement | `etapes` | Étapes numérotées, que le canard parcourt au défilement. |
@@ -61,7 +61,7 @@ Décisions d'Alexandre Perez, à ne pas rouvrir sans lui :
 - Pas de surtitres au-dessus des titres, pas de petites barres ni d'équerres décoratives.
 - Pas de formes ajoutées à la charte (soleil, nuages, cercles) : elles font « IA » et bon marché. Seuls servent le canard, la vague, les deux bandes et le D-canard. Une exception, voulue par Alexandre : la forme qui découpe l'image de l'accroche (`blob.svg`).
 - Les vagues bougent : en haut des sections (`.d38-bord-vague`), sur les bords de page (`.d38-rives`, à partir de 1280 px), dans les encadrés (`.d38-vagues`). Une seule mécanique, `poserOnde()` dans `animations.js` et `components/_ondes.scss`.
-- Les visuels des rangées (`.d38-visuel--canard`, `--sillage`, `--vagues`) sont des décors faits avec les formes de la marque. Une image glissée dans le bloc les recouvre : c'est l'emplacement des futures photos de chantier.
+- Les visuels des rangées sont de vraies photos, posées par le client (bloc Image `.d38-visuel`, cadre 4/3 recadré automatiquement). En attendant, ils affichent `photo-a-venir.svg` (D-canard sur Vert d’eau).
 - Le Jaune caneton ne sert qu'au bouton principal.
 
 ### Couleurs du contenu
@@ -128,7 +128,7 @@ Quatre versions. On ne le redessine pas, on ne le retape pas au clavier, on ne c
 
 | Version | Quand | Fichier (dans `assets/img/`) | Largeur min. écran | Largeur min. imprimé | En dessous |
 |---|---|---|---|---|---|
-| Logo principal | Dès qu'il y a de la largeur : en-tête du site, véhicule, bâche, devis, factures | `logo-primary.svg` (lettres Bleu canard, « 38 » Encre) | 120 px | 35 mm | logo réduit |
+| Logo principal | Dès qu'il y a de la largeur : en-tête du site, véhicule, bâche, devis, factures | `logo-primary.png` (lettres Bleu canard, « 38 » Encre ; PNG transparent, 1000 px) | 120 px | 35 mm | logo réduit |
 | Logo secondaire | Formats carrés ou en hauteur : textile, sac, autocollant, photo de profil | `logo-secondary.svg` (lettres Crème, « 38 » Jaune caneton) | 90 px | 25 mm | logo réduit |
 | Logo réduit | Petits espaces : en-tête du site sur téléphone, signature d'e-mail, coin de bâche | `reduce-logo.svg` (D-canard + « 38 ») | 48 px | 15 mm | favicon |
 | Favicon | Très petits formats : onglet, icône d'application, pastille | `d-canard.svg` (D-canard seul) | 16 px | 6 mm | ne pas descendre |

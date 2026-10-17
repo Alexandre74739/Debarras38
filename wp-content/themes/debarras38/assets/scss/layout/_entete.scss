@@ -11,13 +11,18 @@
 //   .d38-entete__volet     ce qui se replie sous 960 px
 //   .d38-entete__actions   le menu et les boutons
 
-$marge: 0.375rem; // remplissage de la carte, et place du contour de navigation au clavier
-$retrait: calc(1rem - #{$marge}); // aligne les textes du volet sur le logo
+$marge: 0.625rem; // remplissage de la carte, et place du contour de navigation au clavier
+$marge-logo: 1.25rem; // remplissage à gauche, devant le logo
+$retrait: calc(#{$marge-logo} - #{$marge}); // aligne les textes du volet sur le logo
 $hauteur: 2.75rem; // logo, liens, boutons et bouton de menu ont tous cette hauteur
 $surlignage: color-mix(in srgb, var(--bleu-canard) 10%, transparent);
 $filet: color-mix(in srgb, var(--bleu-canard) 12%, transparent);
 $duree: 0.3s;
 $trait-carte: 2px;
+
+// Arrondis concentriques : celui de la carte suit celui des boutons, plus
+// l’écart qui les sépare (remplissage et contour).
+$rayon-entete: calc(#{$rayon-bouton} + #{$marge} + #{$trait-carte});
 
 // Hauteur de l'en-tête, carte repliée. L'accroche s'en sert pour remplir le
 // reste de l'écran (sections/_hero.scss).
@@ -51,10 +56,10 @@ header.wp-block-template-part {
 
   max-width: var(--largeur-contenu);
   margin-inline: auto;
-  padding: $marge $marge $marge 1rem;
+  padding: $marge $marge $marge $marge-logo;
   gap: 0 1rem;
   border: $trait-carte solid $filet;
-  border-radius: $rayon-carte;
+  border-radius: $rayon-entete;
   background-color: var(--creme);
   box-shadow: 0 0.25rem 1rem -0.25rem
     color-mix(in srgb, var(--encre) 20%, transparent);
@@ -81,12 +86,17 @@ header.wp-block-template-part {
     white-space: nowrap;
   }
 
+  // Sans marge : le haut du tiroir, posé avant, ferait sinon ajouter à
+  // WordPress l'écart entre blocs.
   & &__actions {
     gap: clamp(0.5rem, 1.5vw, 1.5rem);
+    margin-block: 0;
   }
 
-  // Bouton de menu : pictogrammes Lucide (lucide.dev).
-  &__bascule {
+  // Boutons d'ouverture et de fermeture du tiroir : pictogrammes Lucide
+  // (lucide.dev).
+  &__bascule,
+  &__fermer {
     display: none;
     flex: none;
     width: $hauteur;
@@ -114,7 +124,13 @@ header.wp-block-template-part {
       mask: url("../img/icone-menu.svg") center / contain no-repeat;
     }
 
-    &[aria-expanded="true"]::before {
+  }
+
+  &__fermer {
+    display: flex;
+    margin-left: 0;
+
+    &::before {
       mask-image: url("../img/icone-fermer.svg");
     }
   }
@@ -149,50 +165,33 @@ header.wp-block-template-part {
   }
 }
 
-// Sous 960 px, le menu et les boutons passent sous le logo, dans la carte, et
-// le bouton de menu les déplie. Le bouton de menu et les boutons d'action ne
-// sont donc jamais visibles ensemble.
+// Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis
+// la gauche, par-dessus la page assombrie (assets/js/entete.js). Sans
+// JavaScript, il n'y a ni bouton ni tiroir : le volet reste déplié sous le
+// logo, dans la carte.
+$tiroir-largeur: min(22rem, 86vw);
+$tiroir-marge: 1.25rem;
+
 @include sous($ecran-large) {
   .d38-entete {
     &__bascule {
       display: flex;
     }
 
-    // Le volet occupe toute la largeur de la carte, remplissage compris.
     & &__volet {
-      display: grid;
       flex: none;
       order: 1;
-      width: calc(100% + 1rem + #{$marge});
-      margin: 0 (-$marge) 0 -1rem;
-      grid-template-rows: 1fr;
-      transition: grid-template-rows $duree $doux;
+      width: 100%;
     }
 
     & &__actions {
-      min-height: 0;
       flex-direction: column;
       align-items: stretch;
-      gap: 0;
-      overflow: hidden;
-      transition: visibility 0s;
-
-      > * {
-        margin: $marge;
-      }
-
-      // Un filet sépare les liens des boutons.
-      > * + * {
-        margin-top: 0.5rem;
-        padding-top: calc(0.5rem + #{$marge});
-        padding-inline: $retrait;
-        border-top: 1px solid $filet;
-      }
+      gap: 0.5rem;
     }
 
     nav.d38-menu {
       display: block;
-      font-size: 1.125rem;
 
       .wp-block-navigation__container {
         flex-direction: column;
@@ -202,31 +201,121 @@ header.wp-block-template-part {
       .wp-block-navigation-item {
         display: block;
       }
-
-      .wp-block-navigation-item__content {
-        min-height: $hauteur-bouton;
-        padding-inline: $retrait;
-      }
     }
   }
 
-  // Volet replié. Sans JavaScript, il n'y a pas de bouton de menu : le volet
-  // reste déplié.
-  .d38-js .d38-entete:not(.est-ouvert) {
+  // Le tiroir.
+  .d38-js .d38-entete {
     .d38-entete__volet {
-      grid-template-rows: 0fr;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      width: $tiroir-largeur;
+      overflow-y: auto;
+      border-radius: 0 $rayon-entete $rayon-entete 0;
+      background-color: var(--creme);
+      box-shadow: 0.5rem 0 2rem -0.5rem
+        color-mix(in srgb, var(--encre) 30%, transparent);
+      translate: -100% 0;
+      visibility: hidden;
+      transition:
+        translate $duree $doux,
+        visibility 0s $duree;
+    }
+
+    // Haut du tiroir : le logo, repris de la carte, et le bouton de fermeture.
+    .d38-entete__tiroir-haut {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: $tiroir-marge $marge 1rem $tiroir-marge;
     }
 
     .d38-entete__actions {
-      visibility: hidden;
-      transition: visibility 0s $duree;
+      flex: 1;
+      padding: 0 $marge $tiroir-marge;
+    }
+
+    // Un lien par rangée, sur toute la largeur, avec un chevron au bout.
+    .d38-menu .wp-block-navigation-item__content {
+      justify-content: space-between;
+      min-height: 3.25rem;
+      padding-inline: calc(#{$tiroir-marge} - #{$marge}) 0.75rem;
+      font-size: 1.125rem;
+
+      &::after {
+        content: "";
+        flex: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        background: currentColor;
+        mask: url("../img/icone-chevron.svg") center / contain no-repeat;
+        opacity: 0.5;
+        transition: opacity 0.15s, translate 0.2s $doux;
+      }
+
+      &:hover::after {
+        opacity: 1;
+        translate: 0.25rem 0;
+      }
+    }
+
+    // Le bouton descend en bas du tiroir, à portée du pouce.
+    .wp-block-buttons {
+      margin-top: auto;
+      padding-top: 1.5rem;
+    }
+
+    .wp-block-button,
+    .wp-block-button__link {
+      width: 100%;
+    }
+
+    &.est-ouvert .d38-entete__volet {
+      translate: 0 0;
+      visibility: visible;
+      transition: translate $duree $doux;
     }
   }
 
+  // La page, assombrie derrière le tiroir. Un clic dessus le referme.
+  .d38-entete__voile {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-color: color-mix(in srgb, var(--encre) 45%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity $duree,
+      visibility 0s $duree;
+
+    .est-ouvert > & {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity $duree;
+    }
+  }
+
+  // La page ne défile pas sous le tiroir ouvert.
+  .d38-menu-ouvert {
+    overflow: hidden;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .d38-entete .d38-entete__volet,
-    .d38-entete .d38-entete__actions {
+    .d38-js .d38-entete .d38-entete__volet,
+    .d38-entete__voile {
       transition: none;
     }
+  }
+}
+
+// Au-delà de 960 px, le tiroir n'existe pas : ses ajouts restent cachés.
+@include ecran($ecran-large) {
+  .d38-entete__tiroir-haut,
+  .d38-entete__voile {
+    display: none;
   }
 }

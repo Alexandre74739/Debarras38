@@ -16,13 +16,13 @@
 <!-- wp:group {"className":"d38-questions","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-questions"><!-- wp:details -->
 <details class="wp-block-details"><summary>Combien coûte un débarras à Grenoble ?</summary><!-- wp:paragraph -->
-<p>Tout dépend du volume à sortir, de l’accès (étage, ascenseur, stationnement) et du nettoyage à prévoir. Nous venons voir les lieux, puis vous recevez un devis écrit.</p>
+<p>Tout dépend du volume à sortir, de l’accès (étage, ascenseur, stationnement) et du nettoyage à prévoir. C’est pour cela que nous venons voir avant de chiffrer : vous recevez un devis écrit, et vous savez ce que vous payez avant que le premier carton ne sorte.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Que devient ce que vous emportez ?</summary><!-- wp:paragraph -->
-<p>Nous trions sur place. Ce qui peut resservir est mis de côté, le reste est déposé en déchetterie.</p>
+<p>Nous trions sur place. Ce qui peut resservir est mis de côté, le reste est déposé en déchetterie. Rien ne finit au coin d’un bois.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 
@@ -34,7 +34,7 @@
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Intervenez-vous après un décès ou pour une succession ?</summary><!-- wp:paragraph -->
-<p>Oui. Dites-nous ce que la famille souhaite garder : nous le mettons à part avant de commencer, et nous nous chargeons du reste.</p>
+<p>Oui. La famille reprend d’abord ce qu’elle souhaite garder, meubles, papiers ou souvenirs. Nous nous chargeons ensuite de tout le reste, jusqu’à la maison vide et propre.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 
@@ -46,13 +46,19 @@
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Faites-vous aussi le nettoyage ?</summary><!-- wp:paragraph -->
-<p>Oui. Après le débarras, nous balayons, nous dépoussiérons et nous lavons les sols, jusque dans les recoins.</p>
+<p>Oui. Après le débarras, nous balayons, nous dépoussiérons et nous lavons les sols, jusque dans les recoins. C’est l’idéal avant un état des lieux de sortie ou une mise en vente.</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details -->
+<details class="wp-block-details"><summary>Combien de temps dure un débarras ?</summary><!-- wp:paragraph -->
+<p>Une cave ne prend pas le temps d’une maison de quatre pièces. Lors de la visite, nous vous indiquons la durée prévue, et le jour de l’intervention est fixé avec vous.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Dans quelles communes vous déplacez-vous ?</summary><!-- wp:paragraph -->
-<p>À Grenoble, dans l’agglomération et dans le reste de l’Isère : Échirolles, Saint-Martin-d’Hères, Fontaine, Meylan, Voiron, Vizille et les communes voisines.</p>
+<p>À Grenoble, dans toute l’agglomération et dans le reste de l’Isère : Échirolles, Saint-Martin-d’Hères, Fontaine, Meylan, Saint-Égrève, Seyssinet-Pariset, Sassenage, Le Pont-de-Claix, Crolles, Voiron, Vizille et les communes voisines.</p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details --></div>
 <!-- /wp:group --></section>

@@ -20,7 +20,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Vous nous décrivez les lieux : une cave, un grenier, une maison entière. Nous fixons un moment pour venir voir.</p>
+<p>Par téléphone ou avec le formulaire, vous nous décrivez les lieux : une cave, un grenier, une maison entière. Nous fixons un moment pour venir voir.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

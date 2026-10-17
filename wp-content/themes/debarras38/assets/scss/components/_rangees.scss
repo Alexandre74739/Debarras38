@@ -35,6 +35,11 @@
 			@include mesure(34rem);
 
 			margin-block: 1rem 1.75rem;
+
+			// Une rangée sans bouton finit sur son paragraphe.
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 }

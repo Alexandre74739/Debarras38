@@ -154,8 +154,8 @@ function d38_seo_entreprise(): array {
 		'description' => d38_coord( 'seo_description' ),
 		'slogan'      => 'On passe dans tous les coins.',
 		'url'         => home_url( '/' ),
-		'logo'        => D38_URI . '/assets/img/logo-primary.svg',
-		'image'       => D38_URI . '/assets/img/logo-primary.svg',
+		'logo'        => D38_URI . '/assets/img/logo-primary.png',
+		'image'       => D38_URI . '/assets/img/logo-primary.png',
 		'telephone'   => str_replace( 'tel:', '', d38_coord( 'telephone_lien' ) ),
 		'email'       => d38_coord( 'email' ),
 		'address'     => array(

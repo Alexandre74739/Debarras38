@@ -154,7 +154,7 @@
 	 * Encadrés : deux nappes d'eau qui ondulent en sens contraires.
 	 */
 	const remplirEncadres = () => {
-		document.querySelectorAll( '.d38-vagues, .d38-visuel--vagues' ).forEach( ( encadre ) => {
+		document.querySelectorAll( '.d38-vagues' ).forEach( ( encadre ) => {
 			poserOnde( creer( 'd38-vague d38-vague--fond', encadre ), 'haut', 30 );
 			poserOnde( creer( 'd38-vague d38-vague--devant', encadre ), 'haut', -44 );
 		} );
@@ -191,7 +191,10 @@
 			if ( element.matches( 'h1, h2, h3' ) ) {
 				const mots = decouperMots( element );
 
+				// Le titre a pu être masqué en entier en attendant (rangées) :
+				// ce sont désormais ses mots qui portent l'apparition.
 				mots.forEach( ( mot ) => ( mot.style.opacity = 0 ) );
+				element.style.removeProperty( 'opacity' );
 				animate( mots, { opacity: 1, y: [ '0.7em', '0em' ], rotate: [ 4, 0 ] }, { duration: 0.75, ease: DOUX, delay: stagger( 0.045, { startDelay: depart } ) } );
 				return;
 			}

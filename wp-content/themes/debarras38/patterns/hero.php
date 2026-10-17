@@ -13,7 +13,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"tagName":"section","metadata":{"name":"Accroche"},"align":"full","className":"d38-section d38-hero","backgroundColor":"creme","layout":{"type":"default"}} -->
 <section class="wp-block-group alignfull d38-section d38-hero has-creme-background-color has-background"><!-- wp:group {"className":"d38-hero__texte","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-hero__texte"><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Débarrassage et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à Grenoble</mark></h1>
+<h1 class="wp-block-heading">Débarras et nettoyage <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-bleu-canard-color">à Grenoble</mark></h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"d38-hero__slogan"} -->
@@ -21,7 +21,7 @@ $images = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"d38-chapo"} -->
-<p class="d38-chapo">Succession, déménagement, logement à rendre : vous nous confiez les clés, nous vidons, nous trions, nous nettoyons. De la cave au grenier, partout en Isère.</p>
+<p class="d38-chapo">Maison, appartement, cave, grenier ou garage : nous vidons, nous trions, nous nettoyons. Nous venons voir, vous recevez un devis écrit, et vous pouvez nous confier les clés. À Grenoble et partout en Isère.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
