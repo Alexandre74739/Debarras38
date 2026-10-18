@@ -1,0 +1,16 @@
+# Configuration propre à chaque installation : accès à la base et clés secrètes.
+# Jamais dans le dépôt (il est public). Modèle de production dans CLAUDE.md.
+wp-config.php
+.env
+
+# Fichiers de Local, inutiles et dangereux en ligne (xdebug_info affiche la configuration du serveur).
+local-xdebuginfo.php
+
+# Contenus et fichiers générés par WordPress.
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/debug.log
+
+# Donne la version de WordPress à qui la demande.
+readme.html

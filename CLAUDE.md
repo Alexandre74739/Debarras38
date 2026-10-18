@@ -112,6 +112,30 @@ Un bloc qui reçoit une couleur de fond règle seul la couleur de ce qu'il conti
 - WordPress 7.1 donne la classe `wp-block-paragraph` à chaque paragraphe : un sélecteur `p:not([class])` ne cible plus rien (c'est le cas de la règle de largeur dans `layout/_section.scss`).
 - `focus()` sur un bouton de l'en-tête fait remonter la page (il est sous la marge de `scroll-padding-top`) : `focus({ preventScroll: true })`.
 
+### Dépôt et sécurité
+
+- Le dépôt GitHub (`Alexandre74739/Debarras38`) est **public**. `wp-config.php` n'y est plus (`.gitignore`) : il contenait les clés secrètes, régénérées depuis (`wp config shuffle-salts`), celles de l'historique ne valent plus rien. Ne jamais committer d'accès, de clé ni de mot de passe.
+- Hors dépôt aussi : `local-xdebuginfo.php` (fichier de Local qui affiche la configuration du serveur), `readme.html` (donne la version de WordPress), `wp-content/uploads/`.
+- Seul le thème `debarras38` est installé : les thèmes Twenty Twenty-* et leurs traductions sont supprimés. `CORE_UPGRADE_SKIP_NEW_BUNDLED` empêche une mise à jour de WordPress de les réinstaller.
+- `DISALLOW_FILE_EDIT` retire l'éditeur de fichiers de l'administration : le code ne se modifie que dans le dépôt.
+- En production, `wp-config.php` est créé sur le serveur, jamais copié depuis Local :
+
+```php
+define( 'DB_NAME', '…' );          // fournis par l'hébergeur
+define( 'DB_USER', '…' );
+define( 'DB_PASSWORD', '…' );      // long et unique
+define( 'DB_HOST', '…' );
+// Clés neuves : https://api.wordpress.org/secret-key/1.1/salt/
+$table_prefix = 'd38x_';           // autre chose que wp_
+define( 'WP_ENVIRONMENT_TYPE', 'production' );
+define( 'WP_DEBUG', false );
+define( 'FORCE_SSL_ADMIN', true );
+define( 'DISALLOW_FILE_EDIT', true );
+define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', true );
+```
+
+- Comptes : un administrateur par personne (Said, Alexandre), aucun identifiant `root` ou `admin` en ligne.
+
 ### Commandes
 
 ```
