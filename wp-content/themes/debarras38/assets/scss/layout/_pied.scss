@@ -61,5 +61,18 @@
     padding-top: 1.5rem;
     border-top: 2px solid var(--bleu-canard);
     font-size: 0.9375rem;
+    text-align: center;
+  }
+
+  // Liens du pied de page sans soulignement (choix d'Alexandre) : il revient
+  // au survol et au clavier, pour qu'on sache où l'on va cliquer.
+  a {
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
   }
 }

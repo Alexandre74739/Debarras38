@@ -4,7 +4,8 @@
  * Slug: debarras38/footer
  * Inserter: no
  *
- * Fond Encre : logo secondaire (lettres Crème, « 38 » Jaune caneton) et slogan en capitales.
+ * Fond Encre : logo principal en version inversée (lettres Crème, « 38 » Jaune caneton,
+ * logo-primary-inverse.svg fourni par Fablioo) et slogan en capitales.
  */
 
 $accueil = esc_url( home_url( '/' ) );
@@ -13,8 +14,8 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"className":"d38-pied","backgroundColor":"encre","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-pied has-encre-background-color has-background"><!-- wp:group {"className":"d38-pied__grille","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-pied__grille"><!-- wp:group {"className":"d38-pied__marque","layout":{"type":"default"}} -->
-<div class="wp-block-group d38-pied__marque"><!-- wp:image {"className":"d38-logo d38-logo--secondaire"} -->
-<figure class="wp-block-image d38-logo d38-logo--secondaire"><img src="<?php echo $images; ?>/logo-secondary.svg" alt="Debarras38"/></figure>
+<div class="wp-block-group d38-pied__marque"><!-- wp:image {"className":"d38-logo d38-logo--pied"} -->
+<figure class="wp-block-image d38-logo d38-logo--pied"><img src="<?php echo $images; ?>/logo-primary-inverse.svg" alt="Debarras38"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"className":"d38-slogan"} -->

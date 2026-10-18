@@ -28,4 +28,10 @@
   &--secondaire {
     width: 9rem;
   }
+
+  // Pied de page : le logo principal en version inversée, pour le fond Encre.
+  // Le slogan dessous garde la zone de protection (un quart de la hauteur).
+  &--pied {
+    width: clamp(12.5rem, 18vw, 16.25rem);
+  }
 }
