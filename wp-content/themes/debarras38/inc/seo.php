@@ -88,6 +88,41 @@ add_action(
 );
 
 /**
+ * Plan du site (/sitemap.xml, que WordPress renvoie vers /wp-sitemap.xml) :
+ * le site n'a ni blog ni catégories, seules les pages y figurent. Pas de
+ * pages d'auteur : elles donneraient l'identifiant de connexion de l'administrateur.
+ */
+add_filter( 'wp_sitemaps_add_provider', static fn( $fournisseur, string $nom ) => 'users' === $nom ? false : $fournisseur, 10, 2 );
+add_filter( 'wp_sitemaps_post_types', static fn( array $types ): array => array_intersect_key( $types, array( 'page' => true ) ) );
+add_filter( 'wp_sitemaps_taxonomies', '__return_empty_array' );
+
+// Même raison : les pages d'auteur renvoient à l'accueil, et la liste des
+// comptes n'est lisible dans l'API qu'une fois connecté.
+add_action(
+	'template_redirect',
+	static function (): void {
+		if ( is_author() ) {
+			wp_safe_redirect( home_url( '/' ), 301 );
+			exit;
+		}
+	}
+,
+	// Avant la redirection canonique de WordPress, qui enverrait ?author=1 vers /author/identifiant/.
+	1
+);
+
+add_filter(
+	'rest_endpoints',
+	static function ( array $routes ): array {
+		if ( ! is_user_logged_in() ) {
+			unset( $routes['/wp/v2/users'], $routes['/wp/v2/users/(?P<id>[\d]+)'] );
+		}
+
+		return $routes;
+	}
+);
+
+/**
  * Textes des blocs d'un type donné, cherchés dans toute l'arborescence.
  *
  * @param array    $blocs  Blocs issus de parse_blocks().
