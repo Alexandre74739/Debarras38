@@ -1,0 +1,141 @@
+@use "../abstracts" as *;
+
+// Sillages : paires de bandes Bleu canard posées par animations.js
+// (poserSillages) dans les sections qui portent une classe
+// « d38-sillage-<placement> ».
+//
+// Une bande n'entre et ne sort que par un bord qui se voit : un côté de la
+// page, ou le bas d'une section quand la vague d'une section d'une autre
+// couleur le recouvre (les Questions avant la demande de devis). Entre deux
+// sections de même fond, la limite ne se voit pas : une bande qui la
+// traverserait paraîtrait coupée net.
+//
+// Elles passent derrière le contenu (z-index -1 dans une section isolée),
+// jamais sous un texte. Toutes les formes partagent la même échelle
+// (--sillage-u, en pixels par unité de dessin) : les bandes gardent la même
+// épaisseur d'une section à l'autre. --largeur est la largeur du dessin,
+// donnée par animations.js.
+//
+// Une paire agrandie garde la même forme et la même épaisseur : --taille
+// multiplie le dessin et divise d'autant le trait. (Pas de
+// « vector-effect: non-scaling-stroke » : il fausse le tracé animé, dont les
+// pointillés se comptent alors en pixels.)
+.d38-section[class*="d38-sillage-"] {
+	position: relative;
+	isolation: isolate;
+}
+
+.d38-sillage {
+	--sillage-u: clamp(0.55px, 0.05vw, 1px);
+	--taille: 1;
+
+	position: absolute;
+	z-index: -1;
+	width: calc(var(--largeur) * var(--sillage-u) * var(--taille));
+	height: auto;
+	overflow: hidden;
+	fill: none;
+	stroke: var(--bleu-canard);
+	stroke-width: calc(12 / var(--taille));
+	pointer-events: none;
+
+	// Coins : en haut à droite (sens du dessin), retourné ailleurs. À réserver
+	// aux bords recouverts par une vague d'une autre couleur.
+	&--coin-haut-droit {
+		top: 0;
+		right: 0;
+	}
+
+	// Grand coin (forme « vaste ») : le coin trois fois plus grand, bandes
+	// aussi serrées que les autres.
+	&--vaste-haut-droit {
+		top: 0;
+		right: 0;
+	}
+
+	// Accroche : la paire part du haut de la page, qui est un bord qui se
+	// voit, et non du haut de l'accroche, qui commence sous l'en-tête (elle y
+	// paraissait coupée). Elle passe derrière la carte de l'en-tête.
+	.d38-hero > &--vaste-haut-droit {
+		top: calc(-1 * var(--entete-hauteur));
+	}
+
+	// Bandeau des atouts : la boucle du bord gauche descend de l'accroche et
+	// plonge dans l'eau du bandeau, dans la marge, à côté de la carte. L'eau
+	// (.d38-vague) passe devant elle.
+	// (Sélecteur renforcé : il passe après les règles des côtés, plus bas.)
+	// Le bas de la boucle reste 3,5rem sous la surface de l'eau (--niveau-fond,
+	// sections/_bandeau.scss) ; le reste en sort, au-dessus.
+	.d38-section.d38-bandeau > &--bord-gauche {
+		top: auto;
+		bottom: calc(var(--niveau-fond) - 3.5rem);
+		translate: none;
+	}
+
+	&--coin-bas-gauche {
+		bottom: 0;
+		left: 0;
+		rotate: 180deg;
+	}
+
+	&--coin-bas-droit {
+		right: 0;
+		bottom: 0;
+		scale: 1 -1;
+	}
+
+	// Sur un côté de la page, boucle (bord-) ou arc (anse-) : seulement quand
+	// la marge les contient. « -gauche » ou « -droit(e) » choisit le côté ;
+	// à mi-hauteur de la section, ou au quart (« -haut ») ou aux trois quarts
+	// (« -bas ») : bord-gauche, anse-droite-haut, anse-gauche-bas…
+	&[class*="--bord-"],
+	&[class*="--anse-"] {
+		top: 50%;
+		display: none;
+		translate: 0 -50%;
+
+		@include ecran(90rem) {
+			display: block;
+		}
+
+		&[class*="-droit"] {
+			right: 0;
+		}
+
+		&[class*="-gauche"] {
+			left: 0;
+			scale: -1 1;
+		}
+
+		&[class*="-haut"] {
+			top: 25%;
+		}
+
+		&[class*="-bas"] {
+			top: 75%;
+		}
+	}
+
+	// Pentes douces et crêtes, sur le bord bas : mêmes réserves que les coins.
+	&--longue-bas-gauche {
+		bottom: 0;
+		left: 0;
+	}
+
+	&--longue-bas-droit {
+		right: 0;
+		bottom: 0;
+		scale: -1 1;
+	}
+
+	&--bosse-bas-gauche {
+		bottom: 0;
+		left: 6%;
+	}
+
+	&--bosse-bas-droit {
+		right: 6%;
+		bottom: 0;
+		scale: -1 1;
+	}
+}

@@ -54,7 +54,7 @@
 	position: relative;
 	overflow: hidden;
 
-	> :not(.d38-vague) {
+	> :not(.d38-vague, .d38-sillage) {
 		position: relative;
 		z-index: 2;
 	}
@@ -68,7 +68,7 @@
 	// L'eau reste sous la vague de la section suivante.
 	isolation: isolate;
 
-	> :not(.d38-vague, .d38-onde) {
+	> :not(.d38-vague, .d38-onde, .d38-sillage) {
 		position: relative;
 		z-index: 2;
 	}

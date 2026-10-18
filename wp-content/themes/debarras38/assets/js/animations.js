@@ -181,7 +181,7 @@
 	 */
 	const elementsDe = ( section ) =>
 		[ ...section.children ]
-			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-coulure, .d38-rangees' ) )
+			.filter( ( element ) => ! element.matches( '.d38-onde, .d38-vague, .d38-coulure, .d38-rangees, .d38-sillage' ) )
 			.flatMap( ( element ) => ( element.matches( GROUPES ) ? [ ...element.children ] : [ element ] ) );
 
 	/**
@@ -226,8 +226,13 @@
 	 */
 	const devoiler = ( element, depart, cache, duree = 1 ) => {
 		element.style.clipPath = cache;
-		animate( element, { clipPath: [ cache, 'inset(-1rem -1rem -1rem -1rem)' ] }, { duration: duree, ease: DOUX, delay: depart } ).finished.then( () =>
-			requestAnimationFrame( () => element.style.removeProperty( 'clip-path' ) )
+
+		// Renvoie une promesse tenue une fois la découpe retirée.
+		return animate( element, { clipPath: [ cache, 'inset(-1rem -1rem -1rem -1rem)' ] }, { duration: duree, ease: DOUX, delay: depart } ).finished.then(
+			() => new Promise( ( fin ) => requestAnimationFrame( () => {
+				element.style.removeProperty( 'clip-path' );
+				fin();
+			} ) )
 		);
 	};
 
@@ -320,7 +325,10 @@
 		// Demande de devis : le numéro s'écrit comme sur la bâche, le
 		// formulaire se déroule comme une feuille.
 		'.d38-numero': ( numero, depart ) => devoiler( numero, depart, DEPUIS_LA_GAUCHE, 0.9 ),
-		'.d38-contact__formulaire': ( formulaire, depart ) => devoiler( formulaire, depart + 0.1, DEPUIS_LE_HAUT, 1.1 ),
+		// Le canard, posé au-dessus de la carte, serait coupé par la découpe :
+		// il s'y pose une fois la carte déroulée (« est-pose »).
+		'.d38-contact__formulaire': ( formulaire, depart ) =>
+			devoiler( formulaire, depart + 0.1, DEPUIS_LE_HAUT, 1.1 ).then( () => formulaire.classList.add( 'est-pose' ) ),
 	};
 
 	/**
@@ -470,6 +478,100 @@
 	};
 
 	/**
+	 * Sillages : des paires de bandes Bleu canard (motif de la charte) qui
+	 * entrent par un bord de la section et en ressortent. Une section en reçoit
+	 * une par classe « d38-sillage-<placement> » ; la position et la taille
+	 * sont dans components/_sillages.scss. Chaque bande se trace depuis son
+	 * bord quand la section arrive à l'écran (base/_animations.scss).
+	 *
+	 * Les secondes bandes sont la première décalée d'une distance constante :
+	 * les deux restent parallèles, d'épaisseur constante.
+	 */
+	const FORMES = {
+		// Entre par le bord haut, ressort par le bord droit.
+		coin: {
+			vue: [ 240, 120 ],
+			traces: [ 'M60 -10C80 34 124 56 176 58S236 76 250 90', 'M100 -24C120 12 160 30 208 32S260 46 274 56' ],
+		},
+		// Le coin en trois fois plus grand, avec le même écart entre les
+		// bandes : pour un grand coin, sans écarter les bandes.
+		vaste: {
+			vue: [ 720, 360 ],
+			traces: [
+				'M180 -30C240 102 372 168 528 174C684 180 708 228 750 270',
+				'M216 -47C223 -36 240 -3 255 16C270 35 288 51 307 65C326 79 348 91 371 101C394 111 419 118 446 124C472 130 501 131 530 134C558 137 590 138 614 143C639 148 659 154 677 162C695 169 710 179 723 188C736 197 745 208 755 217C764 226 774 238 778 242',
+			],
+		},
+		// Entre par le bord droit, fait une boucle et y ressort.
+		bord: {
+			vue: [ 200, 300 ],
+			traces: [ 'M215 18C95 40 55 125 115 158S205 235 215 285', 'M215 62C130 78 100 132 150 158S210 222 215 245' ],
+		},
+		// Entre par le bord droit, s'en écarte en un large arc et y ressort.
+		anse: {
+			vue: [ 200, 360 ],
+			traces: [ 'M215 0C90 70 80 270 215 360', 'M231 28C222 36 193 56 180 74C167 92 158 115 153 138C149 160 148 186 152 209C156 233 165 257 178 278C192 298 224 324 233 333' ],
+		},
+		// Entre par le bord gauche, descend en pente douce, ressort par le bas.
+		longue: {
+			vue: [ 300, 180 ],
+			traces: [
+				'M-15 30C70 25 120 60 150 95C180 130 230 140 260 195',
+				'M-13 62C-6 62 15 62 28 63C40 65 51 68 61 71C71 74 79 79 87 83C95 88 102 93 109 99C115 104 119 109 126 116C133 123 142 132 151 139C159 146 168 151 175 156C183 162 191 166 198 172C204 177 211 182 216 188C222 195 229 207 232 210',
+			],
+		},
+		// Sort du bord bas en crête de vague et y replonge.
+		bosse: {
+			vue: [ 310, 130 ],
+			traces: [
+				'M10 140C50 50 130 25 185 45C235 63 265 105 300 140',
+				'M39 153C43 146 54 125 63 114C72 103 81 95 91 89C100 82 111 78 120 75C130 72 140 70 149 71C158 71 166 73 174 75C182 78 189 81 196 86C203 90 210 95 216 101C223 106 229 112 236 119C243 126 249 133 256 140C263 147 274 159 277 163',
+			],
+		},
+	};
+
+	// Le premier mot du placement nomme la forme : « anse-gauche-bas » pose
+	// une anse. Les placements sont décrits dans components/_sillages.scss.
+	const poserSillages = () => {
+		const SVG = 'http://www.w3.org/2000/svg';
+
+		document.querySelectorAll( '.d38-section[class*="d38-sillage-"]' ).forEach( ( section ) => {
+			[ ...section.classList ].reverse().forEach( ( classe ) => {
+				const placement = classe.replace( 'd38-sillage-', '' );
+				const forme = FORMES[ placement.split( '-' )[ 0 ] ];
+
+				if ( ! classe.startsWith( 'd38-sillage-' ) || ! forme ) {
+					return;
+				}
+
+				const dessin = document.createElementNS( SVG, 'svg' );
+
+				dessin.setAttribute( 'class', `d38-sillage d38-sillage--${ placement }` );
+				dessin.setAttribute( 'viewBox', `0 0 ${ forme.vue.join( ' ' ) }` );
+				dessin.setAttribute( 'aria-hidden', 'true' );
+				dessin.setAttribute( 'focusable', 'false' );
+				dessin.style.setProperty( '--largeur', forme.vue[ 0 ] );
+
+				forme.traces.forEach( ( trace ) => {
+					const bande = document.createElementNS( SVG, 'path' );
+
+					bande.setAttribute( 'd', trace );
+					bande.setAttribute( 'pathLength', '1' );
+					dessin.append( bande );
+				} );
+
+				section.prepend( dessin );
+
+				// Le tracé part quand la paire elle-même arrive à l'écran, pas
+				// sa section : une paire du bas d'une longue section attend.
+				if ( ANIME ) {
+					inView( dessin, () => dessin.classList.add( 'est-trace' ), { margin: '0px 0px -10% 0px' } );
+				}
+			} );
+		} );
+	};
+
+	/**
 	 * Questions : une seule ouverte à la fois dans une même liste.
 	 */
 	const fermerLesAutres = () => {
@@ -491,6 +593,7 @@
 	/* Mise en route ------------------------------------------------------- */
 
 	fermerLesAutres();
+	poserSillages();
 	ondulerBords();
 	coulerBords();
 	remplirEncadres();

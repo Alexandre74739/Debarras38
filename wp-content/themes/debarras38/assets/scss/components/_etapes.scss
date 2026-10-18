@@ -51,7 +51,10 @@ $hauteur-canard: calc(#{$canard} * 252 / 262);
 	}
 
 	@include ecran($ecran-large) {
-		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+		// Toutes sur une ligne, quel que soit leur nombre : alignées, ou
+		// empilées (sans canard) sous 60rem, jamais entre les deux.
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
 		margin-top: calc(#{$hauteur-canard} + 1rem);
 		padding: calc(#{$fil} + 2rem) 0 0;
 
@@ -69,6 +72,18 @@ $hauteur-canard: calc(#{$canard} * 252 / 262);
 			height: $fil;
 			mask: url("../img/fil-sillage.svg") left center / auto 100% repeat-x;
 			transform-origin: left;
+		}
+	}
+
+	// Quand les étapes s'empilent au lieu d'être alignées : ni canard ni fil
+	// (choix d'Alexandre). Elles s'allument toujours au défilement.
+	@include sous($ecran-large) {
+		margin-top: 0;
+		padding: 0;
+
+		&::before,
+		&::after {
+			display: none;
 		}
 	}
 }

@@ -8,7 +8,7 @@
 // l'écran. Sans « d38-anime », rien n'est masqué.
 
 .d38-anime {
-	.d38-section:not(.d38-hero):not(.est-vu) > :not(.d38-onde):not(.d38-vague):not(.d38-coulure) {
+	.d38-section:not(.d38-hero):not(.est-vu) > :not(.d38-onde):not(.d38-vague):not(.d38-coulure):not(.d38-sillage) {
 		opacity: 0;
 	}
 
@@ -62,14 +62,40 @@
 		animation: d38-canard-flotte 3.6s ease-in-out infinite;
 	}
 
-	// Demande de devis : la paire de bandes entre par le bas.
-	.d38-contact::after {
-		transition: clip-path 1.2s $doux 0.3s;
+	// Demande de devis : une fois la carte déroulée (animations.js), le canard
+	// sort de derrière son bord haut. Il monte d'une hauteur de canard pendant
+	// que sa découpe s'ouvre d'autant : ce qui est sous le bord reste caché.
+	// « bottom » plutôt que « translate », que la flottaison anime déjà.
+	.d38-contact__formulaire::before {
+		--hauteur-canard: calc(var(--canard) * #{$canard-rapport});
+
+		clip-path: inset(0 0 0 0);
+		transition:
+			bottom 0.8s $doux,
+			clip-path 0.8s $doux;
 	}
 
-	.d38-contact:not(.est-vu)::after {
-		clip-path: inset(100% 0 0 0);
+	.d38-contact__formulaire:not(.est-pose)::before {
+		bottom: calc(100% - 0.5rem - var(--hauteur-canard));
+		clip-path: inset(0 0 var(--hauteur-canard) 0);
 	}
+
+	// Sillages : chaque paire se trace depuis son bord quand elle arrive
+	// elle-même à l'écran (« est-trace », poserSillages), la seconde bande un
+	// peu après la première.
+	.d38-sillage path {
+		stroke-dasharray: 1;
+		transition: stroke-dashoffset 1.8s $doux 0.2s;
+
+		+ path {
+			transition-delay: 0.45s;
+		}
+	}
+
+	.d38-sillage:not(.est-trace) path {
+		stroke-dashoffset: 1;
+	}
+
 	.d38-carte--avant::after {
 		transition: scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s;
 	}
@@ -79,18 +105,13 @@
 	}
 
 	// Page introuvable : ses deux paires de bandes entrent par leur bord.
-	// Questions : leurs deux paires de bandes entrent de même par leur coin.
 	.d38-erreur::before,
-	.d38-erreur::after,
-	.d38-faq::before,
-	.d38-faq::after {
+	.d38-erreur::after {
 		transition: clip-path 1.2s $doux 0.3s;
 	}
 
 	.d38-erreur:not(.est-vu)::before,
-	.d38-erreur:not(.est-vu)::after,
-	.d38-faq:not(.est-vu)::before,
-	.d38-faq:not(.est-vu)::after {
+	.d38-erreur:not(.est-vu)::after {
 		clip-path: inset(0 0 100% 100%);
 	}
 

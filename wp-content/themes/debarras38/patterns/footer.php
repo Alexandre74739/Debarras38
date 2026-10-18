@@ -70,6 +70,6 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"d38-pied__mention"} -->
-<p class="d38-pied__mention">© <?php echo esc_html( gmdate( 'Y' ) ); ?> Debarras38, débarrassage et nettoyage à Grenoble et en Isère. Site conçu par <a href="https://fablioo.fr">Fablioo</a>.</p>
+<p class="d38-pied__mention">© <?php echo esc_html( gmdate( 'Y' ) ); ?> Debarras38, débarrassage et nettoyage à Grenoble et en Isère. Site conçu par <a href="https://fablioo.com">Fablioo</a>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

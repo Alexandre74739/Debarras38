@@ -4,32 +4,14 @@
 // Demande de devis : le texte et le numéro en grand à gauche, le formulaire à
 // droite, sur une carte Crème où se pose le canard.
 //
-// Une paire de bandes Bleu canard (motif de la charte sur fond sombre) entre
-// par le bas de la section et ressort par le bord droit (sillage-coin.svg,
-// retournée). Elle reste dans la marge du bas, sous le formulaire. Son
-// arrivée est dans base/_animations.scss.
+// Sillage (components/_sillages.scss) : une paire dans le coin bas droit, qui
+// passe derrière la carte. Pas de « overflow: hidden » : il couperait la
+// vague du haut, posée au-dessus de la section.
 .d38-contact {
 	--canard: clamp(3.5rem, 3rem + 2vw, 4.75rem);
 
-	position: relative;
 	display: grid;
 	gap: calc(2.5rem + var(--canard));
-
-	// Pas de « overflow: hidden » : il couperait la vague du haut, posée
-	// au-dessus de la section. Les bandes tiennent dans la section.
-
-	&::after {
-		content: "";
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		width: clamp(9rem, 6rem + 9vw, 16rem);
-		aspect-ratio: 2;
-		background: var(--bleu-canard);
-		mask: url("../img/sillage-coin.svg") center / 100% 100% no-repeat;
-		scale: 1 -1;
-		pointer-events: none;
-	}
 
 	@include ecran($ecran-large) {
 		grid-template-columns: 5fr 6fr;
@@ -42,8 +24,8 @@
 	}
 
 	// Au-dessus des bandes : la carte les cache si elles passent derrière.
-	// La vague du haut (.d38-onde) garde sa position absolue.
-	> :not(.d38-onde) {
+	// La vague du haut et les bandes gardent leur position absolue.
+	> :not(.d38-onde, .d38-sillage) {
 		position: relative;
 		z-index: 1;
 	}

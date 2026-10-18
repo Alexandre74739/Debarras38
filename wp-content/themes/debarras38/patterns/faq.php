@@ -6,8 +6,8 @@
  * Description: Des questions qui se déplient, à côté du titre et du numéro. Elles sont aussi transmises à Google.
  */
 ?>
-<!-- wp:group {"tagName":"section","metadata":{"name":"Questions"},"align":"full","anchor":"questions","className":"d38-section d38-faq","backgroundColor":"creme","layout":{"type":"default"}} -->
-<section id="questions" class="wp-block-group alignfull d38-section d38-faq has-creme-background-color has-background"><!-- wp:group {"className":"d38-faq__titre","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Questions"},"align":"full","anchor":"questions","className":"d38-section d38-faq d38-sillage-coin-bas-gauche d38-sillage-bord-droit","backgroundColor":"creme","layout":{"type":"default"}} -->
+<section id="questions" class="wp-block-group alignfull d38-section d38-faq d38-sillage-coin-bas-gauche d38-sillage-bord-droit has-creme-background-color has-background"><!-- wp:group {"className":"d38-faq__titre","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-faq__titre"><!-- wp:heading -->
 <h2 class="wp-block-heading">Débarrassage et nettoyage : ce qu’on nous demande avant de nous confier les clés</h2>
 <!-- /wp:heading -->

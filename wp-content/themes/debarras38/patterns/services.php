@@ -8,8 +8,8 @@
 
 $images = esc_url( D38_URI . '/assets/img' );
 ?>
-<!-- wp:group {"tagName":"section","metadata":{"name":"Services"},"align":"full","className":"d38-section d38-services d38-bord-vague","backgroundColor":"creme","layout":{"type":"default"}} -->
-<section id="services" class="wp-block-group alignfull d38-section d38-services d38-bord-vague has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Services"},"align":"full","className":"d38-section d38-services d38-bord-vague d38-sillage-bord-gauche-haut d38-sillage-anse-gauche-bas d38-sillage-anse-droite","backgroundColor":"creme","layout":{"type":"default"}} -->
+<section id="services" class="wp-block-group alignfull d38-section d38-services d38-bord-vague d38-sillage-bord-gauche-haut d38-sillage-anse-gauche-bas d38-sillage-anse-droite has-creme-background-color has-background"><!-- wp:group {"className":"d38-entete-section","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-entete-section"><!-- wp:heading -->
 <h2 class="wp-block-heading">Votre entreprise de débarrassage à Grenoble, de la cave au grenier</h2>
 <!-- /wp:heading -->
