@@ -57,8 +57,18 @@
 	// Avant, pendant, après : le canard de la carte mise en avant flotte
 	// doucement sur son bord, comme porté par l'eau. Le bec du coin apparaît
 	// une fois les cartes distribuées.
-	.d38-carte--avant::before {
+	.d38-carte--avant::before,
+	.d38-contact__formulaire::before {
 		animation: d38-canard-flotte 3.6s ease-in-out infinite;
+	}
+
+	// Demande de devis : la paire de bandes entre par le bas.
+	.d38-contact::after {
+		transition: clip-path 1.2s $doux 0.3s;
+	}
+
+	.d38-contact:not(.est-vu)::after {
+		clip-path: inset(100% 0 0 0);
 	}
 	.d38-carte--avant::after {
 		transition: scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s;

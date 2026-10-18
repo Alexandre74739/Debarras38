@@ -14,17 +14,7 @@
 
 <!-- wp:paragraph -->
 <p>Débarrassage et nettoyage en Isère : les réponses simples aux questions qu’on nous pose le plus souvent avant chaque chantier.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:group {"className":"d38-faq__appel","layout":{"type":"default"}} -->
-<div class="wp-block-group d38-faq__appel"><!-- wp:paragraph -->
-<p>Une autre question ?</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"d38-faq__numero","metadata":{"bindings":{"content":{"source":"debarras38/coordonnees","args":{"key":"telephone_html"}}}}} -->
-<p class="d38-faq__numero"></p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"d38-questions","layout":{"type":"default"}} -->

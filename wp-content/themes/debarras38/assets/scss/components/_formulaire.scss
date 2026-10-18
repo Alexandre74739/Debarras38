@@ -18,9 +18,12 @@
 		font: 600 1rem/1.3 var(--police-titres);
 	}
 
+	// « border-box » : le remplissage et le contour restent dans la largeur,
+	// sans quoi deux champs côte à côte se chevauchent.
 	input,
 	select,
 	textarea {
+		box-sizing: border-box;
 		width: 100%;
 		min-height: $hauteur-bouton;
 		padding: 0.625rem 0.875rem;
@@ -29,6 +32,38 @@
 		background: var(--creme);
 		color: var(--encre);
 		font: inherit;
+		transition: border-color 0.2s $doux;
+
+		// Au survol, le fond ne change pas : seul le contour fonce.
+		&:hover {
+			border-color: var(--encre);
+		}
+	}
+
+	// Liste déroulante : la flèche du navigateur laisse la place au chevron
+	// maison, tourné vers le bas.
+	select {
+		padding-right: 3rem;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	.d38-champ:has(select) {
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			right: 1rem;
+			bottom: calc(#{$hauteur-bouton} / 2);
+			width: 1.25rem;
+			height: 1.25rem;
+			background: var(--bleu-canard);
+			mask: url("../img/icone-chevron.svg") center / contain no-repeat;
+			rotate: 90deg;
+			translate: 0 50%;
+			pointer-events: none;
+		}
 	}
 
 	textarea {
@@ -42,10 +77,34 @@
 		left: -200vw;
 	}
 
+	&__accord,
 	&__envoi,
-	&__etat,
-	&__mention {
+	&__etat {
 		grid-column: 1 / -1;
+	}
+
+	// Accord obligatoire, au-dessus du bouton : une case cochée en Bleu canard.
+	&__accord {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+
+		input {
+			flex: none;
+			width: 1.5rem;
+			min-height: 0;
+			height: 1.5rem;
+			margin: 0.0625rem 0 0;
+			padding: 0;
+			accent-color: var(--bleu-canard);
+			cursor: pointer;
+		}
+
+		label {
+			margin: 0;
+			font: 400 1rem / 1.5 var(--police-textes);
+			cursor: pointer;
+		}
 	}
 
 	&__envoi button {
@@ -73,8 +132,9 @@
 		}
 	}
 
-	&__mention {
-		font-size: 0.9375rem;
+	// Vide tant que rien n'a été envoyé : pas de cadre vide sous le bouton.
+	&__etat:empty {
+		display: none;
 	}
 }
 

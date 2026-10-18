@@ -13,7 +13,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"d38-chapo"} -->
-<p class="d38-chapo">Un appel ou un message suffit pour commencer. Vous décrivez la cave, le grenier ou la maison, nous venons sur place et vous recevez un devis écrit. Nous sommes deux associés et l’entreprise est la nôtre : ceux qui viennent voir sont ceux qui viennent vider.</p>
+<p class="d38-chapo">Un appel ou un message suffit pour commencer. Vous décrivez la cave, le grenier ou la maison, nous venons sur place et vous recevez un devis écrit.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"d38-numero","metadata":{"bindings":{"content":{"source":"debarras38/coordonnees","args":{"key":"telephone_html"}}}}} -->

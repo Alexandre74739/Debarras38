@@ -116,13 +116,16 @@ add_shortcode(
 				<textarea id="d38-message" name="message" rows="4" required></textarea>
 			</p>
 
+			<p class="d38-formulaire__accord">
+				<input id="d38-accord" type="checkbox" name="accord" value="1" required>
+				<label for="d38-accord">J’accepte que mes coordonnées servent uniquement à me répondre.</label>
+			</p>
+
 			<p class="d38-formulaire__envoi">
 				<button type="submit" class="wp-element-button">Envoyer ma demande</button>
 			</p>
 
 			<p class="d38-formulaire__etat<?php echo isset( $etats[ $retour ] ) ? ' est-' . esc_attr( $retour ) : ''; ?>" role="status" aria-live="polite"><?php echo esc_html( $etats[ $retour ] ?? '' ); ?></p>
-
-			<p class="d38-formulaire__mention">Vos coordonnées servent uniquement à vous répondre.</p>
 		</form>
 		<?php
 		// Sur une seule ligne : WordPress ajouterait des retours à la ligne entre les champs.
@@ -148,6 +151,7 @@ function d38_formulaire_lire(): array {
 
 	$piege   = (string) ( $_POST['site_web'] ?? '' );
 	$affiche = (int) ( $_POST['d38_affiche'] ?? 0 );
+	$accord  = '1' === ( $_POST['accord'] ?? '' );
 	// phpcs:enable
 
 	if ( ! in_array( $champs['lieu'], d38_formulaire_lieux(), true ) ) {
@@ -160,6 +164,7 @@ function d38_formulaire_lire(): array {
 		strlen( preg_replace( '/\D/', '', $champs['telephone'] ) ) < 9 => 'Indiquez un numéro de téléphone où vous joindre.',
 		'' === $champs['commune']                            => 'Indiquez la commune.',
 		'' === $champs['message']                            => 'Décrivez les lieux en quelques mots.',
+		! $accord                                            => 'Cochez la case pour accepter que vos coordonnées servent à vous répondre.',
 		default                                              => '',
 	};
 

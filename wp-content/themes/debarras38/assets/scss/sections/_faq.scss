@@ -1,6 +1,6 @@
 @use "../abstracts" as *;
 
-// Le titre, une phrase et le numéro à gauche, les questions à droite.
+// Le titre et une phrase à gauche, les questions à droite.
 //
 // Le sillage du canard, en bandes Bleu canard (motif de la charte) :
 //   - ::before, dans le coin bas gauche, la paire de la bande d'appel
@@ -72,39 +72,6 @@
 
 		> * {
 			margin: 0;
-		}
-	}
-
-	&__appel {
-		padding-top: 1.5rem;
-		border-top: 2px solid var(--vert-eau);
-
-		> * {
-			margin: 0;
-		}
-
-		> :first-child {
-			color: var(--titre);
-			font: 600 1.125rem / 1.3 var(--police-titres);
-		}
-	}
-
-	&__numero {
-		font: 700 clamp(1.5rem, 1.2rem + 1vw, 2rem) / 1.3 var(--police-titres);
-
-		a {
-			display: inline-flex;
-			align-items: center;
-			gap: 0.5rem;
-
-			&::before {
-				content: "";
-				flex: none;
-				width: 0.85em;
-				height: 0.85em;
-				background: currentColor;
-				mask: url("../img/icone-telephone.svg") center / contain no-repeat;
-			}
 		}
 	}
 }

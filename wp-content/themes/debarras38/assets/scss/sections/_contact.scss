@@ -1,13 +1,39 @@
+@use "sass:string";
 @use "../abstracts" as *;
 
-// Demande de devis : le numéro en grand à gauche, le formulaire à droite.
+// Demande de devis : le texte et le numéro en grand à gauche, le formulaire à
+// droite, sur une carte Crème où se pose le canard.
+//
+// Une paire de bandes Bleu canard (motif de la charte sur fond sombre) entre
+// par le bas de la section et ressort par le bord droit (sillage-coin.svg,
+// retournée). Elle reste dans la marge du bas, sous le formulaire. Son
+// arrivée est dans base/_animations.scss.
 .d38-contact {
+	--canard: clamp(3.5rem, 3rem + 2vw, 4.75rem);
+
+	position: relative;
 	display: grid;
-	gap: 2.5rem;
+	gap: calc(2.5rem + var(--canard));
+
+	// Pas de « overflow: hidden » : il couperait la vague du haut, posée
+	// au-dessus de la section. Les bandes tiennent dans la section.
+
+	&::after {
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: clamp(9rem, 6rem + 9vw, 16rem);
+		aspect-ratio: 2;
+		background: var(--bleu-canard);
+		mask: url("../img/sillage-coin.svg") center / 100% 100% no-repeat;
+		scale: 1 -1;
+		pointer-events: none;
+	}
 
 	@include ecran($ecran-large) {
 		grid-template-columns: 5fr 6fr;
-		align-items: start;
+		align-items: center;
 		gap: clamp(3rem, 6vw, 5rem);
 	}
 
@@ -15,14 +41,16 @@
 		margin-block: 0;
 	}
 
+	// Au-dessus des bandes : la carte les cache si elles passent derrière.
+	// La vague du haut (.d38-onde) garde sa position absolue.
+	> :not(.d38-onde) {
+		position: relative;
+		z-index: 1;
+	}
+
 	&__texte {
 		> * {
 			margin-block: 0 1.25rem;
-		}
-
-		@include ecran($ecran-large) {
-			position: sticky;
-			top: 7.5rem;
 		}
 	}
 
@@ -44,8 +72,30 @@
 		}
 	}
 
+	// La carte du formulaire. Le canard, de la couleur de la carte, est posé
+	// sur son bord haut, tourné vers elle, et flotte doucement (comme sur la
+	// carte « Pendant », base/_animations.scss).
 	&__formulaire {
+		margin-top: var(--canard);
 		padding: clamp(1.25rem, 4vw, 2.5rem);
 		border-radius: $rayon-carte;
+
+		@include ecran($ecran-large) {
+			margin-top: 0;
+		}
+
+		&::before {
+			@include forme("canard.svg", var(--fond));
+
+			content: "";
+			position: absolute;
+			bottom: calc(100% - 0.5rem);
+			left: clamp(1.5rem, 3vw, 2.5rem);
+			width: var(--canard);
+			aspect-ratio: string.unquote($canard-proportions);
+			scale: -1 1;
+			transform-origin: 50% 100%;
+			pointer-events: none;
+		}
 	}
 }
