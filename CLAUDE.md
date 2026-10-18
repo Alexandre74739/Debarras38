@@ -17,13 +17,14 @@ debarras38/
 ├── functions.php        charge les fichiers de inc/
 ├── inc/
 │   ├── setup.php        supports, scripts, styles, catégorie de compositions, page d'accueil
-│   ├── coordonnees.php  page de réglages « Debarras38 » + liaisons de blocs (téléphone, e-mail…)
+│   ├── coordonnees.php  page de réglages « Debarras38 » (coordonnées, SEO, mentions légales) + liaisons de blocs
 │   ├── seo.php          title, meta, Open Graph, JSON-LD (LocalBusiness, FAQPage)
 │   ├── motif.php        injecte le dessin du grand visuel (tableau-mare.svg)
-│   └── formulaire.php   formulaire de devis : code court, envoi, e-mail, demandes enregistrées
+│   ├── formulaire.php   formulaire de devis : code court, envoi, e-mail, demandes enregistrées, purge RGPD
+│   └── mentions.php     pages légales : création, code court [d38_coord], rappel des mentions manquantes, bandeau de cookies
 ├── templates/           front-page, page, index, 404
 ├── parts/               header, footer (renvoient vers les compositions du même nom)
-├── patterns/            une composition par section de page
+├── patterns/            une composition par section de page, plus le contenu des deux pages légales
 └── assets/
     ├── scss/            sources Sass (abstracts, base, layout, components, sections)
     ├── css/main.css     CSS compilé, ne pas modifier à la main
@@ -32,8 +33,10 @@ debarras38/
     ├── js/entete.js     tiroir de navigation de l’en-tête, sous 960 px
     ├── js/formulaire.js envoi du formulaire sans recharger la page
     ├── js/editeur.js    éditeur : format « Souligner d’une vague » du titre principal
+    ├── js/cookies.js    bandeau de cookies : choix gardé six mois, réouverture par #gerer-cookies
     ├── fonts/           WOFF2
-    └── img/             logos fournis, dessins et formes
+    ├── site.webmanifest icônes Android (icon-192, icon-512)
+    └── img/             logos fournis, dessins et formes, favicons, image de partage (partage.png)
 ```
 
 ### Structure de la page d'accueil
@@ -42,7 +45,7 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 
 | Rôle | Composition | Contenu |
 |---|---|---|
-| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Demander un devis ». Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes maison (`icone-*.svg`). |
+| Navigation | `header` | Carte flottante : logo principal à toutes les largeurs, menu, bouton « Recevoir mon devis » (style Plein). Sous 960 px, le menu et les boutons passent dans un tiroir qui glisse depuis la gauche, par-dessus la page assombrie (`entete.js`) ; sans JavaScript, ils restent dépliés dans la carte. Pictogrammes maison (`icone-*.svg`). |
 | Accroche + image | `hero` | Premier écran, en pleine hauteur de fenêtre (en-tête compris). À gauche : un très grand titre (jusqu'à 72 px, au-delà des 56 px de la charte, choix d'Alexandre) en Encre avec le lieu en Bleu canard, « Grenoble » souligné d'une vague Jaune caneton qui se trace au chargement, le slogan en sous-titre, une phrase courte, le bouton principal. À droite : une forme ronde (`.d38-blob`) d'où sort une image, sans vagues ; en dessous sous 960 px. Le canard (`canard-vert-eau.svg`), sur une forme Bleu canard, y tient la place des futures photos, de préférence détourées. Les tailles et les espaces suivent aussi la hauteur de l'écran (unités `svh`) pour que tout tienne dans la fenêtre. Tout le texte, titre compris, arrive en cascade au chargement. Le grand visuel de la mare (`.d38-tableau`) n'y est plus, son code reste dans le thème. |
 | Bandeau | `atouts` | Bandeau de réassurance (`#atouts`) : une carte Bleu canard qui flotte entre l'accroche et les services, comme la carte de l'en-tête. Elle commence sous le premier écran : rien n'en dépasse sur l'accroche. Quatre atouts en quelques mots, chacun avec un pictogramme maison ; ni titre ni bouton. Une colonne sur téléphone, deux sur tablette, quatre en ligne à partir de 80rem : jamais trois, qui laisserait un atout seul. De l'eau Vert d'eau passe derrière la carte (`.d38-flotte`), refermée par la vague des services. Tient la place d'un « ils nous font confiance », sans rien inventer. La liste des communes n'est plus dans la page. |
 | Services | `services` | Trois rangées en quinconce (`.d38-rangee`) : photo (bloc Image `.d38-visuel`), titre, paragraphe, bouton. La rangée cave/grenier/garage n’a pas de bouton. |
@@ -51,13 +54,26 @@ Elle suit le plan classique d'une page d'atterrissage. Ordre des compositions (`
 | Déroulement | `etapes` | Titre et paragraphe d'introduction, puis les étapes numérotées, que le canard parcourt au défilement. Il nage sur un fil de deux bandes Vert d'eau (`fil-sillage.svg`, `fil-sillage-vertical.svg`), qui coule doucement à contre-courant. À partir de 60rem, les étapes tiennent toutes sur une ligne (`grid-auto-flow: column`), jamais trois puis une. Dès qu’elles s’empilent (sous 60rem), ni canard ni fil (choix d’Alexandre) : elles s’allument toujours au défilement. |
 | Questions | `faq` | Peu de questions (Alexandre trouvait la section surchargée à neuf), choisies par lui : vider la maison d'un défunt avant la fin de la succession (acceptation tacite), présence pendant le débarrassage, cave ou grenier seuls, nettoyage, durée, communes. Il a écarté les questions sur l'accord du notaire, la vente ou la location par une agence, le prix et la revalorisation. Alexandre a écarté les thèmes à `h3` et le sommaire où nageait le canard. Section Crème, comme ses voisines. À gauche : le titre et une phrase courte pour le SEO (débarrassage, nettoyage, Isère). Pas de numéro : il faisait doublon avec celui de la section devis (choix d'Alexandre). Sillages (`d38-sillage-coin-bas-gauche d38-sillage-bord-droit`) : la paire du coin bas gauche, plus grande que les autres (choix d’Alexandre), part de sous la vague Encre qui suit ; la boucle du bord droit à partir de 90rem. Alexandre a écarté la paire du coin haut droit (coupée par la section du dessus) et la boucle du bord gauche. La colonne de gauche n'est pas collante (choix d'Alexandre). À droite, chaque question sur une carte Crème (« blanche », pas Plume, choix d'Alexandre) aux coins de 20 px, avec le filet bleuté et l'ombre douce de la carte de l'en-tête, fixe au survol ; à l'arrivée, les cartes tombent d'en haut l'une après l'autre et s'empilent. Le chevron maison seul (il se retourne à l'ouverture) ; la réponse se déroule en douceur (`::details-content`, `interpolate-size`) ; une seule question ouverte à la fois (`fermerLesAutres()`). Alexandre a écarté l'encadré Vert d'eau à vague pour la question ouverte (« ne respecte pas la DA »), puis les filets de séparation et les pastilles de couleur, la section en Plume, les cartes qui se soulèvent au survol, et l'encadré Bleu canard où flottait le canard sur deux nappes d'eau. Blocs Détails, repris dans les données structurées. En attente de Said : papiers et photos retrouvés, logement très encombré, débarrassage compensé par la valeur des objets. |
 | Appel final | `contact` | Section Encre, vague en haut. À gauche, titre, phrase, numéro en grand et e-mail, centrés en hauteur face au formulaire (pas collants). À droite, le formulaire de devis (`#devis`) sur une carte Crème ; le canard de la couleur de la carte est posé sur son bord haut, tourné vers elle, et flotte (`d38-canard-flotte`). À l’arrivée, la carte se déroule seule (sa découpe couperait le canard), puis le canard sort de derrière son bord haut, en montant (classe `est-pose` : il monte d’une hauteur de canard pendant que sa découpe `clip-path` s’ouvre d’autant ; transition sur `bottom` car la flottaison anime déjà `translate`). Alexandre a écarté le canard qui tombe sur la carte. La liste « Que faut-il vider ? » porte le chevron maison. Pas de sillage (choix d’Alexandre). Les champs sont en `box-sizing: border-box` (sans lui, deux champs côte à côte se chevauchent). Pas de `overflow: hidden` sur la section : il couperait sa vague. |
-| Pied de page | `footer` | Logo principal en version inversée (`logo-primary-inverse.svg`, lettres Crème, « 38 » Jaune caneton, fourni par Alexandre ; `.d38-logo--pied`, 200 à 260 px), comme dans l'en-tête : le pied de page est un format large, et le logo secondaire est réservé aux formats carrés ou en hauteur. Slogan, coordonnées, liens. Liens sans soulignement, qui revient au survol et au clavier (choix d'Alexandre). Mention du bas centrée. |
+| Pied de page | `footer` | Logo principal en version inversée (`logo-primary-inverse.svg`, lettres Crème, « 38 » Jaune caneton, fourni par Alexandre ; `.d38-logo--pied`, 200 à 260 px), comme dans l'en-tête : le pied de page est un format large, et le logo secondaire est réservé aux formats carrés ou en hauteur. Le logo ramène en haut de l'accueil (`#top`, défilement doux sur l'accueil, retour à l'accueil ailleurs). Slogan, coordonnées, liens. Liens sans soulignement, qui revient au survol et au clavier (choix d'Alexandre). Mention du bas centrée, suivie des liens Mentions légales, Politique de confidentialité et Cookies (`.d38-pied__legal`, adresses par `d38_page_legale()`). |
 
 Le modèle prévoit aussi des logos clients, des témoignages et des chiffres : il n'y en a pas de réels, donc rien n'est inventé. Les communes, les situations et le déroulement tiennent ces places.
 
 ### Page introuvable
 
-`templates/404.html` et `sections/_erreur.scss`. Sans cadre : sur un écran Crème, un grand « 404 » Bleu canard, le titre en Encre, la phrase et le bouton, tout centré. La section remplit l'écran sous l'en-tête, le texte centré dedans. Sur les côtés, deux paires de bandes Bleu canard qui entrent par un bord et en ressortent (`sillage-bord.svg`) : en bas à gauche (en miroir) et au milieu du bord droit, sur environ la moitié de la hauteur (`--bandes`). Sous 80rem, le texte prend la largeur : les bandes de la bande d'appel (`sillage-coin.svg`) passent dans les coins bas gauche et haut droit. Le pied de page la referme par sa vague Encre (`.d38-pied-vague` sur la partie de modèle). Alexandre a écarté : la carte flottant sur l'eau, la carte Bleu canard aux bandes de coin, les bandes traversant l'écran, les bandes sur toute la hauteur, la vague du bas avec le canard, les pictogrammes flottants.
+`templates/404.html` et `sections/_erreur.scss`. Sans cadre : sur un écran Crème, un grand « 404 » Bleu canard, le titre en Encre, la phrase et le bouton, tout centré. La section remplit l'écran sous l'en-tête, le texte centré dedans. Sur les côtés, deux paires de bandes Bleu canard qui entrent par un bord et en ressortent (`sillage-bord.svg`) : en bas à gauche (en miroir) et au milieu du bord droit, sur environ la moitié de la hauteur (`--bandes`). Sous 80rem, le texte prend la largeur : les bandes de la bande d'appel (`sillage-coin.svg`) passent dans les coins bas gauche et haut droit. Le pied de page la referme par sa vague Encre (`.d38-pied-vague` sur la partie de modèle, styles dans `layout/_pied.scss`, partagés avec `page.html`). Alexandre a écarté : la carte flottant sur l'eau, la carte Bleu canard aux bandes de coin, les bandes traversant l'écran, les bandes sur toute la hauteur, la vague du bas avec le canard, les pictogrammes flottants.
+
+### Pages légales (RGPD)
+
+- Trois pages, listées dans `d38_pages_legales()` et créées par `d38_creer_pages_legales()` (`inc/mentions.php`, à l'activation du thème) depuis les compositions du même nom : Mentions légales (option `d38_page_mentions`), Politique de confidentialité (la page de confidentialité de WordPress, `wp_page_for_privacy_policy`) et Cookies (`d38_page_cookies`). Une page déjà publiée n'est jamais réécrite. Gabarit `page.html` (`.d38-page`), fermé par le pied de page à vague Encre, comme la page introuvable (`.d38-pied-vague`, demandé par Alexandre). Crédit : « Fablioo, Alexandre-Philippe Perez ».
+- Les informations variables viennent du menu « Debarras38 », groupe « Mentions légales » (responsable, forme juridique, SIRET, immatriculation, TVA, hébergeur, médiateur de la consommation), par le code court `[d38_coord cle="…"]`. Un champ vide s'affiche « à compléter » (`.d38-a-completer`) et un rappel apparaît sur le tableau de bord. TVA vide : « TVA non applicable, article 293 B du CGI ». La clé `messagerie` nomme le fournisseur de la boîte e-mail (Microsoft pour Hotmail), cité dans la politique.
+- Cookies : le site n'en dépose aucun de suivi et ne charge aucun service extérieur (polices locales, ni carte ni vidéo). Alexandre veut quand même une page Cookies à part entière et un bandeau d'acceptation sur le côté : une carte Crème dans le coin bas gauche (`components/_cookies.scss`, filet et ombre de la carte de l'en-tête), qui glisse depuis le bord gauche, avec « Refuser » et « Accepter » de même poids (style Plein tous les deux, exigence CNIL ; pas de Jaune caneton). Le choix est gardé six mois dans le navigateur (`localStorage`, clé `d38-cookies`, `assets/js/cookies.js`). Un lien vers `#gerer-cookies` rouvre le bandeau (bouton « Gérer mes cookies » de la page Cookies). Un script ajouté plus tard (statistiques, carte, vidéo) ne se charge que si `window.d38Consentement === 'accepte'` ou à l'événement `d38:consentement`, et la page Cookies doit alors le lister.
+- Les demandes de devis sont effacées après trois ans (`D38_CONSERVATION`, tâche quotidienne `d38_purger_demandes`), comme l'annonce la politique. Changer l'un, c'est changer l'autre.
+- Sous la case d'accord du formulaire, un lien « Ce que nous faisons de vos données » vers la politique (`.d38-formulaire__mention`).
+
+### Icônes et partage
+
+- Favicons de la charte (chapitre 8) dans `assets/img/` : `favicon.svg`, `favicon.ico` (16 et 32 px, œil agrandi : à 32 px l'œil normal disparaît aussi), `apple-touch-icon.png` (carré plein, iOS arrondit lui-même), `icon-192.png`, `icon-512.png` (dans `assets/site.webmanifest`). Rendus depuis `favicon.svg` par Edge sans écran puis réduits. `/favicon.ico` est redirigé vers celui du thème (WordPress y renvoie sinon son logo). Si le client choisit une icône du site dans l'administration, elle remplace tout.
+- Image de partage `partage.png` (1200 × 630) : logo inversé, slogan, « Débarrassage et nettoyage à Grenoble et en Isère », deux bandes Vert d'eau par le coin haut droit, sur Bleu canard. Balises `og:image` et carte `summary_large_image` dans `inc/seo.php`.
 
 ### Direction artistique du site
 
@@ -122,6 +138,7 @@ Ajouter `--watch` pendant le développement. Installer Sass : binaire autonome (
 - Supprimer ou déplacer une section : vue en liste de l'éditeur.
 - Changer téléphone, e-mail, adresse, horaires, titre et description SEO : menu « Debarras38 » de l'administration.
 - Lire les demandes de devis reçues : Debarras38 → Demandes.
+- Compléter les mentions légales (SIRET, hébergeur, médiateur…) : menu « Debarras38 », groupe « Mentions légales ».
 
 ---
 

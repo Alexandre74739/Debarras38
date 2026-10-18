@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 const D38_DEMANDE          = 'd38_demande';
 const D38_ENVOIS_PAR_HEURE = 5;
 const D38_DELAI_MINIMAL    = 3; // secondes entre l'affichage et l'envoi
+const D38_CONSERVATION     = 3 * YEAR_IN_SECONDS; // durée annoncée dans la politique de confidentialité
 
 /**
  * Lieux proposés dans la liste déroulante.
@@ -58,6 +59,39 @@ add_action(
 		);
 	}
 );
+
+/**
+ * RGPD : chaque jour, efface les demandes plus anciennes que D38_CONSERVATION.
+ */
+add_action(
+	'init',
+	static function (): void {
+		if ( ! wp_next_scheduled( 'd38_purger_demandes' ) ) {
+			wp_schedule_event( time(), 'daily', 'd38_purger_demandes' );
+		}
+	}
+);
+
+add_action(
+	'd38_purger_demandes',
+	static function (): void {
+		$anciennes = get_posts(
+			array(
+				'post_type'      => D38_DEMANDE,
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+				'posts_per_page' => 100,
+				'date_query'     => array( array( 'before' => gmdate( 'Y-m-d H:i:s', time() - D38_CONSERVATION ), 'column' => 'post_date_gmt' ) ),
+			)
+		);
+
+		foreach ( $anciennes as $demande ) {
+			wp_delete_post( $demande, true );
+		}
+	}
+);
+
+add_action( 'switch_theme', static fn() => wp_clear_scheduled_hook( 'd38_purger_demandes' ) );
 
 /**
  * Affichage du formulaire.
@@ -120,6 +154,8 @@ add_shortcode(
 				<input id="d38-accord" type="checkbox" name="accord" value="1" required>
 				<label for="d38-accord">J’accepte que mes coordonnées servent uniquement à me répondre.</label>
 			</p>
+
+			<p class="d38-formulaire__mention"><a href="<?php echo esc_url( d38_page_legale( 'confidentialite' ) ); ?>">Ce que nous faisons de vos données</a></p>
 
 			<p class="d38-formulaire__envoi">
 				<button type="submit" class="wp-element-button">Envoyer ma demande</button>

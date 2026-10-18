@@ -15,4 +15,5 @@ require D38_DIR . '/inc/coordonnees.php';
 require D38_DIR . '/inc/setup.php';
 require D38_DIR . '/inc/motif.php';
 require D38_DIR . '/inc/formulaire.php';
+require D38_DIR . '/inc/mentions.php';
 require D38_DIR . '/inc/seo.php';

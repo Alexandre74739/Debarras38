@@ -53,7 +53,12 @@ add_action(
 			'og:title'       => $titre,
 			'og:description' => $description,
 			'og:url'         => $url,
-			'twitter:card'   => 'summary',
+			// Image de partage (WhatsApp, Facebook…) : logo, slogan et bandes sur Bleu canard.
+			'og:image'       => D38_URI . '/assets/img/partage.png',
+			'og:image:width' => '1200',
+			'og:image:height' => '630',
+			'og:image:alt'   => 'Debarras38, on passe dans tous les coins : débarrassage et nettoyage à Grenoble et en Isère',
+			'twitter:card'   => 'summary_large_image',
 		);
 
 		foreach ( $balises as $nom => $contenu ) {
@@ -155,7 +160,7 @@ function d38_seo_entreprise(): array {
 		'slogan'      => 'On passe dans tous les coins.',
 		'url'         => home_url( '/' ),
 		'logo'        => D38_URI . '/assets/img/logo-primary.png',
-		'image'       => D38_URI . '/assets/img/logo-primary.png',
+		'image'       => D38_URI . '/assets/img/partage.png',
 		'telephone'   => str_replace( 'tel:', '', d38_coord( 'telephone_lien' ) ),
 		'email'       => d38_coord( 'email' ),
 		'address'     => array(

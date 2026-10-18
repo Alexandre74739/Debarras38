@@ -1,0 +1,59 @@
+@use "../abstracts" as *;
+
+// Bandeau de cookies : une carte Crème posée dans le coin bas gauche, avec le
+// filet et l'ombre douce de la carte de l'en-tête. Elle glisse depuis le bord
+// gauche. Sur téléphone, elle prend la largeur, au-dessus du bas de l'écran.
+// Les deux boutons ont le même poids : refuser est aussi simple qu'accepter.
+.d38-cookies {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 90;
+  box-sizing: border-box;
+  width: min(24rem, calc(100% - 2rem));
+  padding: 1.25rem 1.5rem 1.5rem;
+  border: 2px solid color-mix(in srgb, var(--bleu-canard) 12%, transparent);
+  border-radius: $rayon-carte;
+  background-color: var(--creme);
+  color: var(--encre);
+  box-shadow: 0 0.5rem 2rem -0.5rem
+    color-mix(in srgb, var(--encre) 25%, transparent);
+  font-size: 1rem;
+  line-height: 1.5;
+  translate: calc(-100% - 2rem) 0;
+  transition: translate 0.6s $doux;
+
+  &.est-visible {
+    translate: 0 0;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+
+  &__titre {
+    color: var(--bleu-canard);
+    font: 700 1.25rem/1.2 var(--police-titres);
+  }
+
+  &__choix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+
+    .wp-block-button__link {
+      width: 100%;
+      border: 0;
+      font: 700 1rem/1.2 var(--police-titres);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

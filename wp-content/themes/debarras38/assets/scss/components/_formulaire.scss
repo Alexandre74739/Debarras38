@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 .d38-formulaire {
+	$formulaire: &;
+
 	display: grid;
 	gap: 1.125rem 1rem;
 
@@ -10,6 +12,10 @@
 
 	p {
 		margin: 0;
+
+		&#{$formulaire}__mention {
+			margin-top: -0.625rem;
+		}
 	}
 
 	label {
@@ -78,9 +84,16 @@
 	}
 
 	&__accord,
+	&__mention,
 	&__envoi,
 	&__etat {
 		grid-column: 1 / -1;
+	}
+
+	// Lien vers la politique de confidentialité, aligné sous le libellé de la case.
+	&__mention {
+		padding-left: 2.25rem;
+		font-size: 0.9375rem;
 	}
 
 	// Accord obligatoire, au-dessus du bouton : une case cochée en Bleu canard.

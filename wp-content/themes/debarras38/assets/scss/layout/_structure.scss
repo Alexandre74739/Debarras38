@@ -13,4 +13,54 @@
 // Pages simples (mentions légales, etc.)
 .d38-page {
   padding: var(--espace-section) var(--gouttiere);
+
+  .wp-block-post-title {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    margin-block: 2.5rem 0.75rem;
+  }
+
+  // Tableau (page Cookies) : filets bleutés, comme la carte de l'en-tête.
+  .wp-block-table {
+    margin-block: 1.5rem;
+    overflow-x: auto;
+
+    table {
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+
+    th,
+    td {
+      padding: 0.75rem 1rem;
+      border: 2px solid color-mix(in srgb, var(--bleu-canard) 15%, transparent);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--bleu-canard);
+      font: 700 1rem/1.3 var(--police-titres);
+    }
+
+    thead {
+      border-bottom: 0;
+    }
+  }
+
+  &__date {
+    margin-top: 3rem;
+    font-size: 0.9375rem;
+  }
+}
+
+// Mention légale pas encore saisie dans le menu « Debarras38 » : bien visible.
+.d38-a-completer {
+  padding: 0 0.375em;
+  border-radius: 0.25rem;
+  background: var(--vert-eau);
+  color: var(--encre);
+  font-weight: 700;
 }

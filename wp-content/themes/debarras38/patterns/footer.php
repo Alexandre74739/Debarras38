@@ -14,8 +14,8 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- wp:group {"className":"d38-pied","backgroundColor":"encre","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-pied has-encre-background-color has-background"><!-- wp:group {"className":"d38-pied__grille","layout":{"type":"default"}} -->
 <div class="wp-block-group d38-pied__grille"><!-- wp:group {"className":"d38-pied__marque","layout":{"type":"default"}} -->
-<div class="wp-block-group d38-pied__marque"><!-- wp:image {"className":"d38-logo d38-logo--pied"} -->
-<figure class="wp-block-image d38-logo d38-logo--pied"><img src="<?php echo $images; ?>/logo-primary-inverse.svg" alt="Debarras38"/></figure>
+<div class="wp-block-group d38-pied__marque"><!-- wp:image {"linkDestination":"custom","className":"d38-logo d38-logo--pied"} -->
+<figure class="wp-block-image d38-logo d38-logo--pied"><a href="<?php echo $accueil; ?>#top"><img src="<?php echo $images; ?>/logo-primary-inverse.svg" alt="Debarras38 : retour en haut de l’accueil"/></a></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"className":"d38-slogan"} -->
@@ -72,5 +72,19 @@ $images  = esc_url( D38_URI . '/assets/img' );
 
 <!-- wp:paragraph {"className":"d38-pied__mention"} -->
 <p class="d38-pied__mention">© <?php echo esc_html( gmdate( 'Y' ) ); ?> Debarras38, débarrassage et nettoyage à Grenoble et en Isère. Site conçu par <a href="https://fablioo.com">Fablioo</a>.</p>
-<!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"className":"d38-pied__legal"} -->
+<ul class="wp-block-list d38-pied__legal"><!-- wp:list-item -->
+<li><a href="<?php echo esc_url( d38_page_legale( 'mentions' ) ); ?>">Mentions légales</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><a href="<?php echo esc_url( d38_page_legale( 'confidentialite' ) ); ?>">Politique de confidentialité</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><a href="<?php echo esc_url( d38_page_legale( 'cookies' ) ); ?>">Cookies</a></li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list --></div>
 <!-- /wp:group -->

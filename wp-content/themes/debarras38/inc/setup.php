@@ -36,6 +36,7 @@ add_action(
 		wp_enqueue_script('debarras38', D38_URI . '/assets/js/animations.js', array('motion'), $version('/assets/js/animations.js'), array('strategy' => 'defer'));
 		wp_enqueue_script('debarras38-entete', D38_URI . '/assets/js/entete.js', array(), $version('/assets/js/entete.js'), array('strategy' => 'defer'));
 		wp_enqueue_script('debarras38-formulaire', D38_URI . '/assets/js/formulaire.js', array('motion'), $version('/assets/js/formulaire.js'), array('strategy' => 'defer'));
+		wp_enqueue_script('debarras38-cookies', D38_URI . '/assets/js/cookies.js', array(), $version('/assets/js/cookies.js'), array('strategy' => 'defer'));
 	}
 );
 
@@ -67,11 +68,38 @@ add_action(
 			printf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url(D38_URI . "/assets/fonts/$police.woff2"));
 		}
 
+		// Icônes de la charte (chapitre 8), sauf si le client en choisit une dans l'administration.
 		if (!has_site_icon()) {
-			printf('<link rel="icon" href="%s" type="image/svg+xml">' . "\n", esc_url(D38_URI . '/assets/img/favicon.svg'));
+			$icones = array(
+				'<link rel="icon" href="%1$s/img/favicon.ico" sizes="32x32">',
+				'<link rel="icon" href="%1$s/img/favicon.svg" type="image/svg+xml">',
+				'<link rel="apple-touch-icon" href="%1$s/img/apple-touch-icon.png">',
+				'<link rel="manifest" href="%1$s/site.webmanifest">',
+			);
+
+			foreach ($icones as $icone) {
+				printf($icone . "\n", esc_url(D38_URI . '/assets'));
+			}
 		}
 
+		echo '<meta name="theme-color" content="#0B5D66">' . "\n";
+
 		echo "<script>(function(d){d.classList.add('d38-js');setTimeout(function(){window.d38Entete||d.classList.remove('d38-js')},2500);if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('d38-anime');setTimeout(function(){window.d38Pret||d.classList.remove('d38-anime')},2500)})(document.documentElement)</script>\n";
+	},
+	1
+);
+
+/**
+ * /favicon.ico, demandé d'office par les navigateurs : WordPress y renvoie
+ * son propre logo. On renvoie celui de la charte.
+ */
+add_action(
+	'do_favicon',
+	static function (): void {
+		if (!has_site_icon()) {
+			wp_redirect(D38_URI . '/assets/img/favicon.ico', 301);
+			exit;
+		}
 	},
 	1
 );

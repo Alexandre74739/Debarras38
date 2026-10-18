@@ -102,15 +102,3 @@
 		margin-top: 2rem;
 	}
 }
-
-// Pied de page qui suit une section claire : sa vague Encre la referme. Le
-// filet qui le sépare d'une section Encre n'a pas lieu d'être sous la vague.
-footer.d38-pied-vague {
-	--fond: var(--encre);
-
-	position: relative;
-
-	.d38-pied {
-		border-top: 0;
-	}
-}

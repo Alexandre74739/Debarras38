@@ -1,5 +1,18 @@
 @use "../abstracts" as *;
 
+// Pied de page qui suit une section claire (page introuvable, pages légales) :
+// sa vague Encre la referme. Le filet qui le sépare d'une section Encre n'a pas
+// lieu d'être sous la vague.
+footer.d38-pied-vague {
+  --fond: var(--encre);
+
+  position: relative;
+
+  .d38-pied {
+    border-top: 0;
+  }
+}
+
 .d38-pied {
   @include gouttieres;
 
@@ -62,6 +75,17 @@
     border-top: 2px solid var(--bleu-canard);
     font-size: 0.9375rem;
     text-align: center;
+  }
+
+  &__legal {
+    @include liste-nue;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1.5rem;
+    margin-block: 0.75rem 0;
+    font-size: 0.9375rem;
   }
 
   // Liens du pied de page sans soulignement (choix d'Alexandre) : il revient
