@@ -1,5 +1,5 @@
 # Configuration propre à chaque installation : accès à la base et clés secrètes.
-# Jamais dans le dépôt (il est public). Modèle de production dans CLAUDE.md.
+# Jamais dans le dépôt (il est public).
 wp-config.php
 .env
 
