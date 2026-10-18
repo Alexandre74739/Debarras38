@@ -1,9 +1,60 @@
 @use "../abstracts" as *;
 
-// Le titre reste en vue à gauche pendant que les questions défilent à droite.
+// Le titre, une phrase et le numéro à gauche, les questions à droite.
+//
+// Le sillage du canard, en bandes Bleu canard (motif de la charte) :
+//   - ::before, dans le coin bas gauche, la paire de la bande d'appel
+//     retournée (sillage-coin.svg) ; elle passe sous la vague de la section
+//     suivante ;
+//   - ::after, dans le coin haut droit sur écran étroit ; à partir de 90rem,
+//     une paire qui entre par le bord droit et en ressort, au milieu
+//     (sillage-bord.svg, comme sur la page introuvable). Sa taille suit la
+//     marge libre, pour ne jamais passer sous les cartes.
+// Leur arrivée est dans base/_animations.scss.
 .d38-faq {
+	--marge-libre: calc((100vw - var(--largeur-contenu)) / 2);
+	--bandes: min(24rem, calc(var(--marge-libre) * 1.7));
+
+	position: relative;
 	display: grid;
-	gap: 2rem;
+	gap: 2.5rem;
+	overflow: hidden;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		width: clamp(8rem, 5rem + 8vw, 13rem);
+		aspect-ratio: 2;
+		background: var(--bleu-canard);
+		mask: url("../img/sillage-coin.svg") center / 100% 100% no-repeat;
+		pointer-events: none;
+	}
+
+	// Son départ reste caché sous la vague qui suit ; plus grande que celle du
+	// coin opposé, elle remonte plus haut le long du bord.
+	&::before {
+		bottom: 0;
+		left: 0;
+		width: clamp(11rem, 7rem + 11vw, 19rem);
+		rotate: 180deg;
+	}
+
+	&::after {
+		top: 0;
+		right: 0;
+	}
+
+	@include ecran(90rem) {
+		&::after {
+			top: 50%;
+			width: auto;
+			height: var(--bandes);
+			aspect-ratio: 200 / 300;
+			mask-image: url("../img/sillage-bord.svg");
+			translate: 0 -50%;
+		}
+	}
 
 	@include ecran($ecran-large) {
 		grid-template-columns: 4fr 7fr;
@@ -16,13 +67,44 @@
 	}
 
 	&__titre {
-		h2 {
+		display: grid;
+		gap: 1.5rem;
+
+		> * {
+			margin: 0;
+		}
+	}
+
+	&__appel {
+		padding-top: 1.5rem;
+		border-top: 2px solid var(--vert-eau);
+
+		> * {
 			margin: 0;
 		}
 
-		@include ecran($ecran-large) {
-			position: sticky;
-			top: 7.5rem;
+		> :first-child {
+			color: var(--titre);
+			font: 600 1.125rem / 1.3 var(--police-titres);
+		}
+	}
+
+	&__numero {
+		font: 700 clamp(1.5rem, 1.2rem + 1vw, 2rem) / 1.3 var(--police-titres);
+
+		a {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+
+			&::before {
+				content: "";
+				flex: none;
+				width: 0.85em;
+				height: 0.85em;
+				background: currentColor;
+				mask: url("../img/icone-telephone.svg") center / contain no-repeat;
+			}
 		}
 	}
 }

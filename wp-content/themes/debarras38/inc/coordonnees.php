@@ -16,7 +16,7 @@ const D38_OPTION = 'd38_coordonnees';
  */
 function d38_coord_champs(): array {
 	return array(
-		'telephone'       => array( 'Téléphone', 'text', '06 79 37 20 77', '' ),
+		'telephone'       => array( 'Téléphone', 'text', '06 07 31 30 41', '' ),
 		'email'           => array( 'E-mail', 'email', 'debarras38@hotmail.fr', '' ),
 		'rue'             => array( 'Adresse', 'text', '9 rue du Trident', '' ),
 		'code_postal'     => array( 'Code postal', 'text', '38100', '' ),

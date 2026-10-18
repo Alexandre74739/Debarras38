@@ -28,7 +28,7 @@ $images  = esc_url( D38_URI . '/assets/img' );
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"debarras38/coordonnees","args":{"key":"telephone_html"}}}}} -->
-<p>06 79 37 20 77</p>
+<p>06 07 31 30 41</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"debarras38/coordonnees","args":{"key":"email_html"}}}}} -->

@@ -1,11 +1,35 @@
 @use "../abstracts" as *;
 
+// Questions qui se déplient : chacune sur une carte Crème, comme la carte de
+// l'en-tête (filet bleuté, ombre douce), fixe (elle ne se soulève pas), le
+// chevron maison à droite. À leur arrivée, elles tombent
+// l'une après l'autre et s'empilent (animations.js). Une seule ouverte à la
+// fois. La réponse se déroule en douceur (navigateurs qui savent animer vers
+// « auto ») ; ailleurs, elle s'ouvre d'un coup.
 .d38-questions {
-	border-top: 2px solid var(--vert-eau);
+	display: grid;
+	gap: 0.75rem;
 
 	.wp-block-details {
 		margin: 0;
-		border-bottom: 2px solid var(--vert-eau);
+		padding-inline: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+		border: 2px solid color-mix(in srgb, var(--bleu-canard) 12%, transparent);
+		border-radius: $rayon-carte;
+		background: var(--creme);
+		box-shadow: 0 0.25rem 1rem -0.25rem color-mix(in srgb, var(--encre) 16%, transparent);
+		interpolate-size: allow-keywords;
+
+		&::details-content {
+			block-size: 0;
+			overflow: hidden;
+			transition:
+				block-size 0.45s $doux,
+				content-visibility 0.45s allow-discrete;
+		}
+
+		&[open]::details-content {
+			block-size: auto;
+		}
 
 		> :not(summary) {
 			@include mesure;
@@ -20,7 +44,7 @@
 		justify-content: space-between;
 		gap: 1.5rem;
 		padding-block: 1.25rem;
-		color: var(--bleu-canard);
+		color: var(--titre);
 		font: 600 clamp(1.125rem, 1rem + 0.6vw, 1.375rem) / 1.3 var(--police-titres);
 		list-style: none;
 		cursor: pointer;
@@ -29,20 +53,27 @@
 			display: none;
 		}
 
-		// Un « plus » qui pivote en croix à l'ouverture.
+		// Chevron tourné vers le bas, retourné à l'ouverture.
 		&::after {
 			content: "";
 			flex: none;
-			width: 1.125rem;
-			height: 1.125rem;
-			background:
-				linear-gradient(currentColor 0 0) center / 100% $trait no-repeat,
-				linear-gradient(currentColor 0 0) center / $trait 100% no-repeat;
-			transition: transform 0.3s $doux;
+			width: 1.5rem;
+			height: 1.5rem;
+			background: currentColor;
+			mask: url("../img/icone-chevron.svg") center / contain no-repeat;
+			rotate: 90deg;
+			transition: rotate 0.45s $doux;
 		}
 	}
 
 	[open] > summary::after {
-		transform: rotate(45deg);
+		rotate: -90deg;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.wp-block-details::details-content,
+		summary::after {
+			transition: none;
+		}
 	}
 }

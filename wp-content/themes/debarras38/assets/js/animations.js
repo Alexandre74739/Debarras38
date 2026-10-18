@@ -172,8 +172,7 @@
 		} );
 
 		// Une seule nappe sous ce qui flotte (.d38-flotte) : la carte du bandeau.
-		document.querySelectorAll( '.d38-flotte' ).forEach( ( section ) => poserOnde( creer( 'd38-vague d38-vague--fond', section ), 'haut', 26 ) );
-	};
+		document.querySelectorAll( '.d38-flotte' ).forEach( ( section ) => poserOnde( creer( 'd38-vague d38-vague--fond', section ), 'haut', 26 ) );	};
 
 	/* 3. Apparitions ------------------------------------------------------ */
 
@@ -308,9 +307,14 @@
 			animate( etapes, { opacity: 1 }, { duration: 0.6, delay: depart } );
 		},
 
-		// Questions : chaque ligne s'écrit de gauche à droite, filet compris.
+		// Questions : elles tombent d'en haut l'une après l'autre et
+		// s'empilent, avec un léger rebond à l'arrivée.
 		'.d38-questions': ( questions, depart ) => {
-			[ ...questions.children ].forEach( ( question, rang ) => devoiler( question, depart + rang * 0.08, DEPUIS_LA_GAUCHE, 0.8 ) );
+			const cartes = [ ...questions.children ];
+
+			cartes.forEach( ( carte ) => ( carte.style.opacity = 0 ) );
+			animate( cartes, { opacity: 1 }, { duration: 0.3, delay: stagger( 0.12, { startDelay: depart } ) } );
+			animate( cartes, { y: [ -48, 0 ] }, { type: 'spring', stiffness: 320, damping: 20, delay: stagger( 0.12, { startDelay: depart } ) } );
 		},
 
 		// Demande de devis : le numéro s'écrit comme sur la bâche, le
@@ -465,8 +469,28 @@
 		} );
 	};
 
+	/**
+	 * Questions : une seule ouverte à la fois dans une même liste.
+	 */
+	const fermerLesAutres = () => {
+		document.querySelectorAll( '.d38-questions details' ).forEach( ( question ) => {
+			question.addEventListener( 'toggle', () => {
+				if ( ! question.open ) {
+					return;
+				}
+
+				question.closest( '.d38-questions' ).querySelectorAll( 'details[open]' ).forEach( ( autre ) => {
+					if ( autre !== question ) {
+						autre.open = false;
+					}
+				} );
+			} );
+		} );
+	};
+
 	/* Mise en route ------------------------------------------------------- */
 
+	fermerLesAutres();
 	ondulerBords();
 	coulerBords();
 	remplirEncadres();

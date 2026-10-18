@@ -60,7 +60,6 @@
 	.d38-carte--avant::before {
 		animation: d38-canard-flotte 3.6s ease-in-out infinite;
 	}
-
 	.d38-carte--avant::after {
 		transition: scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s;
 	}
@@ -70,13 +69,18 @@
 	}
 
 	// Page introuvable : ses deux paires de bandes entrent par leur bord.
+	// Questions : leurs deux paires de bandes entrent de même par leur coin.
 	.d38-erreur::before,
-	.d38-erreur::after {
+	.d38-erreur::after,
+	.d38-faq::before,
+	.d38-faq::after {
 		transition: clip-path 1.2s $doux 0.3s;
 	}
 
 	.d38-erreur:not(.est-vu)::before,
-	.d38-erreur:not(.est-vu)::after {
+	.d38-erreur:not(.est-vu)::after,
+	.d38-faq:not(.est-vu)::before,
+	.d38-faq:not(.est-vu)::after {
 		clip-path: inset(0 0 100% 100%);
 	}
 
