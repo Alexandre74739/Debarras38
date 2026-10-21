@@ -36,7 +36,7 @@
 	overflow: hidden;
 	fill: none;
 	stroke: var(--bleu-canard);
-	stroke-width: calc(12 / var(--taille));
+	stroke-width: calc(12px / var(--taille));
 	pointer-events: none;
 
 	// Coins : en haut à droite (sens du dessin), retourné ailleurs. À réserver
